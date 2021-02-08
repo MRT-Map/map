@@ -11,6 +11,7 @@ A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap
 * sesese9
 * megascatterbomb
 * Airplaneguy9
+* Scarycrumb45
 
 ## How it works
 Dinty add details
