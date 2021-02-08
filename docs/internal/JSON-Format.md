@@ -2,6 +2,7 @@
 
 ```js
 {
+  type: 'town',
   color: '#111111',
   name: 'Beachview',
   clickInfo: 'Mayor: DintyB\nDeputy Mayor: chiefbozx',
