@@ -6,7 +6,7 @@
   name: 'Beachview',
   clickInfo: 'Mayor: DintyB\nDeputy Mayor: chiefbozx',
   xCoord: '111111',
-  zCoord: '-10239'
+  zCoord: '-10239',
   connections: [],
   catchmentRadius: 300  
 }
