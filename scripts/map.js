@@ -1,11 +1,34 @@
-var map = L.map('map').setView([0, 0], 1);
+var map = L.map('map').setView([0, 0], 0);
 
 //override the default
 L.TileLayer.MyCustomLayer = L.TileLayer.extend({
     getTileUrl: function(coords) {
-        return `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${coords.x}_${coords.y}/${coords.x*32}_${coords.y*32}.png`
 
-        return L.TileLayer.prototype.getTileUrl.call(this, coords);
+      console.log(coords)
+
+      let chunk = {
+        x: Math.floor(coords.x/32),
+        y: Math.floor(coords.y/32)
+      }
+
+      let chunkG = {
+        x: Math.floor(coords.x/32),
+        y: Math.floor(coords.y/32)
+      }
+
+      let zzz = ""
+
+      for (var i = 8; i > coords.z; i--) {
+        zzz += "z";
+      }
+
+      if (zzz.length != "") zzz += "_";
+
+      let url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${chunkG.x}_${chunkG.y}/${zzz}${chunk.x*32}_${chunk.y*32}.png`
+      console.log(url)
+      return url;
+
+      // return L.TileLayer.prototype.getTileUrl.call(this, coords);
     }
 });
 
@@ -25,7 +48,7 @@ function f(t, n) {
 }
 
 L.tileLayer.myCustomLayer("https://dynmap.minecartrapidtransit.net/tiles/new/flat/{x}_{y}/{xm}_{ym}.png", {
-    maxZoom: 18,
+    maxZoom: 8,
     id: 'map',
     tileSize: 128,
     zoomOffset: 0,
