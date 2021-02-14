@@ -1,30 +1,32 @@
-var map = L.map('map').setView([0, 0], 0);
+var map = L.map('map').setView([0, 0], 8);
 
 //override the default
 L.TileLayer.MyCustomLayer = L.TileLayer.extend({
     getTileUrl: function(coords) {
 
-      console.log(coords)
-
-      let chunk = {
-        x: Math.floor(coords.x/32),
-        y: Math.floor(coords.y/32)
+      let group = {
+        x: Math.floor(coords.x / 512),
+        y: Math.floor(coords.y / 512),
       }
 
-      let chunkG = {
-        x: Math.floor(coords.x/32),
-        y: Math.floor(coords.y/32)
+      let numberInGroup = {
+        x: Math.floor(coords.x % 32),
+        y: Math.floor(coords.y % 32)
       }
+
+
+      console.log(coords);
+      console.log(numberInGroup);
 
       let zzz = ""
 
-      for (var i = 8; i > coords.z; i--) {
-        zzz += "z";
-      }
+      // for (var i = 8; i > coords.z; i--) {
+      //   zzz += "z";
+      // }
+      //
+      // if (zzz.length != "") zzz += "_";
 
-      if (zzz.length != "") zzz += "_";
-
-      let url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${chunkG.x}_${chunkG.y}/${zzz}${chunk.x*32}_${chunk.y*32}.png`
+      let url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${group.x}_${group.y}/${zzz}${numberInGroup.x}_${numberInGroup.y}.png`
       console.log(url)
       return url;
 
