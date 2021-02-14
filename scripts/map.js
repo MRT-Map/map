@@ -88,6 +88,10 @@ var linePoints = [
     [21332,-24504]
 ]
 
+for(let i in linePoints) {
+    linePoints[i] = mapcoord(linePoints[i])
+}
+
 var polyline = L.polyline(linePoints, {
     color: 'red',
     weight: 3,
