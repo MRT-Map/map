@@ -6,7 +6,7 @@ A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap
 ## Collaborators
 * DintyB
 * i____7d
-* Red_Ray
+* AP_Red
 * CaptainObi
 * sesese9
 * megascatterbomb
