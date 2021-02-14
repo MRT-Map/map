@@ -1,13 +1,15 @@
-var map = L.map('map').setView([0, 0], 8);
+var map = L.map('map', {
+    crs: L.CRS.Simple
+}).setView([0, 0], 8);
 
 //override the default
 L.TileLayer.MyCustomLayer = L.TileLayer.extend({
     getTileUrl: function(coords) {
 
-      let Xcoord = coords.x * 1;
-      let Ycoord = coords.y * -1;
-      let Zcoord = 2**(8 - coords.z);
 
+      let Zcoord = 2**(8 - coords.z);
+      let Xcoord = (coords.x  * 1);
+      let Ycoord = coords.y * -1;
 
       let group = {
         x: Math.floor(Xcoord * Zcoord / 32),
@@ -57,10 +59,22 @@ function f(t, n) {
 L.tileLayer.myCustomLayer("https://dynmap.minecartrapidtransit.net/tiles/new/flat/{x}_{y}/{xm}_{ym}.png", {
     maxZoom: 8,
     id: 'map',
-    tileSize: 64,
+    tileSize: 128,
     zoomOffset: 0,
+    noWrap: true,
+    bounds:[[-900,-900],[900,900]]
 }).addTo(map)
 
-var marker = L.marker([0, 0]).addTo(map)
+function mapcoord([x,y]){
+    NewX = (y / -64) - 0.5;
+    NewY = x / 64;
+    return [NewX, NewY];
+}
+
+var newmarker = L.marker(mapcoord([16040, 17679])).addTo(map)
+.bindPopup('-125, 125')
+.openPopup();
+
+var marker = L.marker(mapcoord([0, 0])).addTo(map)
     .bindPopup('0, 0')
     .openPopup();
