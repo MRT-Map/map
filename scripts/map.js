@@ -4,27 +4,32 @@ var map = L.map('map').setView([0, 0], 8);
 L.TileLayer.MyCustomLayer = L.TileLayer.extend({
     getTileUrl: function(coords) {
 
+      let Xcoord = coords.x * 1;
+      let Ycoord = coords.y * -1;
+      let Zcoord = 2**(8 - coords.z);
+
+
       let group = {
-        x: Math.floor(coords.x / 512),
-        y: Math.floor(coords.y / 512),
+        x: Math.floor(Xcoord * Zcoord / 32),
+        y: Math.floor(Ycoord * Zcoord / 32),
       }
 
       let numberInGroup = {
-        x: Math.floor(coords.x % 32),
-        y: Math.floor(coords.y % 32)
+        x: Math.floor(Xcoord * Zcoord),
+        y: Math.floor(Ycoord * Zcoord)
       }
 
-
       console.log(coords);
+      console.log(group);
       console.log(numberInGroup);
 
       let zzz = ""
 
-      // for (var i = 8; i > coords.z; i--) {
-      //   zzz += "z";
-      // }
-      //
-      // if (zzz.length != "") zzz += "_";
+      for (var i = 8; i > coords.z; i--) {
+        zzz += "z";
+      }
+
+      if (zzz.length != "") zzz += "_";
 
       let url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${group.x}_${group.y}/${zzz}${numberInGroup.x}_${numberInGroup.y}.png`
       console.log(url)
@@ -52,8 +57,10 @@ function f(t, n) {
 L.tileLayer.myCustomLayer("https://dynmap.minecartrapidtransit.net/tiles/new/flat/{x}_{y}/{xm}_{ym}.png", {
     maxZoom: 8,
     id: 'map',
-    tileSize: 128,
+    tileSize: 64,
     zoomOffset: 0,
 }).addTo(map)
 
-var marker = L.marker([0, 0]).addTo(map);
+var marker = L.marker([0, 0]).addTo(map)
+    .bindPopup('0, 0')
+    .openPopup();
