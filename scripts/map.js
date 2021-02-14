@@ -21,9 +21,9 @@ L.TileLayer.MyCustomLayer = L.TileLayer.extend({
         y: Math.floor(Ycoord * Zcoord)
       }
 
-      console.log(coords);
+     /* console.log(coords);
       console.log(group);
-      console.log(numberInGroup);
+      console.log(numberInGroup);*/
 
       let zzz = ""
 
@@ -34,7 +34,7 @@ L.TileLayer.MyCustomLayer = L.TileLayer.extend({
       if (zzz.length != "") zzz += "_";
 
       let url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${group.x}_${group.y}/${zzz}${numberInGroup.x}_${numberInGroup.y}.png`
-      console.log(url)
+      //console.log(url)
       return url;
 
       // return L.TileLayer.prototype.getTileUrl.call(this, coords);
@@ -78,3 +78,20 @@ var newmarker = L.marker(mapcoord([16040, 17679])).addTo(map)
 var marker = L.marker(mapcoord([0, 0])).addTo(map)
     .bindPopup('0, 0')
     .openPopup();
+
+var linePoints = [
+    [21665,-24454],
+    [21640,-24454],
+    [21570,-24464],
+    [21460,-24464],
+    [21460,-24504],
+    [21332,-24504]
+]
+
+var polyline = L.polyline(linePoints, {
+    color: 'red',
+    weight: 3,
+    opacity: 0.5,
+    smoothFactor: 1
+})
+polyline.addTo(map);    
