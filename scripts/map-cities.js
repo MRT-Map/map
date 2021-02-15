@@ -61,29 +61,21 @@ function mapTowns(res) {
 
     if (map.getZoom() >= 2) {
       map.addLayer(cityLayers.Governor);
-    } else {
-      map.removeLayer(cityLayers.Governor);
-    }
-
-    if (map.getZoom() >= 3) {
       map.addLayer(cityLayers.Senator);
     } else {
+      map.removeLayer(cityLayers.Governor);
       map.removeLayer(cityLayers.Senator);
     }
 
-    if (map.getZoom() >= 4) {
+    if (map.getZoom() >= 3) {
       map.addLayer(cityLayers.Councillor);
-    } else {
-      map.removeLayer(cityLayers.Councillor);
-    }
-
-    if (map.getZoom() >= 5) {
       map.addLayer(cityLayers.Mayor);
     } else {
+      map.removeLayer(cityLayers.Councillor);
       map.removeLayer(cityLayers.Mayor);
     }
 
-    if (map.getZoom() >= 6) {
+    if (map.getZoom() >= 4) {
       map.addLayer(cityLayers.Unranked);
     } else {
       map.removeLayer(cityLayers.Unranked);
