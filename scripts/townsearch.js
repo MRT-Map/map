@@ -1,0 +1,69 @@
+var MRTMembers;
+//get MRT members
+$.ajax({
+    url: 'https://script.google.com/macros/s/AKfycbwde4vwt0l4_-qOFK_gL2KbVAdy7iag3BID8NWu2DQ1566kJlqyAS1Y/exec?spreadsheetId=1Hhj_Cghfhfs8Xh5v5gt65kGc4mDW0sC5GWULKidOBW8&sheetName=Members',
+    type: 'GET',
+    success: (res) => {
+        //add members to object
+        MRTMembers = JSON.parse(res)
+        //make a new property, which is an array of all the user's names
+        for (let member in MRTMembers) {
+            //make new property and add current username
+            MRTMembers[member].names = [MRTMembers[member].Username]
+            if (MRTMembers[member]["Former Usernames"] == '') {
+                //do nothing more
+            } else {
+                //split former usernames into an array
+                let formerUsernames = MRTMembers[member]["Former Usernames"].split(',')
+                //add former usernames to array
+                for (const formerUsername of formerUsernames) {
+                    MRTMembers[member].names.push(formerUsername.trim())
+                }
+            }
+
+        }
+    }
+})
+
+function townSearch(query) {
+    //tell other functions not to display towns
+    displayTowns = false;
+    //get members with names (including old names) matching query
+    var relevantNames = [];
+    for (const member of MRTMembers) {
+        for (let name in member.names) {
+            //deal with names that aren't strings
+            if (typeof member.names[name] != 'string') {
+                member.names[name] = member.names[name].toString()
+            }
+            member.names[name] = member.names[name].toLowerCase()
+            if (member.names[name].toLowerCase().includes(query.toLowerCase())) {
+                relevantNames.push(...member.names);
+            }
+        }
+    }
+    console.log(relevantNames)
+    //filter towns by search query
+    const relevantTowns = towns.filter(t => t.Name.toString().toLowerCase().includes(query.toLowerCase()) || relevantNames.includes(t.Mayor.toString().toLowerCase()));
+    //remove other markers from map
+    for (let layer in cityLayers) {
+        map.removeLayer(cityLayers[layer])
+    }
+    for (const town of relevantTowns) {
+        //parse Coords
+        let rawCoords = town['Town Hall Coordinates (NO COMMAS PLEASE)'].split(' ');
+        //convert all numbers to int
+        for (let i in rawCoords) {
+            rawCoords[i] = parseInt(rawCoords[i])
+        }
+        //do not map if invalid coords
+        if (isNaN(rawCoords[0]) || isNaN(rawCoords[2])) {
+            console.log(`Not displaying town ${town.Name} in search results popup: invalid or missing coordinates`)
+        } else {
+            console.log(`Showing ${town.Name}`)
+            L.marker(mapcoord([rawCoords[0], rawCoords[2]])).addTo(map)
+                .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}`)
+        }
+    }
+    return relevantTowns;
+}
