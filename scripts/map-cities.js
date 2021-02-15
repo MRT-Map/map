@@ -12,37 +12,47 @@ let cityLayers = {}
 function mapTowns(res) {
   let towns = JSON.parse(res);
   for (const town of towns) {
+    //parse Coords
     let rawCoords = town['Town Hall Coordinates (NO COMMAS PLEASE)'].split(' ');
+    //convert all numbers to int
     for (let i in rawCoords) {
       rawCoords[i] = parseInt(rawCoords[i])
     }
-    //console.log(`Mapping town ${town.Name}, coords ${rawCoords}`)
+    //do not map if invalid coords
     if (isNaN(rawCoords[0]) || isNaN(rawCoords[2])) {
       //console.log(`Not displaying town ${town.Name}: invalid coordinates`)
     } else {
       let coords = mapcoord([rawCoords[0], rawCoords[2]]);
+      //if town rank array in object is undefined define it
       if (Array.isArray(cityMarkers[town['Town Rank']]) == false) {
         cityMarkers[town['Town Rank']] = []
       }
-      cityMarkers[town['Town Rank']].push(L.marker(coords).bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Rank: ${town['Town Rank']}`))
+      //create marker and add it to array
+      cityMarkers[town['Town Rank']].push(
+        L.marker(coords)
+        .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Rank: ${town['Town Rank']}`)
+      )
     }
 
   }
 
-  console.log(cityMarkers);
-
   let cityTypes = ["Premier", "Governor", "Senator", "Councillor", "Mayor", "Unranked"]
 
+  //for each type of city
   cityTypes.forEach((type) => {
+    //create a new feature group
     cityLayers[type] = new L.FeatureGroup();
+    //and add all cities of type
     cityMarkers[type].forEach((city) => {
       cityLayers[type].addLayer(city);
     });
-    map.addLayer(cityLayers[type])
   });
 
+  //when we zoom the map
+  //remove cities when we zoom out
+  //add them when we zoom in
   map.on('zoomend', function() {
-    console.log(map.getZoom())
+
     if (map.getZoom() >= 1) {
       map.addLayer(cityLayers.Premier);
     } else {
