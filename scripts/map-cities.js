@@ -1,10 +1,10 @@
 //Note: Community towns are formatted like this because they must match the values on the town list sheet
 const communityTowns = [
     {
-        "Name": "example community town",
-        "Mayor": "me",
-        "Deputy Mayor": "when",
-        "Town Hall Coordinates (NO COMMAS PLEASE)": "100 10 100",
+        "Name": "Augusta",
+        "Mayor": "CaptainObi",
+        "Deputy Mayor": "Needn_NL",
+        "Town Hall Coordinates (NO COMMAS PLEASE)": "-15719 73 -11437",
         "Town Rank": "Community"
     }
 ]
