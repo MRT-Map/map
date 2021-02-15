@@ -1,3 +1,4 @@
+var towns; //declared here so that it can be used by other functions
 //Note: Community towns are formatted like this because they must match the values on the town list sheet
 const communityTowns = [
     {
@@ -21,7 +22,7 @@ let cityMarkers = {}
 let cityLayers = {}
 
 function mapTowns(res) {
-    let towns = JSON.parse(res);
+    towns = JSON.parse(res);
 
     communityTowns.forEach(t => {//add community towns to list
         towns.push(t)
@@ -38,6 +39,7 @@ function mapTowns(res) {
             console.log(`Not displaying town ${town.Name}: invalid or missing coordinates`)
         } else {
             let coords = mapcoord([rawCoords[0], rawCoords[2]]);
+
             //if town rank array in object is undefined define it
             if (!Array.isArray(cityMarkers[town['Town Rank']])) {
                 cityMarkers[town['Town Rank']] = []
@@ -67,7 +69,7 @@ function mapTowns(res) {
     //remove cities when we zoom out
     //add them when we zoom in
     map.on('zoomend', function () {
-
+        if(!displayTowns) return;
         if (map.getZoom() >= 1) {
             map.addLayer(cityLayers.Premier);
         } else {
