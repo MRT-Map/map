@@ -21,6 +21,44 @@ $.ajax({
 let cityMarkers = {}
 let cityLayers = {}
 
+//when we zoom the map
+//remove cities when we zoom out
+//add them when we zoom in
+function mapLayers() {
+    if (!displayTowns) return;
+    map.removeLayer(searchLayer);
+    map.addLayer(CC)
+    if (map.getZoom() >= 1) {
+        map.addLayer(cityLayers.Premier);
+    } else {
+        map.removeLayer(cityLayers.Premier);
+    }
+
+    if (map.getZoom() >= 2) {
+        map.addLayer(cityLayers.Governor);
+        map.addLayer(cityLayers.Senator);
+        map.addLayer(cityLayers.Community);
+    } else {
+        map.removeLayer(cityLayers.Governor);
+        map.removeLayer(cityLayers.Senator);
+        map.removeLayer(cityLayers.Community);
+    }
+
+    if (map.getZoom() >= 3) {
+        map.addLayer(cityLayers.Councillor);
+        map.addLayer(cityLayers.Mayor);
+    } else {
+        map.removeLayer(cityLayers.Councillor);
+        map.removeLayer(cityLayers.Mayor);
+    }
+
+    if (map.getZoom() >= 4) {
+        map.addLayer(cityLayers.Unranked);
+    } else {
+        map.removeLayer(cityLayers.Unranked);
+    }
+};
+
 function mapTowns(res) {
     towns = JSON.parse(res);
 
@@ -65,40 +103,7 @@ function mapTowns(res) {
         });
     });
 
-    //when we zoom the map
-    //remove cities when we zoom out
-    //add them when we zoom in
-    map.on('zoomend', function () {
-        if(!displayTowns) return;
-        if (map.getZoom() >= 1) {
-            map.addLayer(cityLayers.Premier);
-        } else {
-            map.removeLayer(cityLayers.Premier);
-        }
+    map.on('zoomend', mapLayers)
 
-        if (map.getZoom() >= 2) {
-            map.addLayer(cityLayers.Governor);
-            map.addLayer(cityLayers.Senator);
-            map.addLayer(cityLayers.Community);
-        } else {
-            map.removeLayer(cityLayers.Governor);
-            map.removeLayer(cityLayers.Senator);
-            map.removeLayer(cityLayers.Community);
-        }
-
-        if (map.getZoom() >= 3) {
-            map.addLayer(cityLayers.Councillor);
-            map.addLayer(cityLayers.Mayor);
-        } else {
-            map.removeLayer(cityLayers.Councillor);
-            map.removeLayer(cityLayers.Mayor);
-        }
-
-        if (map.getZoom() >= 4) {
-            map.addLayer(cityLayers.Unranked);
-        } else {
-            map.removeLayer(cityLayers.Unranked);
-        }
-    });
 
 }

@@ -1,4 +1,7 @@
+//stuff up here may not be relevant to the script but is put here because hierarchy
 var displayTowns = true;//used by certain later scripts to tell certain functions not to do certain things if a search in progress
+var searchLayer = new L.featureGroup();
+var CC = new L.featureGroup()
 
 var map = L.map('map', {
     crs: L.CRS.Simple
@@ -77,13 +80,11 @@ function mapcoord([x, y]) {
     return [NewX, NewY];
 }
 
-// var newmarker = L.marker(mapcoord([16040, 17679])).addTo(map)
-// .bindPopup('-125, 125')
-// .openPopup();
-
-var marker = L.marker(mapcoord([0, 0])).addTo(map)
-    .bindPopup('Central City<br />0, 0')
-    .openPopup();
+CC.addLayer(
+    L.marker(mapcoord([0, 0])).addTo(map)
+        .bindPopup('Central City<br />0, 0')
+        .openPopup()
+)
 
 var linePoints = [
     [21665, -24454],

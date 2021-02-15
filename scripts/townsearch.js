@@ -26,6 +26,12 @@ $.ajax({
 })
 
 function townSearch(query) {
+    //hide CC
+    map.removeLayer(CC)
+    //hide old search
+    map.removeLayer(searchLayer);
+    //redefine feature group
+    searchLayer = new L.featureGroup()
     //tell other functions not to display towns
     displayTowns = false;
     //get members with names (including old names) matching query
@@ -42,7 +48,6 @@ function townSearch(query) {
             }
         }
     }
-    console.log(relevantNames)
     //filter towns by search query
     const relevantTowns = towns.filter(t => t.Name.toString().toLowerCase().includes(query.toLowerCase()) || relevantNames.includes(t.Mayor.toString().toLowerCase()));
     //remove other markers from map
@@ -61,9 +66,24 @@ function townSearch(query) {
             console.log(`Not displaying town ${town.Name} in search results popup: invalid or missing coordinates`)
         } else {
             console.log(`Showing ${town.Name}`)
-            L.marker(mapcoord([rawCoords[0], rawCoords[2]])).addTo(map)
-                .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}`)
+            searchLayer.addLayer(
+                L.marker(mapcoord([rawCoords[0], rawCoords[2]])).addTo(map)
+                    .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}`)
+            )
         }
     }
+    map.addLayer(searchLayer)
     return relevantTowns;
+}
+
+document.addEventListener('keydown', keyPress);
+
+function keyPress(e) {
+    if (e.code == 'KeyS') {
+        townSearch(prompt('Enter search parameter...'))
+    } else if (e.code == 'KeyT') {
+        displayTowns = true;
+        mapLayers()
+    }
+    
 }
