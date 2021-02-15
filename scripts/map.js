@@ -56,7 +56,7 @@ function f(t, n) {
     })
 }
 
-L.tileLayer.customTileLayer("https://dynmap.minecartrapidtransit.net/tiles/new/flat/{x}_{y}/{xm}_{ym}.png", {
+L.tileLayer.customTileLayer("unused url; check custom function", {
     maxZoom: 8,
     id: 'map',
     tileSize: 128,
