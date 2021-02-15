@@ -3,7 +3,7 @@ var map = L.map('map', {
 }).setView([0, 0], 8);
 
 //override the default
-L.TileLayer.MyCustomLayer = L.TileLayer.extend({
+L.TileLayer.customTileLayer = L.TileLayer.extend({
     getTileUrl: function(coords) {
 
 
@@ -42,8 +42,8 @@ L.TileLayer.MyCustomLayer = L.TileLayer.extend({
 });
 
 // static factory as recommended by http://leafletjs.com/reference-1.0.3.html#class
-L.tileLayer.myCustomLayer = function(templateUrl, options) {
-    return new L.TileLayer.MyCustomLayer(templateUrl, options);
+L.tileLayer.customTileLayer = function(templateUrl, options) {
+    return new L.TileLayer.customTileLayer(templateUrl, options);
 }
 
 function f(t, n) {
@@ -56,13 +56,14 @@ function f(t, n) {
     })
 }
 
-L.tileLayer.myCustomLayer("https://dynmap.minecartrapidtransit.net/tiles/new/flat/{x}_{y}/{xm}_{ym}.png", {
+L.tileLayer.customTileLayer("https://dynmap.minecartrapidtransit.net/tiles/new/flat/{x}_{y}/{xm}_{ym}.png", {
     maxZoom: 8,
     id: 'map',
     tileSize: 128,
     zoomOffset: 0,
     noWrap: true,
-    bounds:[[-900,-900],[900,900]]
+    bounds:[[-900,-900],[900,900]],
+    attribution: "Minecart Rapid Transit"
 }).addTo(map)
 
 function mapcoord([x,y]){
@@ -84,7 +85,7 @@ var linePoints = [
     [21640,-24454],
     [21570,-24464],
     [21460,-24464],
-    [21460,-24504], 
+    [21460,-24504],
     [21332,-24504]
 ]
 
@@ -98,4 +99,4 @@ var polyline = L.polyline(linePoints, {
     opacity: 0.5,
     smoothFactor: 1
 })
-polyline.addTo(map);    
+polyline.addTo(map);
