@@ -35,7 +35,7 @@ function mapTowns(res) {
         }
         //do not map if invalid coords
         if (isNaN(rawCoords[0]) || isNaN(rawCoords[2])) {
-            console.log(`Not displaying town ${town.Name}: invalid coordinates`)
+            console.log(`Not displaying town ${town.Name}: invalid or missing coordinates`)
         } else {
             let coords = mapcoord([rawCoords[0], rawCoords[2]]);
             //if town rank array in object is undefined define it
