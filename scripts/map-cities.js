@@ -7,6 +7,13 @@ const communityTowns = [
         "Deputy Mayor": "Needn_NL",
         "Town Hall Coordinates (NO COMMAS PLEASE)": "-15719 73 -11437",
         "Town Rank": "Community"
+    },
+    {
+        "Name": "New Singapore",
+        "Mayor": "HarborRandom852",
+        "Deputy Mayor": "frogggggg",
+        "Town Hall Coordinates (NO COMMAS PLEASE)": "-22653 65 14077",
+        "Town Rank": "Community"
     }
 ]
 
