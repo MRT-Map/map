@@ -86,6 +86,13 @@ function townSearch(query) {
     return relevantTowns;
 }
 
+
+window.onload = intro;
+
+function intro() {
+    alert('Welcome to the MRT Map!\nPress S to search for a town and T to return to the normal view.\n\nNote that this is temporary and will be replaced by something more user-friendly in the future.\nAlso note that all data is sourced from staff docs so if something is wrong go yell at staff.')
+}
+
 document.addEventListener('keydown', keyPress);
 
 function keyPress(e) {
