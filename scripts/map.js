@@ -85,7 +85,7 @@ CC.addLayer(
         .bindPopup('Central City<br />0, 0')
         .openPopup()
 )
-
+/*
 var linePoints = [
     [21665, -24454],
     [21640, -24454],
@@ -105,4 +105,4 @@ var polyline = L.polyline(linePoints, {
     opacity: 0.5,
     smoothFactor: 1
 })
-polyline.addTo(map);
+polyline.addTo(map);*/
