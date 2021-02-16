@@ -20,6 +20,16 @@ $.ajax({
                     MRTMembers[member].names.push(formerUsername.trim())
                 }
             }
+            if (MRTMembers[member]["Temporary Usernames"] == '') {
+                //do nothing more
+            } else {
+                //split temp usernames into an array
+                let tempUsernames = MRTMembers[member]["Temporary Usernames"].split(',')
+                //add temp usernames to array
+                for (const tempUsername of tempUsernames) {
+                    MRTMembers[member].names.push(tempUsername.trim())
+                }
+            }
 
         }
     }
