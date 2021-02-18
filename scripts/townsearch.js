@@ -78,7 +78,7 @@ function townSearch(query) {
       console.log(`Showing ${town.Name}`)
       searchLayer.addLayer(
         L.marker(mapcoord([rawCoords[0], rawCoords[2]])).addTo(map)
-        .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}`)
+          .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}`)
       )
     }
   }
@@ -86,12 +86,17 @@ function townSearch(query) {
   return relevantTowns;
 }
 
-$("#search__input").on("change", function() {
+$("#search__input").on("change", function () {
   let value = $("#search__input").val()
   if (value == null || value == "") {
     displayTowns = true;
     mapLayers()
+    document.getElementById("search__results").innerHTML = "";
   } else {
-    townSearch(value)
+    let results = townSearch(value)
+    document.getElementById("search__results").innerHTML = "";
+    for(const result of results) {
+      document.getElementById("search__results").innerHTML += `<div class="result"><strong>${result.Name}</strong><br>Rank: ${result["Town Rank"]}<br>Mayor: ${result.Mayor}</div>`;
+    }
   }
 })

@@ -31,12 +31,14 @@ html, body {
   box-shadow: 5px 5px 5px #0005;
 }
 
-.search__results {
+#search__results {
   margin-top: 10px;
   background: whitesmoke;
   padding: 10px 20px;
   border-radius: 9px;
   box-shadow: 5px 5px 5px #0005;
+  overflow: auto;
+  max-height: 78vh;
 }
 
 #search__input {
