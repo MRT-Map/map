@@ -135,6 +135,7 @@ html, body {
     width: calc(100vw - 30px);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
+    pointer-events: auto;
   }
 
   .pill {

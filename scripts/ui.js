@@ -30,12 +30,18 @@ $(".pill").on(
     }
 );
 
+var leaveTimeout
+
 $("#search__results, .pill").on("mouseenter touchstart", function(){
+  clearTimeout(leaveTimeout)
   $(".results__container").addClass("touchable")
+  console.log("in")
 })
 
-$("#search__results, .pill").on("mouseout touchend", function(){
-  setTimeout(function(){
-  $(".results__container").removeClass("touchable")
-  }, 100)
+$("#search__results, .pill").on("mouseleave touchend", function(){
+  console.log("mouse left");
+  leaveTimeout = setTimeout(function(){
+    $(".results__container").removeClass("touchable")
+    console.log("out")
+  }, 300)
 })
