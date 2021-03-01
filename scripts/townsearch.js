@@ -86,18 +86,24 @@ function townSearch(query) {
   return relevantTowns;
 }
 
+var searchTimer;
+
 $("#search__input").on("input", function () {
-  let value = $("#search__input").val()
-  //console.log(value)
-  if (value == null || value == "") {
-    displayTowns = true;
-    mapLayers()
-    document.getElementById("search__results").innerHTML = "";
-  } else {
-    let results = townSearch(value)
-    document.getElementById("search__results").innerHTML = "";
-    for(const result of results) {
-      document.getElementById("search__results").innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(function(){
+    console.log("searching");
+    let value = $("#search__input").val()
+    //console.log(value)
+    if (value == null || value == "") {
+      displayTowns = true;
+      mapLayers()
+      document.getElementById("search__results").innerHTML = "";
+    } else {
+      let results = townSearch(value)
+      document.getElementById("search__results").innerHTML = "";
+      for(const result of results) {
+        document.getElementById("search__results").innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+      }
     }
-  }
+  }, 500)
 })
