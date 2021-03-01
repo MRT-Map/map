@@ -65,6 +65,7 @@ html, body {
   transition: opacity 0.2s;
   opacity: 1;
   pointer-events: auto;
+  min-height: calc(20vh - 70px);
 }
 
 #search__results:empty {
