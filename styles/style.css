@@ -64,6 +64,7 @@ html, body {
   border-bottom: 10px solid whitesmoke;
   transition: opacity 0.2s;
   opacity: 1;
+  pointer-events: auto;
 }
 
 #search__results:empty {
@@ -144,14 +145,17 @@ html, body {
     position: sticky;
     margin-bottom: -50px;
     top: -10px;
-    width: 20px;
+    width: 80vw;
     height: 10px;
     padding: 20px 15px;
     display: none;
+    border: 1px solid red
   }
 
   .pill:after {
     position: absolute;
+    left: 50%;
+    margin-left: -10px;
     width: 20px;
     height: 6px;
     border-radius: 100px;

@@ -22,26 +22,88 @@
 // loop();
 
 var scrollOffset = 0;
+var lastY = 0
 
 $(".pill").on(
-    'scroll',
-    (click) => {
-      console.log(event)
+    'touchstart',
+    (e) => {
+      var touchobj = e.changedTouches[0]
+      lastY = parseInt(touchobj.clientY)
+      e.preventDefault();
     }
 );
+
+$(".pill").on(
+    'touchmove',
+    (e) => {
+      let container = $(".results__container")
+      let touchobj = e.changedTouches[0]
+      let dist = parseInt(touchobj.clientY) - lastY
+      lastY = touchobj.clientY;
+      scrollOffset += dist;
+
+      if (scrollOffset < 0) {
+        scrollOffset = 0
+        container.scrollTop(container.scrollTop() - dist)
+      };
+
+      if (scrollOffset > 250) {
+        scrollOffset = 250
+      };
+
+      if (scrollOffset > container.scrollTop()) {
+        console.log("uhoh")
+        scrollOffset -= dist; //reverse changes
+      }
+
+      container.css("transform", `translateY(${scrollOffset}px)`)
+    }
+);
+
+var lastScroll = 0;
+
+$(".results__container").on("scroll", (e) => {
+  console.log("scroll!")
+  let container = $(".results__container")
+  let dist = lastScroll - container.scrollTop();
+  lastScroll = container.scrollTop()
+
+  if (scrollOffset > 0 && dist < 0) {
+    //scroll using offset
+    //this is kinda shaky, feel free to fix
+    scrollOffset += dist;
+    scrollOffset += dist;
+    container.scrollTop(container.scrollTop() + dist);
+    container.scrollTop(container.scrollTop() + dist);
+
+    if (scrollOffset < 0) {
+      scrollOffset = 0
+    };
+
+    if (scrollOffset > 250) {
+      scrollOffset = 250
+    };
+  }
+
+  if (scrollOffset > 0 && dist > 0) {
+    if (scrollOffset > container.scrollTop()) {
+      console.log("uhoh")
+      scrollOffset -= dist; //reverse changes
+    }
+  }
+
+  container.css("transform", `translateY(${scrollOffset}px)`)
+})
 
 var leaveTimeout
 
 $("#search__results, .pill").on("mouseenter touchstart", function(){
   clearTimeout(leaveTimeout)
   $(".results__container").addClass("touchable")
-  console.log("in")
 })
 
 $("#search__results, .pill").on("mouseleave touchend", function(){
-  console.log("mouse left");
   leaveTimeout = setTimeout(function(){
     $(".results__container").removeClass("touchable")
-    console.log("out")
   }, 300)
 })
