@@ -91,14 +91,15 @@ var searchTimer;
 $("#search__input").on("input", function () {
   clearTimeout(searchTimer);
   searchTimer = setTimeout(function(){
-    console.log("searching");
     let value = $("#search__input").val()
     //console.log(value)
     if (value == null || value == "") {
+      $(".pill").fadeOut()
       displayTowns = true;
       mapLayers()
       document.getElementById("search__results").innerHTML = "";
     } else {
+      $(".pill").fadeIn()
       let results = townSearch(value)
       document.getElementById("search__results").innerHTML = "";
       for(const result of results) {

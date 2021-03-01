@@ -1,3 +1,4 @@
+
 // let results = $("#search__results")
 //
 // function loop() {
@@ -19,3 +20,22 @@
 // }
 //
 // loop();
+
+var scrollOffset = 0;
+
+$(".pill").on(
+    'scroll',
+    (click) => {
+      console.log(event)
+    }
+);
+
+$("#search__results, .pill").on("mouseenter touchstart", function(){
+  $(".results__container").addClass("touchable")
+})
+
+$("#search__results, .pill").on("mouseout touchend", function(){
+  setTimeout(function(){
+  $(".results__container").removeClass("touchable")
+  }, 100)
+})
