@@ -103,19 +103,31 @@ html, body {
   }
 
   #search__results {
+    will-change: transform;
     position: fixed;
     width: calc(100vw - 30px);
-    bottom: 0px;
-    height: 50vh;
+    margin: 0px;
+    top: 0px;
+    height: calc(50vh - 50px);
+    top: 50vh;
     left: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-top: 10px solid whitesmoke;
+    transition: opacity 0.2s;
   }
-  
+
+  #search__results * {
+  -webkit-font-smoothing: antialiased;
+  }
+
+  #search__results:empty {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .leaflet-top.leaflet-right {
     margin-top: 60px;
   }
-
 
 }

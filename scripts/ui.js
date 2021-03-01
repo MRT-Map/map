@@ -6,11 +6,11 @@ function loop() {
 
     scrollOffset = results.scrollTop();
 
-    scrollOffset = 400 - scrollOffset
+    if (scrollOffset > 400) scrollOffset = 400;
 
-    if (scrollOffset < 0) scrollOffset = 0;
+    results.css("transform", `translateY(calc(${(400 - scrollOffset)/10}vh))`)
+    results.css("height", `calc(${(scrollOffset + 100)/10}vh - 50px)`)
 
-    results.css("transform", `translateY(${scrollOffset/10}vh)`)
   } else {
     results.css("transform", 'none')
   }
