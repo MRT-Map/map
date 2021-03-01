@@ -60,6 +60,13 @@ html, body {
   overflow-y: auto;
   padding: 20px;
   padding-right: 10px;
+  border-top: 10px solid whitesmoke;
+  border-bottom: 10px solid whitesmoke;
+}
+
+#search__results:empty {
+  opacity: 0;
+  pointer-events: none;
 }
 
 #search__input {
@@ -71,9 +78,9 @@ html, body {
   padding: 5px;
 }
 
-.leaflet-top.leaflet-left {
+.leaflet-top.leaflet-left, .leaflet-control-attribution {
   display: none;
-  /* to remove wrong zoom */
+  /* to remove wrong zoom, remove attribution */
 }
 
 .result {
@@ -102,32 +109,32 @@ html, body {
     width: calc(100vw - 20px);
   }
 
-  #search__results {
-    will-change: transform;
+  .results__container {
     position: fixed;
+    bottom: 0px;
+    left: 0px;
+    height: 50vh;
+    width: 100vw;
+    overflow: auto;
+    overflow-x: hidden;
+    border-top-left-radius:10px;
+    border-top-right-radius: 10px
+  }
+
+  #search__results {
+    max-height: none;
+    margin-top: 30vh;
     width: calc(100vw - 30px);
-    margin: 0px;
-    top: 0px;
-    height: calc(50vh - 50px);
-    top: 50vh;
-    left: 0;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    border-top: 10px solid whitesmoke;
-    transition: opacity 0.2s;
-  }
-
-  #search__results * {
-  -webkit-font-smoothing: antialiased;
-  }
-
-  #search__results:empty {
-    opacity: 0;
-    pointer-events: none;
   }
 
   .leaflet-top.leaflet-right {
     margin-top: 60px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
   }
 
 }
