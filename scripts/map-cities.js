@@ -5,14 +5,18 @@ const communityTowns = [
         "Name": "Augusta",
         "Mayor": "CaptainObi",
         "Deputy Mayor": "Needn_NL",
-        "Town Hall Coordinates (NO COMMAS PLEASE)": "-15719 73 -11437",
+        "X": "-15719",
+        "Y": "73",
+        "Z": "-11437",
         "Town Rank": "Community"
     },
     {
         "Name": "New Singapore",
         "Mayor": "HarborRandom852",
         "Deputy Mayor": "frogggggg",
-        "Town Hall Coordinates (NO COMMAS PLEASE)": "-22653 65 14077",
+        "X": "-22653",
+        "Y": "65",
+        "Z": "14077",
         "Town Rank": "Community"
     }
 ]
@@ -74,7 +78,10 @@ function mapTowns(res) {
     })
     for (const town of towns) {
         //parse Coords
-        let rawCoords = town['Town Hall Coordinates (NO COMMAS PLEASE)'].replace(/\s\s+/g, ' ').split(' ');//replacing whitespace with single space to combat issue where there is more than one space between coordinates
+        let rawCoords = [];
+        rawCoords.push(town.X.toString().trim())
+        rawCoords.push(town.Y.toString().trim())
+        rawCoords.push(town.Z.toString().trim())
         
         //convert all numbers to int
         for (let i in rawCoords) {

@@ -66,7 +66,10 @@ function townSearch(query) {
   }
   for (const town of relevantTowns) {
     //parse Coords
-    let rawCoords = town['Town Hall Coordinates (NO COMMAS PLEASE)'].replace(/\s\s+/g, ' ').split(' ');//replacing whitespace with single space to combat issue where there is more than one space between coordinates
+    let rawCoords = [];
+    rawCoords.push(town.X.toString().trim())
+    rawCoords.push(town.Y.toString().trim())
+    rawCoords.push(town.Z.toString().trim())
     //convert all numbers to int
     for (let i in rawCoords) {
       rawCoords[i] = parseInt(rawCoords[i])
@@ -90,7 +93,7 @@ var searchTimer;
 
 $("#search__input").on("input", function () {
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(function(){
+  searchTimer = setTimeout(function () {
     let value = $("#search__input").val()
     //console.log(value)
     if (value == null || value == "") {
@@ -102,7 +105,7 @@ $("#search__input").on("input", function () {
       $(".pill").fadeIn()
       let results = townSearch(value)
       document.getElementById("search__results").innerHTML = "";
-      for(const result of results) {
+      for (const result of results) {
         document.getElementById("search__results").innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
       }
     }
