@@ -76,7 +76,7 @@ L.tileLayer.customTileLayer("unused url; check custom function", {
 }).addTo(map)
 
 L.control.zoom({
-  position: 'bottomleft'
+  position: 'topright'
 }).addTo(map);
 
 function mapcoord([x, y]) {

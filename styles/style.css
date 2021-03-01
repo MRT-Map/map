@@ -2,7 +2,32 @@ html, body {
   margin: 0;
   width: 100%;
   height: 100%;
+  font-size: 16px;
+  font-family: sans-serif;
 }
+
+/* custom scroll */
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: none;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #999;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 
 #map {
   width: 100%;
@@ -17,12 +42,6 @@ html, body {
   z-index: 500; /* to put above map */
 }
 
-@media only screen and (max-width: 600px) {
-  .search {
-    width: calc(100vw - 20px);
-  }
-}
-
 .search__bar {
   background: whitesmoke;
   padding: 10px;
@@ -34,11 +53,13 @@ html, body {
 #search__results {
   margin-top: 10px;
   background: whitesmoke;
-  padding: 10px 20px;
   border-radius: 9px;
   box-shadow: 5px 5px 5px #0005;
-  overflow: auto;
   max-height: 78vh;
+  overflow: hidden;
+  overflow-y: auto;
+  padding: 20px;
+  padding-right: 10px;
 }
 
 #search__input {
@@ -46,9 +67,55 @@ html, body {
   width: 100%;
   margin: 0px;
   border: none;
+  font-size: 1em;
+  padding: 5px;
 }
 
 .leaflet-top.leaflet-left {
   display: none;
   /* to remove wrong zoom */
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  border-top: 1px solid gray;
+}
+
+.result__details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.result__name {
+  font-weight: bold;
+  max-width: 75%;
+  overflow-wrap: break-word;
+}
+
+
+/* MOBILE */
+
+@media only screen and (max-width: 1000px) {
+  .search {
+    width: calc(100vw - 20px);
+  }
+
+  #search__results {
+    position: fixed;
+    width: calc(100vw - 30px);
+    bottom: 0px;
+    height: 50vh;
+    left: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top: 10px solid whitesmoke;
+  }
+  
+  .leaflet-top.leaflet-right {
+    margin-top: 60px;
+  }
+
+
 }
