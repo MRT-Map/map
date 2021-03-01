@@ -74,7 +74,8 @@ function mapTowns(res) {
     })
     for (const town of towns) {
         //parse Coords
-        let rawCoords = town['Town Hall Coordinates (NO COMMAS PLEASE)'].split(' ');
+        let rawCoords = town['Town Hall Coordinates (NO COMMAS PLEASE)'].replace(/\s\s+/g, ' ').split(' ');//replacing whitespace with single space to combat issue where there is more than one space between coordinates
+        
         //convert all numbers to int
         for (let i in rawCoords) {
             rawCoords[i] = parseInt(rawCoords[i])
