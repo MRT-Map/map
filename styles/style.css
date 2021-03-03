@@ -44,10 +44,30 @@ html, body {
 
 .search__bar {
   background: whitesmoke;
-  padding: 10px;
-  padding-right: 20px;
   border-radius: 9px;
   box-shadow: 5px 5px 5px #0005;
+  display: flex;
+  align-items: baseline;
+  overflow: hidden;
+  height: 50px;
+}
+
+.search__bar button {
+  background-color: dodgerblue;
+  color: white;
+  height: 100%;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0px;
+}
+
+#search__input {
+  background: whitesmoke;
+  width: 100%;
+  margin: 0px;
+  border: none;
+  font-size: 1em;
+  padding: 15px 15px;
 }
 
 #search__results {
@@ -71,15 +91,6 @@ html, body {
 #search__results:empty {
   opacity: 0;
   pointer-events: none;
-}
-
-#search__input {
-  background: whitesmoke;
-  width: 100%;
-  margin: 0px;
-  border: none;
-  font-size: 1em;
-  padding: 5px;
 }
 
 .leaflet-top.leaflet-left, .leaflet-control-attribution {
