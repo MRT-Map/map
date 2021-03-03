@@ -18,7 +18,16 @@ const communityTowns = [
         "Y": "65",
         "Z": "14077",
         "Town Rank": "Community"
-    }
+    },
+    {
+        "Name": "Monterey",
+        "Mayor": "CodyHM",
+        "Deputy Mayor": "Weier",
+        "X": "1025",
+        "Y": "65",
+        "Z": "-9364",
+        "Town Rank": "Community"
+    },
 ]
 
 $.ajax({
