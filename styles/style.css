@@ -59,6 +59,7 @@ html, body {
   border: none;
   padding: 10px 20px;
   border-radius: 0px;
+  font-size: 1em;
 }
 
 #search__input {
@@ -133,6 +134,13 @@ html, body {
     border-top-left-radius:10px;
     border-top-right-radius: 10px;
     pointer-events: none;
+    animation: ascend 1s;
+    display: none;
+  }
+
+  @keyframes ascend {
+    from {transform: translateY(100vh);}
+    to {transform: translateY(0vh);}
   }
 
   .touchable {
@@ -160,7 +168,6 @@ html, body {
     width: 80vw;
     height: 10px;
     padding: 20px 15px;
-    display: none;
   }
 
   .pill:after {
