@@ -63,7 +63,6 @@ $(".pill").on(
 var lastScroll = 0;
 
 $(".results__container").on("scroll", (e) => {
-  console.log("scroll!")
   let container = $(".results__container")
   let dist = lastScroll - container.scrollTop();
   lastScroll = container.scrollTop()
@@ -97,7 +96,7 @@ $(".results__container").on("scroll", (e) => {
 
 var leaveTimeout
 
-$("#search__results, .pill").on("mouseenter touchstart", function(){
+$("#search__results, .pill").on("mouseenter touchstart touchmove", function(){
   clearTimeout(leaveTimeout)
   $(".results__container").addClass("touchable")
 })
