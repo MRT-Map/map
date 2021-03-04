@@ -101,7 +101,6 @@ function startSearch() {
     $(".results__container").css("display", "block")
     let results = townSearch(value)
     document.getElementById("search__results").innerHTML = "";
-    console.log(results)
     if (results.length == 0) {
       document.getElementById("search__results").innerHTML = "<div>No Results</div>";
     }
