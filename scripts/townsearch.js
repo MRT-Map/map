@@ -90,6 +90,11 @@ function townSearch(query) {
 }
 
 function startSearch() {
+  try {
+    resetOffset()
+  } catch {
+    console.log("couldn't reset results");
+  }
   let value = $("#search__input").val()
   //console.log(value)
   if (value == null || value == "") {

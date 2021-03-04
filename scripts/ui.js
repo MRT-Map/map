@@ -10,7 +10,10 @@ container.on("touchstart", (e) => {
 
 container.on("touchmove", (e) => {
 
-  if (window.innerWidth > 1000) return
+  if (window.innerWidth > 1000) {
+    container.css("transform", "none")
+    return
+  }
 
   currY = e.touches[0].clientY
   let dist = lastY - currY;
@@ -36,7 +39,10 @@ container.on("touchmove", (e) => {
 
 container.on("wheel", e => {
 
-  if (window.innerWidth > 1000) return
+  if (window.innerWidth > 1000) {
+    container.css("transform", "none")
+    return
+  }
 
   let dist = container.scrollTop() - lastScrollTop;
   lastScrollTop = container.scrollTop();
@@ -62,3 +68,15 @@ container.on("wheel", e => {
   container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
 
 })
+
+
+function resetOffset(){
+
+  if (window.innerWidth > 1000) {
+    container.css("transform", "none")
+    return
+  }
+
+  offset = 0;
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
+}
