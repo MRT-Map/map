@@ -10,6 +10,8 @@ container.on("touchstart", (e) => {
 
 container.on("touchmove", (e) => {
 
+  if (window.innerWidth > 1000) return
+
   currY = e.touches[0].clientY
   let dist = lastY - currY;
   lastY = currY;
@@ -33,6 +35,8 @@ container.on("touchmove", (e) => {
 })
 
 container.on("wheel", e => {
+
+  if (window.innerWidth > 1000) return
 
   let dist = container.scrollTop() - lastScrollTop;
   lastScrollTop = container.scrollTop();
