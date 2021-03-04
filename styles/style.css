@@ -126,29 +126,21 @@ html, body {
 
   .results__container {
     position: fixed;
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     height: 50vh;
     width: 100vw;
     overflow: auto;
     border-top-left-radius:10px;
     border-top-right-radius: 10px;
-    pointer-events: none;
     animation: ascend 1s;
     display: none;
+    transform: translateY(30vh);
   }
 
   @keyframes ascend {
     from {transform: translateY(100vh);}
-    to {transform: translateY(0vh);}
-  }
-
-  .touchable {
-    pointer-events: auto;
-  }
-
-  .results__container div {
-    pointer-events: auto;
+    to {transform: translateY(30vh);}
   }
 
   #search__results {
@@ -156,12 +148,10 @@ html, body {
     width: calc(100vw - 30px);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    pointer-events: auto;
   }
 
   .pill {
     margin: 0 auto;
-    margin-top: 30vh;
     position: sticky;
     margin-bottom: -50px;
     top: -10px;
@@ -179,10 +169,6 @@ html, body {
     border-radius: 100px;
     content: "";
     background-color: #bbb;
-  }
-
-  #search__results:empty ~ .pill {
-    opacity: 0;
   }
 
   .leaflet-top.leaflet-right {

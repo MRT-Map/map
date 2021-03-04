@@ -1,108 +1,60 @@
+container = $(".results__container")
 
-// let results = $("#search__results")
-//
-// function loop() {
-//
-//   if (window.innerWidth < 1000) {
-//
-//     scrollOffset = results.scrollTop();
-//
-//     if (scrollOffset > 400) scrollOffset = 400;
-//
-//     results.css("transform", `translateY(calc(${(400 - scrollOffset)/10}vh))`)
-//     results.css("height", `calc(${(scrollOffset + 100)/10}vh - 50px)`)
-//
-//   } else {
-//     results.css("transform", 'none')
-//   }
-//
-//   requestAnimationFrame(loop);
-// }
-//
-// loop();
+var lastY
+var offset = 0
+var lastScrollTop = 0
 
-var scrollOffset = 0;
-var lastY = 0
-
-$(".pill").on(
-    'touchstart',
-    (e) => {
-      var touchobj = e.changedTouches[0]
-      lastY = parseInt(touchobj.clientY)
-      e.preventDefault();
-    }
-);
-
-$(".pill").on(
-    'touchmove',
-    (e) => {
-      let container = $(".results__container")
-      let touchobj = e.changedTouches[0]
-      let dist = parseInt(touchobj.clientY) - lastY
-      lastY = touchobj.clientY;
-      scrollOffset += dist;
-
-      if (scrollOffset < 0) {
-        scrollOffset = 0
-        container.scrollTop(container.scrollTop() - dist)
-      };
-
-      if (scrollOffset > 250) {
-        scrollOffset = 250
-      };
-
-      if (scrollOffset > container.scrollTop()) {
-        console.log("uhoh")
-        scrollOffset -= dist; //reverse changes
-      }
-
-      container.css("transform", `translateY(${scrollOffset}px)`)
-    }
-);
-
-var lastScroll = 0;
-
-$(".results__container").on("scroll", (e) => {
-  let container = $(".results__container")
-  let dist = lastScroll - container.scrollTop();
-  lastScroll = container.scrollTop()
-
-  if (scrollOffset > 0 && dist < 0) {
-    //scroll using offset
-    //this is kinda shaky, feel free to fix
-    scrollOffset += dist;
-    scrollOffset += dist;
-    container.scrollTop(container.scrollTop() + dist);
-    container.scrollTop(container.scrollTop() + dist);
-
-    if (scrollOffset < 0) {
-      scrollOffset = 0
-    };
-
-    if (scrollOffset > 250) {
-      scrollOffset = 250
-    };
-  }
-
-  if (scrollOffset > 0 && dist > 0) {
-    if (scrollOffset > container.scrollTop()) {
-      console.log("uhoh")
-      scrollOffset -= dist; //reverse changes
-    }
-  }
-
-  container.css("transform", `translateY(${scrollOffset}px)`)
+container.on("touchstart", (e) => {
+  lastY = e.touches[0].clientY
 })
 
-var leaveTimeout
+container.on("touchmove", (e) => {
 
-$("#search__results, .pill").on("mouseenter touchstart touchmove", function(){
-  clearTimeout(leaveTimeout)
-  $(".results__container").addClass("touchable")
+  currY = e.touches[0].clientY
+  let dist = lastY - currY;
+  lastY = currY;
+  let maxOffset = container.height() * 2 * .30;
+
+  if (container.scrollTop() == 0) {
+    offset += dist;
+    e.preventDefault();
+  }
+
+  if (offset > maxOffset) {
+    container.scrollTop(container.scrollTop() + dist)
+    offset = maxOffset;
+  }
+
+  if (offset < 0) {
+    offset = 0;
+  }
+
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
 })
 
-$("#search__results, .pill").on("mouseleave touchend", function(){
-  leaveTimeout = setTimeout(function(){
-    $(".results__container").removeClass("touchable")
-  }, 300)
+container.on("wheel", e => {
+
+  let dist = container.scrollTop() - lastScrollTop;
+  lastScrollTop = container.scrollTop();
+  let maxOffset = container.height() * 2 * .30;
+
+  if (offset < maxOffset && dist > 0) {
+    offset += dist;
+  }
+
+  if (offset > 0 && dist < 0 && container.scrollTop() < 500) {
+    offset += dist;
+  }
+
+  if (offset > maxOffset) {
+    container.scrollTop(container.scrollTop() + dist)
+    offset = maxOffset;
+  }
+
+  if (offset < 0) {
+    offset = 0;
+  }
+
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
+
 })
