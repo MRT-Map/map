@@ -1,34 +1,4 @@
 var towns; //declared here so that it can be used by other functions
-//Note: Community towns are formatted like this because they must match the values on the town list sheet
-const communityTowns = [
-    {
-        "Name": "Augusta",
-        "Mayor": "CaptainObi",
-        "Deputy Mayor": "Needn_NL",
-        "X": "-15719",
-        "Y": "73",
-        "Z": "-11437",
-        "Town Rank": "Community"
-    },
-    {
-        "Name": "New Singapore",
-        "Mayor": "HarborRandom852",
-        "Deputy Mayor": "frogggggg",
-        "X": "-22653",
-        "Y": "65",
-        "Z": "14077",
-        "Town Rank": "Community"
-    },
-    {
-        "Name": "Monterey",
-        "Mayor": "CodyHM",
-        "Deputy Mayor": "Weier",
-        "X": "1025",
-        "Y": "65",
-        "Z": "-9364",
-        "Town Rank": "Community"
-    },
-]
 
 $.ajax({
     url: 'https://script.google.com/macros/s/AKfycbwde4vwt0l4_-qOFK_gL2KbVAdy7iag3BID8NWu2DQ1566kJlqyAS1Y/exec?spreadsheetId=1JSmJtYkYrEx6Am5drhSet17qwJzOKDI7tE7FxPx4YNI&sheetName=New%20World',
@@ -81,10 +51,6 @@ function mapLayers() {
 
 function mapTowns(res) {
     towns = JSON.parse(res);
-
-    communityTowns.forEach(t => {//add community towns to list
-        towns.push(t)
-    })
     for (const town of towns) {
         //parse Coords
         let rawCoords = [];
