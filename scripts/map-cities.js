@@ -57,7 +57,7 @@ function mapTowns(res) {
         rawCoords.push(town.X.toString().trim())
         rawCoords.push(town.Y.toString().trim())
         rawCoords.push(town.Z.toString().trim())
-        
+
         //convert all numbers to int
         for (let i in rawCoords) {
             rawCoords[i] = parseInt(rawCoords[i])
@@ -94,6 +94,4 @@ function mapTowns(res) {
     });
 
     map.on('zoomend', mapLayers)
-
-
 }
