@@ -52,6 +52,7 @@ function mapLayers() {
 function mapTowns(res) {
     towns = JSON.parse(res);
     for (const town of towns) {
+        town.Name = town[""]
         //parse Coords
         let rawCoords = [];
         rawCoords.push(town.X.toString().trim())
