@@ -1,7 +1,7 @@
-# OpenMRTMap
-A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap
+# Map
+A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap and Google Maps
 
-## Current version: v0.0 (todo implement version standard)
+All data is sourced from staff documents and the server dynamic map. You may need to hard refresh your page (shift+f5) to get the latest updates.
 
 ## Collaborators
 * DintyB
@@ -12,6 +12,3 @@ A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap
 * megascatterbomb
 * Airplaneguy9
 * Scarycrumb45
-
-## How it works
-Dinty add details
