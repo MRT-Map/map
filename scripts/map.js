@@ -85,11 +85,18 @@ function mapcoord([x, y]) {
   return [NewX, NewY];
 }
 
+function worldcoord([x, y]) {
+    NewX = y * 64;
+    NewY = (x + 0.5) * -64
+    return [NewX, NewY];
+}
+
 CC.addLayer(
   L.marker(mapcoord([0, 0])).addTo(map)
   .bindPopup('Central City<br />0, 0')
   .openPopup()
 )
+
 /*
 var linePoints = [
     [21665, -24454],
