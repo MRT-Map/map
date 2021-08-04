@@ -8,11 +8,15 @@ var nodeIcon = L.icon({
 })
 
 function dataViewer() {
-  p = JSON.parse(prompt("Copypaste your PLA JSON file:"))
-  n = JSON.parse(prompt("Copypaste your node JSON file:"))
-  s = JSON.parse(prompt("Copypaste your skin JSON file:"))
-  showPla(p, n, s)
-  showNodes(n)
+  var p = JSON.parse(prompt("Copypaste your PLA JSON file:"))
+  var n = JSON.parse(prompt("Copypaste your node JSON file:"))
+  //s = JSON.parse(prompt("Copypaste your skin JSON file:"))
+  $.getJSON("https://raw.githubusercontent.com/MRT-Map/tile-renderer/main/renderer/skins/default.json", data => {
+    s = data
+    console.log(s)
+    showPla(p, n, s)
+    showNodes(n)
+  })
 }
 
 function showNodes(nodeJson) {
