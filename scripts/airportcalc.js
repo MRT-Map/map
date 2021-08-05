@@ -52,6 +52,8 @@ function toggleControls() {
     if (airportcalc) {
         map.pm.removeControls();
         map.removeLayer(airportcalcGroup);
+        displayTowns = true;
+        mapLayers();
         bottomBar.hide();
     }
     else {
@@ -62,6 +64,8 @@ function toggleControls() {
         drawMarker: false,
       }); 
       map.addLayer(airportcalcGroup);
+      displayTowns = false;
+      mapLayers();
       bottomBar.show();
     }
     airportcalc = airportcalc ? false : true;
@@ -107,7 +111,7 @@ setInterval(() => {
         bottomBar.setContent(`<b>City area size:</b> ${Math.round(cityArea)}m^2
         <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
         <b>| Percentage:</b> <span style="color: ${percentage < 50 ? 'green' : 'red'};">${Math.round(percentage*100)/100}%</span>
-        <br><b>Drawing for:</b> ${drawFor}`);
+        <b>| Drawing for:</b> ${drawFor}`);
     }
 }, 50);
 

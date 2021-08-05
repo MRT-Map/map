@@ -15,9 +15,19 @@ let cityLayers = {}
 //remove cities when we zoom out
 //add them when we zoom in
 function mapLayers() {
-    if (!displayTowns) return;
+    if (!displayTowns) {
+      map.removeLayer(cityLayers.Community);
+      map.removeLayer(cityLayers.Premier);
+      map.removeLayer(cityLayers.Governor);
+      map.removeLayer(cityLayers.Senator);
+      map.removeLayer(cityLayers.Mayor);
+      map.removeLayer(cityLayers.Councillor);
+      map.removeLayer(cityLayers.Unranked);
+      map.removeLayer(CC);
+      return;
+    }
     map.removeLayer(searchLayer);
-    map.addLayer(CC)
+    map.addLayer(CC);
     if (map.getZoom() >= 1) {
         map.addLayer(cityLayers.Premier);
     } else {
@@ -96,3 +106,8 @@ function mapTowns(res) {
 
     map.on('zoomend', mapLayers)
 }
+
+L.easyButton('fa-city', () => {
+  displayTowns = displayTowns ? false : true;
+  mapLayers()
+}, "Show/Hide towns", {position: 'topright'}).addTo(map);
