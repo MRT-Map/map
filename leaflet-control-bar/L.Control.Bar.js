@@ -1,5 +1,4 @@
 // https://github.com/filipzava/leaflet-control-bar
-
 /**
  * Created by zava on 7.6.2015.
  */
