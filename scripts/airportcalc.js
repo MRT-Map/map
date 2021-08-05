@@ -10,11 +10,13 @@ map.pm.setGlobalOptions({
 });
 
 var drawFor = "city"
+var prevDisplayTowns = 1
 
 map.pm.Toolbar.createCustomControl({
     name: "cityspace",
     title: "City Space",
     block: "custom",
+    className: "fas fa-city icon",
     onClick: () => {
         map.pm.setGlobalOptions({
             layerGroup: airportcalcGroup,
@@ -29,6 +31,7 @@ map.pm.Toolbar.createCustomControl({
     name: "airportspace",
     title: "Airport Space",
     block: "custom",
+    className: "fas fa-plane icon",
     onClick: () => {
         map.pm.setGlobalOptions({
             layerGroup: airportcalcGroup,
@@ -40,6 +43,8 @@ map.pm.Toolbar.createCustomControl({
     }
 });
 
+
+
 var bottomBar = L.control.bar('bar', {
     position: 'bottom',
     visible: false
@@ -50,20 +55,22 @@ map.pm.removeControls();
 var airportcalc = false;
 function toggleControls() {
     if (airportcalc) {
+        if (airportcalcGroup.getLayers().length != 0) confirm("Close without exporting?")
         map.pm.removeControls();
         map.removeLayer(airportcalcGroup);
-        displayTowns = true;
+        displayTowns = prevDisplayTowns==1;
         mapLayers();
         bottomBar.hide();
     }
     else {
-        map.pm.addControls({  
+      map.pm.addControls({  
         position: 'bottomleft',
         drawCircleMarker: false,
         drawPolyline: false,
         drawMarker: false,
       }); 
       map.addLayer(airportcalcGroup);
+      prevDisplayTowns = displayTowns ? 1 : 0
       displayTowns = false;
       mapLayers();
       bottomBar.show();
