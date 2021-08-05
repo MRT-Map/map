@@ -84,7 +84,6 @@ function mapcoord([x, y]) {
   NewY = x / 64;
   return [NewX, NewY];
 }
-
 function worldcoord([x, y]) {
     NewX = y * 64;
     NewY = (x + 0.5) * -64
