@@ -43,7 +43,15 @@ map.pm.Toolbar.createCustomControl({
     }
 });
 
-
+map.pm.Toolbar.createCustomControl({
+    name: "clearall",
+    title: "Clear All",
+    block: "custom",
+    className: "fas fa-times icon",
+    onClick: () => {
+        if (confirm("Are you sure you want to clear all polygons?")) airportcalcGroup.clearLayers();
+    }
+});
 
 var bottomBar = L.control.bar('bar', {
     position: 'bottom',
@@ -55,7 +63,9 @@ map.pm.removeControls();
 var airportcalc = false;
 function toggleControls() {
     if (airportcalc) {
-        if (airportcalcGroup.getLayers().length != 0) confirm("Close without exporting?")
+        //var conf = true
+        //if (airportcalcGroup.getLayers().length != 0) conf = confirm("Close without exporting?");
+        //if (!conf) return;
         map.pm.removeControls();
         map.removeLayer(airportcalcGroup);
         displayTowns = prevDisplayTowns==1;
@@ -90,8 +100,8 @@ function calcCityArea() {
             //console.log(latlngs)
             var newArea = 0
             for (i=0; i<latlngs.length; i++) {
-                var thisLatlng = latlngs[i]
-                var nextLatlng = latlngs[i+1]
+                var thisLatlng = latlngs[i];
+                var nextLatlng = latlngs[i+1];
                 if (latlngs[i+1] == undefined) nextLatlng = latlngs[0]
                 newArea += 0.5*(thisLatlng[1]+nextLatlng[1])*(nextLatlng[0]-thisLatlng[0])
             }

@@ -6,7 +6,7 @@ $.ajax({
     success: (res) => {
         mapTowns(res)
     }
-})
+});
 
 let cityMarkers = {}
 let cityLayers = {}

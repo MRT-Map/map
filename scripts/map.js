@@ -73,7 +73,7 @@ L.tileLayer.customTileLayer("unused url; check custom function", {
     [900, 900]
   ],
   attribution: "Minecart Rapid Transit"
-}).addTo(map)
+}).addTo(map);
 
 L.control.zoom({
   position: 'topright'
