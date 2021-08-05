@@ -93,7 +93,7 @@ function worldcoord([x, y]) {
 CC.addLayer(
   L.marker(mapcoord([0, 0])).addTo(map)
   .bindPopup('Central City<br />0, 0')
-  .openPopup()
+  //.openPopup()
 )
 
 /*
