@@ -78,7 +78,6 @@ map.pm.Toolbar.createCustomControl({
     className: "fas fa-file-import icon",
     toggle: false,
     onClick: () => {
-        alert("Coming soon")
         document.getElementById("importer").click()
     }
 });
@@ -168,7 +167,7 @@ function exportAirportcalc() {
             var latlng = JSON.parse(JSON.stringify(l._latlng))
             feature.geometry['coordinates'] = [latlng.lat, latlng.lng]
         } else {
-            console.log(JSON.stringify(l._latlngs))
+            //console.log(JSON.stringify(l._latlngs))
             var latlngs = JSON.parse(JSON.stringify(l._latlngs))
             for (i=0; i<latlngs.length; i++) {
                 for (j=0; j<latlngs[i].length; j++) latlngs[i][j] = [latlngs[i][j].lat, latlngs[i][j].lng];
