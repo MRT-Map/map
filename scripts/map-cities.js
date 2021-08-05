@@ -5,6 +5,8 @@ $.ajax({
     type: 'GET',
     success: (res) => {
         mapTowns(res)
+        cityButton.enable();
+        airportcalcButton.enable();
     }
 });
 
@@ -107,7 +109,9 @@ function mapTowns(res) {
     map.on('zoomend', mapLayers)
 }
 
-L.easyButton('fa-city', () => {
+cityButton = L.easyButton('fa-city', () => {
   displayTowns = displayTowns ? false : true;
   mapLayers()
-}, "Show/Hide towns", {position: 'topright'}).addTo(map);
+}, "Show/Hide towns", {position: 'topright'});
+cityButton.addTo(map);
+cityButton.disable();
