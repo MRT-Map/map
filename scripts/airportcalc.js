@@ -184,7 +184,17 @@ function exportAirportcalc() {
 }
 
 function importAirportCalc(geojson) {
-    console.log()
+    geojson.features.forEach(f => {
+      if (f.properties.shape == "Circle") airportcalcGroup.addLayer(
+        L.circle(f.geometry.coordinates, {color: f.properties.color, radius: f.properties.radius}).addTo(map)
+      );
+      else if (f.properties.shape == "Rectangle") airportcalcGroup.addLayer(
+        L.rectangle([f.geometry.coordinates[0], f.geometry.coordinates[2]], {color: f.properties.color}).addTo(map)
+      );
+      else airportcalcGroup.addLayer(
+        L.polygon(f.geometry.coordinates, {color: f.properties.color}).addTo(map)
+      )
+    })
 }
 
 function preImportAirportcalc() {
