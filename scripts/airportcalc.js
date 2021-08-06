@@ -48,7 +48,10 @@ map.pm.Toolbar.createCustomControl({
 
 function clear(prompt_) {
     if (airportcalcGroup.getLayers().length != 0) {
-        if (confirm(prompt_)) airportcalcGroup.clearLayers();
+        if (confirm(prompt_)) {
+            airportcalcGroup.clearLayers();
+            showNotif("Polygons cleared")
+        }
     }
 }
 
@@ -60,7 +63,6 @@ map.pm.Toolbar.createCustomControl({
     toggle: false,
     onClick: () => {
         clear("Are you sure you want to clear all polygons?")
-        showNotif("Polygons cleared")
     }
 });
 
@@ -118,13 +120,14 @@ function toggleControls() {
         }); 
         if (window.localStorage.airportcalc != undefined) {
             importAirportcalc(JSON.parse(window.localStorage.airportcalc));
-            window.localStorage.airportcalc = ""
+            delete window.localStorage.airportcalc;
         }
         map.addLayer(airportcalcGroup);
         prevDisplayTowns = displayTowns ? 1 : 0
         displayTowns = false;
         mapLayers();
         bottomBar.show();
+        showNotif("Airportcalc v2.0 (6/8/21)")
     }
     airportcalc = airportcalc ? false : true;
 }
