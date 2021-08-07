@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="A guide for the MRT City Map">
+    <meta name="author" content="MRT Mapping Services">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map Guide</title>
+    
+    <link rel="icon" type="image/png" href="./media/favicon.png">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+  </head>
+  <body>
+    <h1>MRT City Map Guide</h1>
+    <hr>
+    <p>This is a guide on how to use the <a href="index.html">MRT City Map</a></p>
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#s1">Searching</a></li>
+      <li><a href="#s2">Show/hide towns</a></li>
+      <li><a href="#s3">Airportcalc v2</a></li>
+      <li><a href="#s4">Editing (JsonBuilders)</a></li>
+      <li><a href="#s5">Editing (Stencil)</a></li>
+    </ol>
+    <h2 id="s1">Searching</h2>
+    <p>There is a search bar on the top-left or top of the map.
+    Input the name of the town/city, or a player, and click <span class="fa fa-search"></span>.
+    Markers will show on the towns/cities found.
+    Clear the search bar to exit.</p>
+    
+    <h2 id="s2">Show/hide towns</h2>
+    <p>To show/hide the markers of towns, click <span class="fa fa-city"></span> on the top-right.
+    This might help in reducing some lag.</p>
+    
+    <h2 id="s3">Airportcalc v2</h2>
+    <p>To launch Airportcalc, click <span class="fa fa-ruler"></span> on the top-right.</p>
+    <p>At the bottom-left, there are three options: Rectangle, Polygon and Circle.
+    Use these to mark out the area of the city/airport.</p>
+    <p>There are also options to edit the nodes, cut holes, delete and rotate polygons.</p>
+    <p>At the top of the controls you would see <span class="fa fa-city"></span>. Select this to indicate that you are marking out the city.
+    Alternatively, select <span class="fa fa-plane"></span> to indicate that you are marking out the airport.</p>
+    <p>Select <span class="fa fa-times"></span> to clear all polygons,
+    <span class="fa fa-file-export"></span> to export the current measurement as a .apc file, and
+    <span class="fa fa-file-import"></span> to import a measurement.</p>
+    <p>The measurement would be saved if you close and reopen, or reload the page.</p>
+    
+    <h2 id="s4">Editing (JsonBuilders)</h2>
+    <p>More info can be found <a href="https://github.com/MRT-Map/map-data/blob/main/guide.md">here</a>.</p>
+    
+    <h2 id="s5">Editing (Stencil)</h2>
+    <p>Stencil is a planned editor to replace JsonBuilders as a more visual and interactive editor, like iD and Potlach.</p>
+    <p>Coming soon! :D</p>
+    
+    <h6>Written by 7d | Correct as of 7/9/21</h6>
+  </body>
+</html>
