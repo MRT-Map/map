@@ -96,6 +96,11 @@ CC.addLayer(
   //.openPopup()
 )
 
+guideButton = L.easyButton('fa-question', () => {
+  window.open('guide.html', '_blank')
+}, "Guide", {position: 'topright'});
+guideButton.addTo(map);
+
 /*
 var linePoints = [
     [21665, -24454],
