@@ -5,10 +5,12 @@ All data is sourced from staff documents and the server dynamic map. You may nee
 
 ## Collaborators
 * DintyB
-* i____7d
+* __7d
 * AP_Red
 * CaptainObi
 * sesese9
 * megascatterbomb
 * Airplaneguy9
 * Scarycrumb45
+  
+MRT Map and Airportcalc logo by Cortesi
