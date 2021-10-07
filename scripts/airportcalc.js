@@ -1,4 +1,9 @@
-//L.PM.setOptIn(true);
+const VERSION = "2.1 (7/10/21)";
+/*
+v1: https://github.com/iiiii7d/airportcalc
+v2.0: initial release
+v2.1: added logo, banner content is now selectable
+*/
 
 var airportcalcGroup = L.layerGroup([]);
 map.pm.setGlobalOptions({
@@ -110,6 +115,7 @@ function toggleControls() {
         map.removeLayer(airportcalcGroup);
         displayTowns = prevDisplayTowns==1;
         mapLayers();
+        map.addControl(logo);
         bottomBar.hide();
     } else {
         map.pm.addControls({  
@@ -127,7 +133,8 @@ function toggleControls() {
         displayTowns = false;
         mapLayers();
         bottomBar.show();
-        showNotif("Airportcalc v2.0 (6/8/21)")
+        map.removeControl(logo);
+        showNotif("Airportcalc " + VERSION)
     }
     airportcalc = airportcalc ? false : true;
 }
@@ -242,12 +249,14 @@ map.on("pm:vertexadded pm:centerplaced", e => {
 
 setInterval(() => {
     if (bottomBar.isVisible()) {
-        var [cityArea, airportArea, percentage] = calcCityArea()
-        if (isNaN(percentage)) percentage = 0
-        bottomBar.setContent(`<b>City area size:</b> ${Math.round(cityArea)}m^2
+        var [cityArea, airportArea, percentage] = calcCityArea();
+        if (isNaN(percentage)) percentage = 0;
+        let newdata = `<img src="media/airportcalcicon.png" style="height: 100%; float: right;">
+        <b>City area size:</b> ${Math.round(cityArea)}m^2
         <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
         <b>| Percentage:</b> <span style="color: ${percentage < 50 ? 'green' : 'red'};">${Math.round(percentage*100)/100}%</span>
-        <b>| Drawing for:</b> ${drawFor}` + (notif != "" ? `<br><b>${notif}</b>` : ""));
+        <b>| Drawing for:</b> ${drawFor}` + (notif != "" ? `<br><b>${notif}</b>` : "")
+        if (bottomBar.getContainer().innerHTML != newdata) bottomBar.setContent(newdata);
     }
 }, 50);
 
