@@ -30,5 +30,5 @@ function toggleCompass() {
 }
 
 
-var compassButton = L.easyButton('fa-compass', toggleCompass, "Open Compass", {position: 'topright'});
+var compassButton = L.easyButton('fa-drafting-compass', toggleCompass, "Open Compass", {position: 'topright'});
 compassButton.addTo(map);
