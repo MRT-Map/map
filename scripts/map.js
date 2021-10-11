@@ -122,3 +122,16 @@ var polyline = L.polyline(linePoints, {
     smoothFactor: 1
 })
 polyline.addTo(map);*/
+
+var MyControl = L.Control.extend({
+  options: {position: 'bottomright'},
+  onAdd: function (map) {
+    let container = L.DomUtil.create('div');
+    container.innerHTML = "<img src='media/mrtmapicon_lighttext.png' style='height: 50px;' title='Logo by Cortesi'>"
+    return container;
+  },
+  onRemove: function(map) {}
+});
+
+var logo = new MyControl();
+map.addControl(logo);
