@@ -59,7 +59,7 @@ function mapLayers() {
     } else {
         map.removeLayer(cityLayers.Unranked);
     }
-};
+}
 
 function mapTowns(res) {
     towns = JSON.parse(res);

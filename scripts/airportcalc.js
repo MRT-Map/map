@@ -9,7 +9,7 @@ map.pm.setGlobalOptions({
     }
 });
 
-var drawFor = "city"
+var drawFor = "city";
 var prevDisplayTowns = 1;
 var notif = "";
 
@@ -26,7 +26,7 @@ map.pm.Toolbar.createCustomControl({
                 color: "#ff0000"
             }
         });
-        drawFor = "city"
+        drawFor = "city";
     }
 });
 map.pm.Toolbar.createCustomControl({
@@ -42,7 +42,7 @@ map.pm.Toolbar.createCustomControl({
                 color: "#00dd00"
             }
         });
-        drawFor = "airport"
+        drawFor = "airport";
     }
 });
 
@@ -50,7 +50,7 @@ function clear(prompt_) {
     if (airportcalcGroup.getLayers().length != 0) {
         if (confirm(prompt_)) {
             airportcalcGroup.clearLayers();
-            showNotif("Polygons cleared")
+            showNotif("Polygons cleared");
         }
     }
 }
@@ -62,7 +62,7 @@ map.pm.Toolbar.createCustomControl({
     className: "fas fa-times icon",
     toggle: false,
     onClick: () => {
-        clear("Are you sure you want to clear all polygons?")
+        clear("Are you sure you want to clear all polygons?");
     }
 });
 
@@ -78,7 +78,7 @@ map.pm.Toolbar.createCustomControl({
         dlAnchorElem.href = dataStr;
         dlAnchorElem.download = "city.apc";
         dlAnchorElem.click();
-        showNotif("Polygons exported")
+        showNotif("Polygons exported");
     }
 });
 
@@ -89,7 +89,7 @@ map.pm.Toolbar.createCustomControl({
     className: "fas fa-file-import icon",
     toggle: false,
     onClick: () => {
-        document.getElementById("importer").click()
+        document.getElementById("importer").click();
     }
 });
 
@@ -101,7 +101,7 @@ map.addControl(bottomBar);
 
 map.pm.removeControls();
 var airportcalc = false;
-function toggleControls() {
+function toggleAirportcalc() {
     if (airportcalc) {
         //var conf = true
         //if (airportcalcGroup.getLayers().length != 0) conf = confirm("Close without exporting?");
@@ -123,26 +123,27 @@ function toggleControls() {
             delete window.localStorage.airportcalc;
         }
         map.addLayer(airportcalcGroup);
-        prevDisplayTowns = displayTowns ? 1 : 0
+        prevDisplayTowns = displayTowns ? 1 : 0;
         displayTowns = false;
         mapLayers();
         bottomBar.show();
-        showNotif("Airportcalc v2.0 (6/8/21)")
+        showNotif("Airportcalc v2.0 (6/8/21)");
     }
     airportcalc = airportcalc ? false : true;
 }
 
 function calcCityArea() {
-    var cityArea = 0
-    var airportArea = 0
+    var cityArea = 0;
+    var airportArea = 0;
     airportcalcGroup.getLayers().forEach(l => {
+        var newArea;
         if (l._mRadius == undefined) {
-            var newArea = 0;
+            newArea = 0;
             for (s=0; s<l._latlngs.length; s++) {
                 var polyArea = 0;
-                var latlngs = JSON.parse(JSON.stringify(l._latlngs[s]))
+                var latlngs = JSON.parse(JSON.stringify(l._latlngs[s]));
                 for (i=0; i<latlngs.length; i++) {
-                    latlngs[i] = worldcoord([latlngs[i].lat, latlngs[i].lng])
+                    latlngs[i] = worldcoord([latlngs[i].lat, latlngs[i].lng]);
                 }
                 //console.log(latlngs)
                 for (i=0; i<latlngs.length; i++) {
@@ -156,13 +157,13 @@ function calcCityArea() {
                 else newArea -= Math.abs(polyArea);
             }
         } else {
-            var radius = l._mRadius * 64
-            var newArea = Math.PI*radius**2
+            var radius = l._mRadius * 64;
+            newArea = Math.PI*radius**2;
         }
-        if (l.options.color == "#ff0000") cityArea += Math.abs(newArea)
-        else airportArea += Math.abs(newArea)
+        if (l.options.color == "#ff0000") cityArea += Math.abs(newArea);
+        else airportArea += Math.abs(newArea);
     });
-    return [cityArea, airportArea, airportArea/cityArea*100]
+    return [cityArea, airportArea, airportArea/cityArea*100];
 }
 
 function exportAirportcalc() {
@@ -178,18 +179,18 @@ function exportAirportcalc() {
                 shape: l.pm._shape,
                 color: l.options.color
             }
-        }
+        };
         if (l.pm._shape == "Circle") {
-            feature.properties['radius'] = l._mRadius;
-            var latlng = JSON.parse(JSON.stringify(l._latlng))
-            feature.geometry['coordinates'] = [latlng.lat, latlng.lng]
+            feature.properties.radius = l._mRadius;
+            var latlng = JSON.parse(JSON.stringify(l._latlng));
+            feature.geometry.coordinates = [latlng.lat, latlng.lng];
         } else {
             //console.log(JSON.stringify(l._latlngs))
-            var latlngs = JSON.parse(JSON.stringify(l._latlngs))
+            var latlngs = JSON.parse(JSON.stringify(l._latlngs));
             for (i=0; i<latlngs.length; i++) {
                 for (j=0; j<latlngs[i].length; j++) latlngs[i][j] = [latlngs[i][j].lat, latlngs[i][j].lng];
             }
-            feature.geometry['coordinates'] = latlngs
+            feature.geometry.coordinates = latlngs;
         }
         features.push(feature);
     });
@@ -209,8 +210,8 @@ function importAirportcalc(geojson) {
       );
       else airportcalcGroup.addLayer(
         L.polygon(f.geometry.coordinates, {color: f.properties.color}).addTo(map)
-      )
-    })
+      );
+    });
 }
 
 function preImportAirportcalc() {
@@ -242,8 +243,8 @@ map.on("pm:vertexadded pm:centerplaced", e => {
 
 setInterval(() => {
     if (bottomBar.isVisible()) {
-        var [cityArea, airportArea, percentage] = calcCityArea()
-        if (isNaN(percentage)) percentage = 0
+        var [cityArea, airportArea, percentage] = calcCityArea();
+        if (isNaN(percentage)) percentage = 0;
         bottomBar.setContent(`<b>City area size:</b> ${Math.round(cityArea)}m^2
         <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
         <b>| Percentage:</b> <span style="color: ${percentage < 50 ? 'green' : 'red'};">${Math.round(percentage*100)/100}%</span>
@@ -251,10 +252,10 @@ setInterval(() => {
     }
 }, 50);
 
-airportcalcButton = L.easyButton('fa-ruler', toggleControls, "Open Airportcalc 2", {position: 'topright'});
+airportcalcButton = L.easyButton('fa-ruler', toggleAirportcalc, "Open Airportcalc 2", {position: 'topright'});
 airportcalcButton.addTo(map);
 airportcalcButton.disable();
 
 window.addEventListener("beforeunload", e => {
-    window.localStorage.airportcalc = JSON.stringify(exportAirportcalc())
-})
+    window.localStorage.airportcalc = JSON.stringify(exportAirportcalc());
+});
