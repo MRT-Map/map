@@ -111,6 +111,7 @@ html, body {
   flex-direction: column;
   padding: 5px;
   border-top: 1px solid gray;
+  cursor: pointer;
 }
 
 .result__details {

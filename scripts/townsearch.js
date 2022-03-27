@@ -110,7 +110,7 @@ function startSearch() {
       document.getElementById("search__results").innerHTML = "<div>No Results</div>";
     }
     for (const result of results) {
-      document.getElementById("search__results").innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+      document.getElementById("search__results").innerHTML += `<div class="result" onclick="focusMap('${result.X.toString().trim()}', '${result.Z.toString().trim()}')"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
     }
   }
 }
@@ -149,3 +149,12 @@ $(".search__bar button").click(function() {
   hideKeyboard();
   startSearch();
 })
+
+function focusMap(x, z) {
+  x = parseInt(x);
+  z = parseInt(z);
+
+  if (isNaN(x) || isNaN(z)) return alert("This town cannot be displayed because it contains invalid coordinates. Please contact a staff member to fix.");
+
+  map.flyTo(mapcoord([x, z]), 5)
+}
