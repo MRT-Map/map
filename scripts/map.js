@@ -135,3 +135,11 @@ var MyControl = L.Control.extend({
 
 var logo = new MyControl();
 map.addControl(logo);
+
+streetMap = L.tileLayer("https://raw.githubusercontent.com/MRT-Map/map-data/main/tiles/{z}/{x}/{y}.png");
+streetMapVisible = false;
+streetMapButton = L.easyButton('fa-map', () => {
+  if (!streetMapVisible) streetMap.addTo(map); else streetMap.removeFrom(map);
+  streetMapVisible = !streetMapVisible;
+}, "Show Streetmap", {position: 'topright'});
+streetMapButton.addTo(map);
