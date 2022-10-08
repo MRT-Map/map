@@ -6,7 +6,7 @@ if (params.get("waypoints")) {
     success: (res) => {
       let wps = res.split('\n').map(a => a.split(","))
       wps.shift()
-      for (wp of wps) {
+      for (var wp of wps) {
         console.log(wp)
         L.circleMarker(
           mapcoord(wp[1].split(" ")),
@@ -14,6 +14,19 @@ if (params.get("waypoints")) {
           )
           .bindPopup(wp[0])
           .addTo(map)
+      }
+    }
+  })
+}
+
+if (params.get("airways")) {
+  $.ajax({
+    url: "https://raw.githubusercontent.com/MRT-Map/mrt-flightradar/main/data/airway_coords.json",
+    type: "GET",
+    success: (res) => {
+      for (var line of JSON.parse(res)) {
+        console.log(line)
+        L.polyline(line.map(([a, b]) => [a, -b]).map(mapcoord), {color: 'red'}).addTo(map)
       }
     }
   })
