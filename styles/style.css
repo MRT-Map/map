@@ -101,6 +101,10 @@ html, body {
   pointer-events: none;
 }
 
+.results__container {
+  max-height: 0;
+}
+
 .leaflet-top.leaflet-left, .leaflet-control-attribution {
   display: none;
   /* to remove wrong zoom, remove attribution */
