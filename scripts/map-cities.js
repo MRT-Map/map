@@ -1,17 +1,24 @@
 var towns; //declared here so that it can be used by other functions
 
+let cityMarkers = {}
+let cityLayers = {}
+var CC = new L.featureGroup()
+
 $.ajax({
     url: 'https://script.google.com/macros/s/AKfycbwde4vwt0l4_-qOFK_gL2KbVAdy7iag3BID8NWu2DQ1566kJlqyAS1Y/exec?spreadsheetId=1JSmJtYkYrEx6Am5drhSet17qwJzOKDI7tE7FxPx4YNI&sheetName=New%20World',
     type: 'GET',
     success: (res) => {
+        CC.addLayer(
+            L.marker(mapcoord([0, 0]))
+            .bindPopup('Central City<br />0, 0')
+            //.openPopup()
+          )
         mapTowns(res)
+        mapLayers()
         cityButton.enable();
         airportcalcButton.enable();
     }
 });
-
-let cityMarkers = {}
-let cityLayers = {}
 
 //when we zoom the map
 //remove cities when we zoom out
@@ -63,6 +70,7 @@ function mapLayers() {
 
 function mapTowns(res) {
     towns = JSON.parse(res);
+    
     for (const town of towns) {
         town.Name = town["Town Name"]
         //parse Coords

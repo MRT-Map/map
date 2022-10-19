@@ -1,7 +1,6 @@
 //stuff up here may not be relevant to the script but is put here because hierarchy
 var displayTowns = true; //used by certain later scripts to tell certain functions not to do certain things if a search in progress
 var searchLayer = new L.featureGroup();
-var CC = new L.featureGroup()
 
 var map = L.map('map', {
   crs: L.CRS.Simple
@@ -90,11 +89,6 @@ function worldcoord([x, y]) {
     return [NewX, NewY];
 }
 
-CC.addLayer(
-  L.marker(mapcoord([0, 0])).addTo(map)
-  .bindPopup('Central City<br />0, 0')
-  //.openPopup()
-)
 
 guideButton = L.easyButton('fa-question', () => {
   window.open('guide.html', '_blank')
