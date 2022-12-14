@@ -81,7 +81,7 @@ function townSearch(query) {
       //console.log(`Showing ${town.Name}`)
       searchLayer.addLayer(
         L.marker(mapcoord([rawCoords[0], rawCoords[2]])).addTo(map)
-        .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}`)
+        .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}<br><a href="https://mrtrapidroute.com?from=Current+Location&to=${encodeURIComponent(town.Name)}" target="_blank">Navigate to here with RapidRoute</a>`)
       )
     }
   }
