@@ -10,9 +10,9 @@ $.ajax({
     success: (res) => {
         CC.addLayer(
             L.marker(mapcoord([0, 0]))
-            .bindPopup('Central City<br />0, 0')
+                .bindPopup('Central City<br />0, 0')
             //.openPopup()
-          )
+        )
         mapTowns(res)
         mapLayers()
         cityButton.enable();
@@ -25,16 +25,28 @@ $.ajax({
 //add them when we zoom in
 function mapLayers() {
     if (!displayTowns) {
-      map.removeLayer(cityLayers.Community);
-      map.removeLayer(cityLayers.Premier);
-      map.removeLayer(cityLayers.Governor);
-      map.removeLayer(cityLayers.Senator);
-      map.removeLayer(cityLayers.Mayor);
-      map.removeLayer(cityLayers.Councillor);
-      map.removeLayer(cityLayers.Unranked);
-      map.removeLayer(CC);
-      return;
+        map.removeLayer(cityLayers.Community);
+        map.removeLayer(cityLayers.Premier);
+        map.removeLayer(cityLayers.Governor);
+        map.removeLayer(cityLayers.Senator);
+        map.removeLayer(cityLayers.Mayor);
+        map.removeLayer(cityLayers.Councillor);
+        map.removeLayer(cityLayers.Unranked);
+        map.removeLayer(CC);
+        return;
+    } else {
+        map.removeLayer(searchLayer);
+        map.addLayer(cityLayers.Community);
+        map.addLayer(cityLayers.Premier);
+        map.addLayer(cityLayers.Governor);
+        map.addLayer(cityLayers.Senator);
+        map.addLayer(cityLayers.Mayor);
+        map.addLayer(cityLayers.Councillor);
+        map.addLayer(cityLayers.Unranked);
+        map.addLayer(CC);
     }
+    // This made stuff hard to use
+    /*
     map.removeLayer(searchLayer);
     map.addLayer(CC);
     if (map.getZoom() >= 1) {
@@ -65,12 +77,12 @@ function mapLayers() {
         map.addLayer(cityLayers.Unranked);
     } else {
         map.removeLayer(cityLayers.Unranked);
-    }
+    }*/
 };
 
 function mapTowns(res) {
     towns = JSON.parse(res);
-    
+
     for (const town of towns) {
         town.Name = town["Town Name"]
         //parse Coords
@@ -118,8 +130,8 @@ function mapTowns(res) {
 }
 
 cityButton = L.easyButton('fa-city', () => {
-  displayTowns = displayTowns ? false : true;
-  mapLayers()
-}, "Show/Hide towns", {position: 'topright'});
+    displayTowns = displayTowns ? false : true;
+    mapLayers()
+}, "Show/Hide towns", { position: 'topright' });
 cityButton.addTo(map);
 cityButton.disable();
