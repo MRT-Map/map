@@ -81,6 +81,16 @@ function mapLayers() {
 };
 
 function mapTowns(res) {
+    let rankColors = {
+        "Premier": "#fffc04",
+        "Governor": "#08fc04",
+        "Senator": "#08ac04",
+        "Mayor": "#0804fc",
+        "Councillor": "#5084ec",
+        "Community": "#781c44",
+        "Unranked": "#ffffff"
+    }
+
     towns = JSON.parse(res);
 
     for (const town of towns) {
@@ -107,14 +117,14 @@ function mapTowns(res) {
             }
             //create marker and add it to array
             cityMarkers[town['Town Rank']].push(
-                L.marker(coords)
+                L.circleMarker(coords, {color: rankColors[town['Town Rank']], radius: 7})
                     .bindPopup(`Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${town['Deputy Mayor']}<br>Rank: ${town['Town Rank']}<br><a href="https://mrtrapidroute.com?from=Current+Location&to=${encodeURIComponent(town.Name)}" target="_blank">Navigate to here with RapidRoute</a>`)
             )
         }
 
     }
 
-    let cityTypes = ["Premier", "Governor", "Senator", "Community", "Mayor", "Councillor", "Unranked"]
+    let cityTypes = ["Premier", "Governor", "Senator", "Community", "Mayor", "Councillor", "Unranked"];
 
     //for each type of city
     cityTypes.forEach((type) => {
