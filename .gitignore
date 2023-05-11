@@ -54,3 +54,4 @@ dkms.conf
 # Config
 .replit
 .DS_Store
+node_modules/
