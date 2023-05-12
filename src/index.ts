@@ -14,6 +14,7 @@ import "leaflet-control-bar/src/L.Control.Bar.css";
 
 import L from "leaflet";
 
+// https://stackoverflow.com/a/58254190
 // @ts-expect-error fix esbuild not making these load by themselves
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
