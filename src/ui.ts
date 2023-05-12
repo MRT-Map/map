@@ -11,7 +11,6 @@ container.on("touchstart", (e) => {
 })
 
 container.on("touchmove", (e) => {
-
   if (window.innerWidth > 1000) {
     container.css("transform", "none")
     return

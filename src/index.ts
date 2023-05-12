@@ -1,7 +1,14 @@
 import "./ui.ts"
-import "./map.ts"
-import "./map-cities.ts"
-import "./townsearch.ts"
+import { initMap } from "./map.ts";
+import { initMapCities } from "./map-cities.ts";
+import { initTownSearch } from "./townsearch.ts";
 import "./airportcalc.ts"
-import "./waypoint-viewer.ts"
+import { initAirways, initWaypoints } from "./waypoint-viewer.ts";
 import "./style.css";
+
+
+initMap();
+void initMapCities();
+void initTownSearch();
+void initWaypoints();
+void initAirways();

@@ -4,15 +4,20 @@ import "@geoman-io/leaflet-geoman-free"
 import L from "leaflet";
 import { mapLayers } from "./map-cities";
 import { toggleControls } from "./airportcalc";
-import { Logo } from "./map";
 
 export class Globals {
   displayTowns = true; //used by certain later scripts to tell certain functions not to do certain things if a search in progress
-  map?: L.Map;
+  map: L.Map;
   cityMap = new CityMap()
   streetMapVisible = false;
-  buttons = new Buttons(this.map!);
-  logo?: Logo
+  buttons: Buttons
+  logo: Logo
+
+  constructor(map: L.Map) {
+    this.map = map
+    this.buttons = new Buttons(this.map)
+    this.logo = new Logo(this.map)
+  }
 }
 
 export interface Town {
@@ -36,6 +41,20 @@ export class CityMap {
   towns: Town[] = []
 }
 
+
+export class Logo extends L.Control {
+  override onAdd() {
+    const container = L.DomUtil.create('div');
+    container.innerHTML = "<img src='media/mrtmapicon_lighttext.png' style='height: 50px;' title='Logo by Cortesi'>"
+    return container;
+  }
+  override onRemove() { /* empty */ }
+
+  constructor(map: L.Map, options?: L.ControlOptions | undefined) {
+    super(options)
+    this.setPosition("bottomright").addTo(map)
+  }
+}
 export class Buttons {
   city: Control.EasyButton
   guide: Control.EasyButton
@@ -68,7 +87,6 @@ export class Buttons {
 declare global {
   interface Window { globals: Globals; }
 }
-window.globals = new Globals();
 
 export function g(): Globals {
   return window.globals

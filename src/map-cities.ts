@@ -2,28 +2,21 @@ import L from "leaflet";
 import { mapcoord } from "./utils";
 import { CityMap, Town, g, gb, gcm } from "./globals";
 
-void $.ajax({
-    url: 'https://script.google.com/macros/s/AKfycbwde4vwt0l4_-qOFK_gL2KbVAdy7iag3BID8NWu2DQ1566kJlqyAS1Y/exec?spreadsheetId=1JSmJtYkYrEx6Am5drhSet17qwJzOKDI7tE7FxPx4YNI&sheetName=New%20World',
-    type: 'GET',
-    success: (res: string) => {
-        gcm().CC.addLayer(
-            L.marker(mapcoord([0, 0]))
-                .bindPopup('Central City<br />0, 0')
-            //.openPopup()
-        )
-        mapTowns(res)
-        mapLayers()
-        gb().city.enable();
-        gb().airportCalc.enable();
-    }
-});
+export async function initMapCities() {
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwde4vwt0l4_-qOFK_gL2KbVAdy7iag3BID8NWu2DQ1566kJlqyAS1Y/exec?spreadsheetId=1JSmJtYkYrEx6Am5drhSet17qwJzOKDI7tE7FxPx4YNI&sheetName=New%20World');
+    const towns = await res.json() as Town[];
+    mapTowns(towns)
+    mapLayers()
+    gb().city.enable();
+    gb().airportCalc.enable();
+}
 
 //when we zoom the map
 //remove cities when we zoom out
 //add them when we zoom in
 export function mapLayers() {
     const { cityLayers, CC, searchLayer } = gcm();
-    const map = g().map!;
+    const map = g().map;
     if (!g().displayTowns) {
         map.removeLayer(cityLayers.get("Community")!);
         map.removeLayer(cityLayers.get("Premier")!);
@@ -80,7 +73,7 @@ export function mapLayers() {
     }*/
 }
 
-function mapTowns(res: string) {
+function mapTowns(towns: Town[]) {
     const rankColors = {
         "Premier": "#fffc04",
         "Governor": "#08fc04",
@@ -91,8 +84,7 @@ function mapTowns(res: string) {
         "Unranked": "#ffffff"
     }
 
-    window.globals.cityMap.towns = JSON.parse(res) as Town[];
-    const towns = window.globals.cityMap.towns;
+    window.globals.cityMap.towns = towns;
 
     const { cityMarkers, cityLayers } = gcm();
 
@@ -131,5 +123,5 @@ function mapTowns(res: string) {
         cityLayers.set(type, featureGroup)
     });
 
-    g().map!.on('zoomend', mapLayers)
+    g().map.on('zoomend', mapLayers)
 }

@@ -13,13 +13,13 @@ v2.1: added logo, banner content is now selectable
 
 const airportcalcGroup = L.layerGroup([]) as L.LayerGroup<L.Polygon | L.Circle>;
 
-const map = window.globals.map!;
+const map = g().map;
 const downloader = document.getElementById('downloader')! as HTMLAnchorElement;
 const importer = document.getElementById('importer')! as HTMLInputElement;
 
 map.pm.setGlobalOptions({
     layerGroup: airportcalcGroup,
-    pmIgnore: false,
+    //pmIgnore: false,
     pathOptions: {
         color: "#ff0000"
     }
@@ -123,7 +123,6 @@ declare class ControlBar extends L.Control {
     isVisible(): boolean;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 const bottomBar = L.control.bar('bar', {
     position: 'bottom',
     visible: false
