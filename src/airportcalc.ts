@@ -3,64 +3,131 @@ import { g } from "./globals";
 import { mapLayers } from "./map-cities";
 import { Feature, GeoJson } from "./geojson";
 import { worldcoord } from "./utils";
+import "leaflet-control-bar";
 
-const VERSION = "2.1 (7/10/21)";
+const VERSION = "2.2 (12/5/23)";
 /*
 v1: https://github.com/iiiii7d/airportcalc
 v2.0: initial release
 v2.1: added logo, banner content is now selectable
+v2.2: convert to typescript, integrate with rest of refactors
 */
 
 const airportcalcGroup = L.layerGroup([]) as L.LayerGroup<L.Polygon | L.Circle>;
 
-const map = g().map;
 const downloader = document.getElementById('downloader')! as HTMLAnchorElement;
 const importer = document.getElementById('importer')! as HTMLInputElement;
+let bottomBar: ControlBar | undefined = undefined;
 
-map.pm.setGlobalOptions({
-    layerGroup: airportcalcGroup,
-    //pmIgnore: false,
-    pathOptions: {
-        color: "#ff0000"
-    }
-});
 
 let drawFor = "city"
 let prevDisplayTowns = 1;
 let notif = "";
 
-map.pm.Toolbar.createCustomControl({
-    name: "cityspace",
-    title: "City Space",
-    block: "custom",
-    className: "fas fa-city icon",
-    toggle: false,
-    onClick: () => {
-        map.pm.setGlobalOptions({
-            layerGroup: airportcalcGroup,
-            pathOptions: {
-                color: "#ff0000"
-            }
-        });
-        drawFor = "city"
-    }
-});
-map.pm.Toolbar.createCustomControl({
-    name: "airportspace",
-    title: "Airport Space",
-    block: "custom",
-    className: "fas fa-plane icon",
-    toggle: false,
-    onClick: () => {
-        map.pm.setGlobalOptions({
-            layerGroup: airportcalcGroup,
-            pathOptions: {
-                color: "#00dd00"
-            }
-        });
-        drawFor = "airport"
-    }
-});
+export function initAirportcalc() {
+    const map = g().map;
+    map.pm.setGlobalOptions({
+        layerGroup: airportcalcGroup,
+        //pmIgnore: false,
+        pathOptions: {
+            color: "#ff0000"
+        }
+    });
+
+    map.pm.Toolbar.createCustomControl({
+        name: "cityspace",
+        title: "City Space",
+        block: "custom",
+        className: "fas fa-city icon",
+        toggle: false,
+        onClick: () => {
+            map.pm.setGlobalOptions({
+                layerGroup: airportcalcGroup,
+                pathOptions: {
+                    color: "#ff0000"
+                }
+            });
+            drawFor = "city"
+        }
+    });
+    map.pm.Toolbar.createCustomControl({
+        name: "airportspace",
+        title: "Airport Space",
+        block: "custom",
+        className: "fas fa-plane icon",
+        toggle: false,
+        onClick: () => {
+            map.pm.setGlobalOptions({
+                layerGroup: airportcalcGroup,
+                pathOptions: {
+                    color: "#00dd00"
+                }
+            });
+            drawFor = "airport"
+        }
+    });
+
+    map.pm.Toolbar.createCustomControl({
+        name: "clearall",
+        title: "Clear All",
+        block: "custom",
+        className: "fas fa-times icon",
+        toggle: false,
+        onClick: () => {
+            clear("Are you sure you want to clear all polygons?")
+        }
+    });
+
+    map.pm.Toolbar.createCustomControl({
+        name: "export",
+        title: "Export",
+        block: "custom",
+        className: "fas fa-file-export icon",
+        toggle: false,
+        onClick: () => {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportAirportcalc(), null, 2));
+            downloader.href = dataStr;
+            downloader.download = "city.apc";
+            downloader.click();
+            showNotif("Polygons exported")
+        }
+    });
+
+    map.pm.Toolbar.createCustomControl({
+        name: "import",
+        title: "Import",
+        block: "custom",
+        className: "fas fa-file-import icon",
+        toggle: false,
+        onClick: () => {
+            document.getElementById("importer")!.click()
+        }
+    });
+
+        
+    bottomBar = L.control.bar('bar', {
+        position: 'bottom',
+        visible: false,
+    });
+
+    map.addControl(bottomBar);
+
+    map.pm.removeControls();
+
+    setInterval(() => {
+        if (bottomBar?.isVisible()) {
+            // eslint-disable-next-line prefer-const
+            let [cityArea, airportArea, percentage] = calcCityArea();
+            if (isNaN(percentage)) percentage = 0;
+            const newdata = `<img src="media/airportcalcicon.png" style="height: 100%; float: right;" title="Logo by Cortesi">
+            <b>City area size:</b> ${Math.round(cityArea)}m^2
+            <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
+            <b>| Percentage:</b> <span style="color: ${percentage < 50 ? 'green' : 'red'};">${Math.round(percentage*100)/100}%</span>
+            <b>| Drawing for:</b> ${drawFor}` + (notif != "" ? `<br><b>${notif}</b>` : "")
+            if (bottomBar.getContainer()?.innerHTML != newdata) bottomBar.setContent(newdata);
+        }
+    }, 50);
+}
 
 function clear(prompt_: string) {
     if (airportcalcGroup.getLayers().length != 0) {
@@ -70,43 +137,6 @@ function clear(prompt_: string) {
         }
     }
 }
-
-map.pm.Toolbar.createCustomControl({
-    name: "clearall",
-    title: "Clear All",
-    block: "custom",
-    className: "fas fa-times icon",
-    toggle: false,
-    onClick: () => {
-        clear("Are you sure you want to clear all polygons?")
-    }
-});
-
-map.pm.Toolbar.createCustomControl({
-    name: "export",
-    title: "Export",
-    block: "custom",
-    className: "fas fa-file-export icon",
-    toggle: false,
-    onClick: () => {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportAirportcalc(), null, 2));
-        downloader.href = dataStr;
-        downloader.download = "city.apc";
-        downloader.click();
-        showNotif("Polygons exported")
-    }
-});
-
-map.pm.Toolbar.createCustomControl({
-    name: "import",
-    title: "Import",
-    block: "custom",
-    className: "fas fa-file-import icon",
-    toggle: false,
-    onClick: () => {
-        document.getElementById("importer")!.click()
-    }
-});
 
 declare module 'leaflet' {
     // eslint-disable-next-line @typescript-eslint/no-namespace
@@ -123,15 +153,9 @@ declare class ControlBar extends L.Control {
     isVisible(): boolean;
 }
 
-const bottomBar = L.control.bar('bar', {
-    position: 'bottom',
-    visible: false
-});
-map.addControl(bottomBar);
-
-map.pm.removeControls();
 let airportcalc = false;
 export function toggleControls() {
+    const map = g().map;
     if (airportcalc) {
         //var conf = true
         //if (airportcalcGroup.getLayers().length != 0) conf = confirm("Close without exporting?");
@@ -141,7 +165,7 @@ export function toggleControls() {
         g().displayTowns = prevDisplayTowns==1;
         mapLayers();
         map.addControl(g().logo);
-        bottomBar.hide();
+        bottomBar?.hide();
     } else {
         map.pm.addControls({  
             position: 'bottomleft',
@@ -157,7 +181,7 @@ export function toggleControls() {
         prevDisplayTowns = g().displayTowns ? 1 : 0
         g().displayTowns = false;
         mapLayers();
-        bottomBar.show();
+        bottomBar?.show();
         map.removeControl(g().logo);
         showNotif("Airportcalc " + VERSION)
     }
@@ -229,13 +253,13 @@ function exportAirportcalc(): GeoJson {
 function importAirportcalc(geojson: GeoJson) {
     geojson.features.forEach(f => {
       if (f.properties.shape == "Circle") airportcalcGroup.addLayer(
-        L.circle(f.geometry.coordinates as [number, number], {color: f.properties.color, radius: f.properties.radius}).addTo(map)
+        L.circle(f.geometry.coordinates as [number, number], {color: f.properties.color, radius: f.properties.radius}).addTo(g().map)
       );
       else if (f.properties.shape == "Rectangle") airportcalcGroup.addLayer(
-        L.rectangle([f.geometry.coordinates[0] as [number, number], f.geometry.coordinates[2] as [number, number]], {color: f.properties.color}).addTo(map)
+        L.rectangle([f.geometry.coordinates[0] as [number, number], f.geometry.coordinates[2] as [number, number]], {color: f.properties.color}).addTo(g().map)
       );
       else airportcalcGroup.addLayer(
-        L.polygon(f.geometry.coordinates as [number, number][], {color: f.properties.color}).addTo(map)
+        L.polygon(f.geometry.coordinates as [number, number][], {color: f.properties.color}).addTo(g().map)
       )
     })
 }
@@ -269,20 +293,6 @@ function showNotif(newNotif: string) {
 //    e.lat = Math.round(e.lat);
 //    e.lng = Math.round(e.lng);
 //});
-
-setInterval(() => {
-    if (bottomBar.isVisible()) {
-        // eslint-disable-next-line prefer-const
-        let [cityArea, airportArea, percentage] = calcCityArea();
-        if (isNaN(percentage)) percentage = 0;
-        const newdata = `<img src="media/airportcalcicon.png" style="height: 100%; float: right;" title="Logo by Cortesi">
-        <b>City area size:</b> ${Math.round(cityArea)}m^2
-        <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
-        <b>| Percentage:</b> <span style="color: ${percentage < 50 ? 'green' : 'red'};">${Math.round(percentage*100)/100}%</span>
-        <b>| Drawing for:</b> ${drawFor}` + (notif != "" ? `<br><b>${notif}</b>` : "")
-        if (bottomBar.getContainer()?.innerHTML != newdata) bottomBar.setContent(newdata);
-    }
-}, 50);
 
 window.addEventListener("beforeunload", () => {
     window.localStorage.airportcalc = JSON.stringify(exportAirportcalc())

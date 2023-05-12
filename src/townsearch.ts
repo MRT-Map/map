@@ -2,9 +2,8 @@ import L from "leaflet";
 import { resetOffset } from "./ui";
 import { mapcoord } from "./utils";
 import { mapLayers } from "./map-cities";
-
-const { CC, searchLayer } = window.globals.cityMap;
-const map = window.globals.map;
+import { g, gcm } from "./globals";
+import $ from "jquery";
 
 interface Member {
   Username: string | number
@@ -47,6 +46,9 @@ export async function initTownSearch() {
 }
 
 function townSearch(query: string) {
+  const { CC, searchLayer } = gcm();
+  const map = g().map;
+
   //hide CC
   map.removeLayer(CC)
   //hide old search
@@ -171,5 +173,5 @@ export function focusMap(ox: string, oz: string) {
 
   if (isNaN(x) || isNaN(z)) return alert("This town cannot be displayed because it contains invalid coordinates. Please contact a staff member to fix.");
 
-  map.flyTo(mapcoord([x, z]), 5)
+  g().map.flyTo(mapcoord([x, z]), 5)
 }

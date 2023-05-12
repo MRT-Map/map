@@ -17,11 +17,7 @@ class CustomTileLayer extends L.TileLayer {
       x: Math.floor(Xcoord * Zcoord),
       y: Math.floor(Ycoord * Zcoord)
     }
-
-    /* console.log(coords);
-     console.log(group);
-     console.log(numberInGroup);*/
-
+    
     let zzz = ""
 
     for (let i = 8; i > coords.z; i--) {
@@ -31,10 +27,7 @@ class CustomTileLayer extends L.TileLayer {
     if (zzz.length != 0) zzz += "_";
 
     const url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${group.x}_${group.y}/${zzz}${numberInGroup.x}_${numberInGroup.y}.png`
-    //console.log(url)
     return url;
-
-    // return L.TileLayer.prototype.getTileUrl.call(this, coords);
   }
 }
 
@@ -47,7 +40,6 @@ export function initMap() {
   const map = L.map('map', {
     crs: L.CRS.Simple
   }).setView([0, 0], 8);
-  window.globals = new Globals(map);
 
   customTileLayer("unused url; check custom function", {
     maxZoom: 8,
@@ -66,4 +58,6 @@ export function initMap() {
   L.control.zoom({
     position: 'topright'
   }).addTo(map);  
+
+  window.globals = new Globals(map);
 }
