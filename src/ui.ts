@@ -1,25 +1,25 @@
 import $ from "jquery";
 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-const container = $(".results__container")
+const container = $(".results__container");
 
-let lastY: number
-let offset = 0
-let lastScrollTop = 0
+let lastY: number;
+let offset = 0;
+let lastScrollTop = 0;
 
 container.on("touchstart", (e) => {
-  lastY = e.touches[0].clientY
-})
+  lastY = e.touches[0].clientY;
+});
 
 container.on("touchmove", (e) => {
   if (window.innerWidth > 1000) {
-    container.css("transform", "none")
-    return
+    container.css("transform", "none");
+    return;
   }
 
-  const currY = e.touches[0].clientY
+  const currY = e.touches[0].clientY;
   const dist = lastY - currY;
   lastY = currY;
-  const maxOffset = container.height()! * 2 * .30;
+  const maxOffset = container.height()! * 2 * 0.3;
 
   if (container.scrollTop() == 0) {
     offset += dist;
@@ -27,7 +27,7 @@ container.on("touchmove", (e) => {
   }
 
   if (offset > maxOffset) {
-    container.scrollTop(container.scrollTop()! + dist)
+    container.scrollTop(container.scrollTop()! + dist);
     offset = maxOffset;
   }
 
@@ -35,19 +35,18 @@ container.on("touchmove", (e) => {
     offset = 0;
   }
 
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
-})
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+});
 
 container.on("wheel", () => {
-
   if (window.innerWidth > 1000) {
-    container.css("transform", "none")
-    return
+    container.css("transform", "none");
+    return;
   }
 
   const dist = container.scrollTop()! - lastScrollTop;
   lastScrollTop = container.scrollTop()!;
-  const maxOffset = container.height()! * 2 * .30;
+  const maxOffset = container.height()! * 2 * 0.3;
 
   if (offset < maxOffset && dist > 0) {
     offset += dist;
@@ -58,7 +57,7 @@ container.on("wheel", () => {
   }
 
   if (offset > maxOffset) {
-    container.scrollTop(container.scrollTop()! + dist)
+    container.scrollTop(container.scrollTop()! + dist);
     offset = maxOffset;
   }
 
@@ -66,18 +65,15 @@ container.on("wheel", () => {
     offset = 0;
   }
 
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+});
 
-})
-
-
-export function resetOffset(){
-
+export function resetOffset() {
   if (window.innerWidth > 1000) {
-    container.css("transform", "none")
-    return
+    container.css("transform", "none");
+    return;
   }
 
   offset = 0;
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
 }

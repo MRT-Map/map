@@ -1,24 +1,23 @@
-container = $(".results__container")
+container = $(".results__container");
 
-var lastY
-var offset = 0
-var lastScrollTop = 0
+var lastY;
+var offset = 0;
+var lastScrollTop = 0;
 
 container.on("touchstart", (e) => {
-  lastY = e.touches[0].clientY
-})
+  lastY = e.touches[0].clientY;
+});
 
 container.on("touchmove", (e) => {
-
   if (window.innerWidth > 1000) {
-    container.css("transform", "none")
-    return
+    container.css("transform", "none");
+    return;
   }
 
-  currY = e.touches[0].clientY
+  currY = e.touches[0].clientY;
   let dist = lastY - currY;
   lastY = currY;
-  let maxOffset = container.height() * 2 * .30;
+  let maxOffset = container.height() * 2 * 0.3;
 
   if (container.scrollTop() == 0) {
     offset += dist;
@@ -26,7 +25,7 @@ container.on("touchmove", (e) => {
   }
 
   if (offset > maxOffset) {
-    container.scrollTop(container.scrollTop() + dist)
+    container.scrollTop(container.scrollTop() + dist);
     offset = maxOffset;
   }
 
@@ -34,19 +33,18 @@ container.on("touchmove", (e) => {
     offset = 0;
   }
 
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
-})
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+});
 
-container.on("wheel", e => {
-
+container.on("wheel", (e) => {
   if (window.innerWidth > 1000) {
-    container.css("transform", "none")
-    return
+    container.css("transform", "none");
+    return;
   }
 
   let dist = container.scrollTop() - lastScrollTop;
   lastScrollTop = container.scrollTop();
-  let maxOffset = container.height() * 2 * .30;
+  let maxOffset = container.height() * 2 * 0.3;
 
   if (offset < maxOffset && dist > 0) {
     offset += dist;
@@ -57,7 +55,7 @@ container.on("wheel", e => {
   }
 
   if (offset > maxOffset) {
-    container.scrollTop(container.scrollTop() + dist)
+    container.scrollTop(container.scrollTop() + dist);
     offset = maxOffset;
   }
 
@@ -65,18 +63,15 @@ container.on("wheel", e => {
     offset = 0;
   }
 
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+});
 
-})
-
-
-function resetOffset(){
-
+function resetOffset() {
   if (window.innerWidth > 1000) {
-    container.css("transform", "none")
-    return
+    container.css("transform", "none");
+    return;
   }
 
   offset = 0;
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`)
+  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
 }
