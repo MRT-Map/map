@@ -4,7 +4,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node build.mjs"
+    "dev": "node build.mjs",
+    "prod": "node build.mjs prod"
   },
   "keywords": [],
   "author": "",
