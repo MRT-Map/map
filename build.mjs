@@ -15,6 +15,7 @@ let ctx = await esbuild.context({
   minify: true,
   sourcemap: true,
   outfile: "out/out.js",
+  publicPath: process.argv[2] == "prod" ? "https://mrt-map.github.io/map" : undefined,
   plugins: [
     sassPlugin({
       async transform(source) {
