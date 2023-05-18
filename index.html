@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MRT City Map</title>
+    <meta
+      name="description"
+      content="An unofficial map of towns on the Minecart Rapid Transit server"
+    />
+    <meta name="author" content="MRT Mapping Services" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/png" href="./media/favicon.png" />
+
+    <link rel="stylesheet" href="out.css" />
+    <script defer src="out.js"></script>
+  </head>
+
+  <body>
+    <div class="search">
+      <div class="search__bar">
+        <input id="search__input" placeholder="Search" />
+        <button><i class="fa fa-search"></i></button>
+      </div>
+      <div class="results__container">
+        <div class="pill"></div>
+        <div id="search__results"></div>
+      </div>
+    </div>
+
+    <div id="map"></div>
+    <div id="bar"></div>
+    <a id="downloader" style="display: none"></a>
+    <input
+      type="file"
+      name="importer"
+      id="importer"
+      accept=".apc,.json"
+      style="display: none"
+    />
+  </body>
+</html>
