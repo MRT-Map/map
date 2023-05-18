@@ -1,54 +1,41 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <title>MRT City Map</title>
+    <meta
+      name="description"
+      content="An unofficial map of towns on the Minecart Rapid Transit server"
+    />
+    <meta name="author" content="MRT Mapping Services" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-  <title>MRT City Map</title>
-  <meta name="description" content="An unofficial map of towns on the Minecart Rapid Transit server">
-  <meta name="author" content="MRT Mapping Services">
+    <link rel="icon" type="image/png" href="./media/favicon.png" />
 
-  <link rel="icon" type="image/png" href="./media/favicon.png">
+    <link rel="stylesheet" href="out.css" />
+    <script defer src="out.js"></script>
+  </head>
 
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
-  <link rel="stylesheet" href="styles/style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.css" />  
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
-  <link rel="stylesheet" href="leaflet-control-bar/L.Control.Bar.css">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script defer src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
-  <script defer src="https://unpkg.com/@geoman-io/leaflet-geoman-free@latest/dist/leaflet-geoman.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
-  <script defer src="leaflet-control-bar/L.Control.Bar.js"></script>
-  
-  <script defer src="scripts/ui.js"></script>
-  <script defer src="scripts/map.js"></script>
-  <script defer src="scripts/map-cities.js"></script>
-  <script defer src="scripts/townsearch.js"></script>
-  <script defer src="scripts/mappinghelper.js"></script>
-  <script defer src="scripts/airportcalc.js"></script>
-  <script defer src="scripts/waypoint-viewer.js"></script>
-    
-</head>
-
-<body>
-  <div class="search">
-    <div class="search__bar">
-      <input id="search__input" placeholder="Search"/>
-      <button><i class="fa fa-search"></i></button>
+  <body>
+    <div class="search">
+      <div class="search__bar">
+        <input id="search__input" placeholder="Search" />
+        <button><i class="fa fa-search"></i></button>
+      </div>
+      <div class="results__container">
+        <div class="pill"></div>
+        <div id="search__results"></div>
+      </div>
     </div>
-    <div class="results__container">
-      <div class="pill"></div>
-      <div id="search__results"></div>
-    </div>
-  </div>
 
-  <div id="map"></div>
-  <div id="bar"></div>
-  <a id="downloader" style="display:none"></a>
-  <input type="file" name="importer" id="importer" accept=".apc,.json" style="display:none" oninput="preImportAirportcalc()">
-</body>
-
+    <div id="map"></div>
+    <div id="bar"></div>
+    <a id="downloader" style="display: none"></a>
+    <input
+      type="file"
+      name="importer"
+      id="importer"
+      accept=".apc,.json"
+      style="display: none"
+    />
+  </body>
 </html>

@@ -1,10 +1,11 @@
-html, body {
+html,
+body {
   margin: 0;
   width: 100%;
   height: 100%;
   font-size: 16px;
   font-family: sans-serif;
-}   
+}
 
 /* Geoman icons */
 .icon {
@@ -34,7 +35,6 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
 
 #map {
   width: 100%;
@@ -105,7 +105,8 @@ html, body {
   max-height: 0;
 }
 
-.leaflet-top.leaflet-left, .leaflet-control-attribution {
+.leaflet-top.leaflet-left,
+.leaflet-control-attribution {
   display: none;
   /* to remove wrong zoom, remove attribution */
 }
@@ -143,7 +144,7 @@ html, body {
     height: 50vh;
     width: 100vw;
     overflow: auto;
-    border-top-left-radius:10px;
+    border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     animation: ascend 1s;
     display: none;
@@ -151,8 +152,12 @@ html, body {
   }
 
   @keyframes ascend {
-    from {transform: translateY(100vh);}
-    to {transform: translateY(30vh);}
+    from {
+      transform: translateY(100vh);
+    }
+    to {
+      transform: translateY(30vh);
+    }
   }
 
   #search__results {
@@ -191,5 +196,4 @@ html, body {
   ::-webkit-scrollbar {
     width: 0px;
   }
-
 }
