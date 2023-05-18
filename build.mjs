@@ -36,7 +36,10 @@ fs.copyFileSync("./index.html", "./out/index.html");
 fs.copyFileSync("./guide.html", "./out/guide.html");
 fse.copySync("./media", "./out/media");
 
-if (process.argv[2] == "prod") process.exit();
+if (process.argv[2] == "prod") {
+  await ctx.rebuild();
+  process.exit();
+}
 
 await ctx.watch();
 
