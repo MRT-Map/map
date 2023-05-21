@@ -137,7 +137,7 @@ body {
     width: calc(100vw - 20px);
   }
 
-  .results__container {
+  /*.results__container {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -149,7 +149,7 @@ body {
     animation: ascend 1s;
     display: none;
     transform: translateY(30vh);
-  }
+  }*/
 
   @keyframes ascend {
     from {
@@ -160,15 +160,15 @@ body {
     }
   }
 
-  #search__results {
+  /*#search__results {
     max-height: none;
     width: calc(100vw - 30px);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     min-height: calc(50vh - 70px);
-  }
+  }*/
 
-  .pill {
+  /*.pill {
     margin: 0 auto;
     position: sticky;
     margin-bottom: -50px;
@@ -187,7 +187,7 @@ body {
     border-radius: 100px;
     content: "";
     background-color: #bbb;
-  }
+  }*/
 
   .leaflet-top.leaflet-right {
     margin-top: 60px;

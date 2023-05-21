@@ -147,7 +147,7 @@ function startSearch() {
       }</div><div class="result__mayor">Mayor: ${
         result.Mayor
       }</div></div></div>`;
-      ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Y)
+      ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Z)
     }
   }
 }
@@ -203,5 +203,6 @@ export function focusMap(x: number, z: number) {
       "This town cannot be displayed because it contains invalid coordinates. Please contact a staff member to fix."
     );
 
+  console.log(x, z)
   g().map.flyTo(mapcoord([x, z]), 5);
 }

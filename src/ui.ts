@@ -35,7 +35,7 @@ container.on("touchmove", (e) => {
     offset = 0;
   }
 
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+  //container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
 });
 
 container.on("wheel", () => {
@@ -65,7 +65,7 @@ container.on("wheel", () => {
     offset = 0;
   }
 
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+  //container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
 });
 
 export function resetOffset() {
@@ -75,5 +75,5 @@ export function resetOffset() {
   }
 
   offset = 0;
-  container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
+  //container.css("transform", `translateY(calc(-${offset}px + 30vh))`);
 }
