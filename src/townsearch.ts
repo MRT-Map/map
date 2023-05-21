@@ -48,15 +48,14 @@ export async function initTownSearch() {
 }
 
 function townSearch(query: string) {
-  const { CC, searchLayer } = gcm();
   const map = g().map;
 
   //hide CC
-  map.removeLayer(CC);
+  map.removeLayer(gcm().CC);
   //hide old search
-  map.removeLayer(searchLayer);
+  map.removeLayer(gcm().searchLayer);
   //redefine feature group
-  window.globals.cityMap.searchLayer =
+  gcm().searchLayer =
     L.featureGroup() as L.FeatureGroup<L.Marker>;
   //tell other functions not to display towns
   window.globals.displayTowns = false;
@@ -96,7 +95,7 @@ function townSearch(query: string) {
       );
     } else {
       //console.log(`Showing ${town.Name}`)
-      searchLayer.addLayer(
+      gcm().searchLayer.addLayer(
         L.marker(mapcoord([rawCoords[0], rawCoords[2]]))
           .addTo(map)
           .bindPopup(
@@ -111,7 +110,7 @@ function townSearch(query: string) {
       );
     }
   }
-  map.addLayer(searchLayer);
+  map.addLayer(gcm().searchLayer);
   return relevantTowns;
 }
 
@@ -177,7 +176,8 @@ let searchTimer: NodeJS.Timeout;
 
 $("#search__input").on("input", function () {
   $(".results__container").css("display", "none");
-  if (!mobileCheck()) {
+  const value = $("#search__input").val();
+  if (!mobileCheck() || value == null || value == "") {
     clearTimeout(searchTimer);
     searchTimer = setTimeout(function () {
       startSearch();
