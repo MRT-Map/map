@@ -1,6 +1,7 @@
 import L from "leaflet";
 import { mapcoord } from "./utils";
 import { CityMap, Town, g, gb, gcm } from "./globals";
+import $ from "jquery";
 
 export async function initMapCities() {
   const res = await fetch(
@@ -11,6 +12,7 @@ export async function initMapCities() {
   mapLayers();
   gb().city.enable();
   gb().airportCalc.enable();
+  $("#search__input").removeAttr("disabled")
 }
 
 //when we zoom the map

@@ -78,6 +78,10 @@ body {
   padding: 15px 15px;
 }
 
+#search__input:disabled {
+  background: #ccc;
+}
+
 #search__results {
   margin-top: 10px;
   background: whitesmoke;
