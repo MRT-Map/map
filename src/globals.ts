@@ -78,7 +78,7 @@ export class Buttons {
     this.guide = L.easyButton(
       "fa-question",
       () => {
-        window.open("guide.html", "_blank");
+        window.open("https://github.com/mrt-map/map/wiki/City-Map", "_blank");
       },
       "Guide"
     )
