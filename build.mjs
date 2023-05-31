@@ -34,7 +34,6 @@ let ctx = await esbuild.context({
 });
 if (!fs.existsSync("out")) fs.mkdirSync("out");
 fs.copyFileSync("./index.html", "./out/index.html");
-fs.copyFileSync("./guide.html", "./out/guide.html");
 fse.copySync("./media", "./out/media");
 
 if (process.argv[2] == "prod") {
