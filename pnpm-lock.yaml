@@ -6,8 +6,8 @@ settings:
 
 devDependencies:
   '@fortawesome/fontawesome-free':
-    specifier: ^6.4.0
-    version: 6.4.0
+    specifier: ^6.4.2
+    version: 6.4.2
   '@geoman-io/leaflet-geoman-free':
     specifier: ^2.14.2
     version: 2.14.2(leaflet@1.9.4)
@@ -49,7 +49,7 @@ devDependencies:
     version: 1.9.4
   leaflet-control-bar:
     specifier: github:mapshakers/leaflet-control-bar
-    version: github.com/mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd
+    version: git/github.com+mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd
   leaflet-easybutton:
     specifier: ^2.4.0
     version: 2.4.0
@@ -649,8 +649,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fortawesome/fontawesome-free@6.4.0:
-    resolution: {integrity: sha512-0NyytTlPJwB/BF5LtRV8rrABDbe3TdTXqNB3PdZ+UUUZAEIrdOJdmABqKjt4AXwIoJNaRVVZEXxpNrqvE1GAYQ==}
+  /@fortawesome/fontawesome-free@6.4.2:
+    resolution: {integrity: sha512-m5cPn3e2+FDCOgi1mz0RexTUvvQibBebOUlUlW0+YrMjDTPkiJ6VTKukA1GRsvRw+12KyJndNjj0O4AgTxm2Pg==}
     engines: {node: '>=6'}
     requiresBuild: true
     dev: true
@@ -2407,8 +2407,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd:
-    resolution: {tarball: https://codeload.github.com/mapshakers/leaflet-control-bar/tar.gz/1c823dbbb53d8c19d329c1b831a4df4978b34efd}
+  git/github.com+mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd:
+    resolution: {commit: 1c823dbbb53d8c19d329c1b831a4df4978b34efd, repo: git@github.com:mapshakers/leaflet-control-bar.git, type: git}
     name: leaflet-control-bar
     version: 0.0.1
     dependencies:
