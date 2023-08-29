@@ -16,7 +16,7 @@
     "@types/fs-extra": "^11.0.1",
     "@types/jquery": "^3.5.17",
     "@types/leaflet": "^1.9.3",
-    "@types/node": "^20.5.1",
+    "@types/node": "^20.5.7",
     "@typescript-eslint/eslint-plugin": "^6.4.1",
     "autoprefixer": "^10.4.15",
     "esbuild": "^0.18.20",
