@@ -18,8 +18,8 @@ devDependencies:
     specifier: ^3.5.17
     version: 3.5.17
   '@types/leaflet':
-    specifier: ^1.9.3
-    version: 1.9.3
+    specifier: ^1.9.4
+    version: 1.9.4
   '@types/node':
     specifier: ^20.5.7
     version: 20.5.7
@@ -885,8 +885,8 @@ packages:
       '@types/node': 20.5.7
     dev: true
 
-  /@types/leaflet@1.9.3:
-    resolution: {integrity: sha512-Caa1lYOgKVqDkDZVWkto2Z5JtVo09spEaUt2S69LiugbBpoqQu92HYFMGUbYezZbnBkyOxMNPXHSgRrRY5UyIA==}
+  /@types/leaflet@1.9.4:
+    resolution: {integrity: sha512-kfwgQf4eOxoe/tD9CaKQrBKHbc7VpyfJOG5sxsQtkH+ML9xYa8hUC3UMa0wU1pKfciJtO0pU9g9XbWhPo7iBCA==}
     dependencies:
       '@types/geojson': 7946.0.10
     dev: true
