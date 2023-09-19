@@ -33,8 +33,8 @@ devDependencies:
     specifier: ^0.19.3
     version: 0.19.3
   esbuild-sass-plugin:
-    specifier: ^2.14.0
-    version: 2.14.0(esbuild@0.19.3)
+    specifier: ^2.15.0
+    version: 2.15.0(esbuild@0.19.3)
   eslint:
     specifier: ^8.49.0
     version: 8.49.0
@@ -1307,8 +1307,8 @@ packages:
     resolution: {integrity: sha512-6s7NVJz+sATdYnIwhdshx/N/9O6rvMxmhVoDSDFdj6iA45gHR8EQje70+RYsF4GeB+k0IeNSBnP7yG9ZXJFr7A==}
     dev: true
 
-  /esbuild-sass-plugin@2.14.0(esbuild@0.19.3):
-    resolution: {integrity: sha512-aT9SY31xXpxZ9EHw4SomYaSAr/sXmoITY7W2s2yLV61813Jt2fF7xU3L70r7vd6oJ/oV93i0x8t1YWfVzA30HQ==}
+  /esbuild-sass-plugin@2.15.0(esbuild@0.19.3):
+    resolution: {integrity: sha512-T0GCHVfeuGBBgY5k19RbExd7vVuC3lzrK8IZbXOqZftw6N9lTBnZuqKhnhdAJBcu6wek7K/fXJ2zzY6KrcNtAg==}
     peerDependencies:
       esbuild: ^0.19.1
     dependencies:
