@@ -19,7 +19,7 @@
     "@types/node": "^20.6.0",
     "@typescript-eslint/eslint-plugin": "^6.7.2",
     "autoprefixer": "^10.4.15",
-    "esbuild": "^0.19.2",
+    "esbuild": "^0.19.3",
     "esbuild-sass-plugin": "^2.14.0",
     "eslint": "^8.49.0",
     "fs-extra": "^11.1.1",
