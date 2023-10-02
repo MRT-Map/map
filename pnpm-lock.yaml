@@ -21,8 +21,8 @@ devDependencies:
     specifier: ^1.9.6
     version: 1.9.6
   '@types/node':
-    specifier: ^20.7.0
-    version: 20.7.0
+    specifier: ^20.8.1
+    version: 20.8.1
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.7.3
     version: 6.7.3(@typescript-eslint/parser@6.7.3)(eslint@8.50.0)(typescript@5.2.2)
@@ -49,7 +49,7 @@ devDependencies:
     version: 1.9.4
   leaflet-control-bar:
     specifier: github:mapshakers/leaflet-control-bar
-    version: github.com/mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd
+    version: git/github.com+mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd
   leaflet-easybutton:
     specifier: ^2.4.0
     version: 2.4.0
@@ -856,7 +856,7 @@ packages:
     resolution: {integrity: sha512-c0hrgAOVYr21EX8J0jBMXGLMgJqVf/v6yxi0dLaJboW9aQPh16Id+z6w2Tx1hm+piJOLv8xPfVKZCLfjPw/IMQ==}
     dependencies:
       '@types/jsonfile': 6.1.2
-      '@types/node': 20.7.0
+      '@types/node': 20.8.1
     dev: true
 
   /@types/geojson@7946.0.11:
@@ -880,7 +880,7 @@ packages:
   /@types/jsonfile@6.1.2:
     resolution: {integrity: sha512-8t92P+oeW4d/CRQfJaSqEwXujrhH4OEeHRjGU3v1Q8mUS8GPF3yiX26sw4svv6faL2HfBtGTe2xWIoVgN3dy9w==}
     dependencies:
-      '@types/node': 20.7.0
+      '@types/node': 20.8.1
     dev: true
 
   /@types/leaflet@1.9.6:
@@ -889,8 +889,8 @@ packages:
       '@types/geojson': 7946.0.11
     dev: true
 
-  /@types/node@20.7.0:
-    resolution: {integrity: sha512-zI22/pJW2wUZOVyguFaUL1HABdmSVxpXrzIqkjsHmyUjNhPoWM1CKfvVuXfetHhIok4RY573cqS0mZ1SJEnoTg==}
+  /@types/node@20.8.1:
+    resolution: {integrity: sha512-iN6stS2QGMl50pjH0h/dIfmcEUogljAreQZ+cubPw3ISWp5fJrZw9NOh/sDHJfw92A41hCU+Ls5zTIsNYzcnuA==}
     dev: true
 
   /@types/semver@7.5.3:
@@ -2414,8 +2414,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd:
-    resolution: {tarball: https://codeload.github.com/mapshakers/leaflet-control-bar/tar.gz/1c823dbbb53d8c19d329c1b831a4df4978b34efd}
+  git/github.com+mapshakers/leaflet-control-bar/1c823dbbb53d8c19d329c1b831a4df4978b34efd:
+    resolution: {commit: 1c823dbbb53d8c19d329c1b831a4df4978b34efd, repo: git@github.com:mapshakers/leaflet-control-bar.git, type: git}
     name: leaflet-control-bar
     version: 0.0.1
     dependencies:
