@@ -26,7 +26,7 @@ class CustomTileLayer extends L.TileLayer {
 
     if (zzz.length != 0) zzz += "_";
 
-    const url = `https://dynmap.minecartrapidtransit.net/tiles/new/flat/${group.x}_${group.y}/${zzz}${numberInGroup.x}_${numberInGroup.y}.png`;
+    const url = `https://dynmap.minecartrapidtransit.net/main/tiles/new/flat/${group.x}_${group.y}/${zzz}${numberInGroup.x}_${numberInGroup.y}.png`;
     return url;
   }
 }
