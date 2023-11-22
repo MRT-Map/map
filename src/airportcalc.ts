@@ -120,7 +120,7 @@ export function initAirportcalc() {
       let [cityArea, airportArea, percentage] = calcCityArea();
       if (isNaN(percentage)) percentage = 0;
       const newdata =
-        `<img src="media/airportcalcicon.png" style="height: 100%; float: right;" title="Logo by Cortesi">
+        `<img src="media/ac2-dark.png" style="height: 100%; float: right;" title="Logo by Cortesi">
             <b>City area size:</b> ${Math.round(cityArea)}m^2
             <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
             <b>| Percentage:</b> <span style="color: ${

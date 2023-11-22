@@ -56,7 +56,7 @@ export class Logo extends L.Control {
   override onAdd() {
     const container = L.DomUtil.create("div");
     container.innerHTML =
-      "<img src='media/mrtmapicon_lighttext.png' style='height: 50px;' title='Logo by Cortesi'>";
+      "<img src='media/map-light.png' style='height: 50px;' title='Logo by Cortesi'>";
     return container;
   }
   override onRemove() {

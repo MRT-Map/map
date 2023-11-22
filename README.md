@@ -1,4 +1,4 @@
-# Map
+![](./media/map-light.png)
 
 A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap and Google Maps
 
