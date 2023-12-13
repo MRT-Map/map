@@ -15,8 +15,8 @@ devDependencies:
     specifier: ^11.0.4
     version: 11.0.4
   '@types/jquery':
-    specifier: ^3.5.27
-    version: 3.5.27
+    specifier: ^3.5.29
+    version: 3.5.29
   '@types/leaflet':
     specifier: ^1.9.8
     version: 1.9.8
@@ -897,8 +897,8 @@ packages:
     resolution: {integrity: sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA==}
     dev: true
 
-  /@types/jquery@3.5.27:
-    resolution: {integrity: sha512-TR28Y8ezIGgfyA02UOh9x+Fy16/1qWYAnvtRd2gTBJuccX/vmddyti0MezLkTv7f+OLofVc2T961VPyKv1tXJQ==}
+  /@types/jquery@3.5.29:
+    resolution: {integrity: sha512-oXQQC9X9MOPRrMhPHHOsXqeQDnWeCDT3PelUIg/Oy8FAbzSZtFHRjc7IpbfFVmpLtJ+UOoywpRsuO5Jxjybyeg==}
     dependencies:
       '@types/sizzle': 2.3.5
     dev: true
