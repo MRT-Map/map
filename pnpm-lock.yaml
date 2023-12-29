@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^6.4.2
     version: 6.4.2
   '@geoman-io/leaflet-geoman-free':
-    specifier: ^2.14.2
-    version: 2.14.2(leaflet@1.9.4)
+    specifier: ^2.15.0
+    version: 2.15.0(leaflet@1.9.4)
   '@types/fs-extra':
     specifier: ^11.0.4
     version: 11.0.4
@@ -694,8 +694,8 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@geoman-io/leaflet-geoman-free@2.14.2(leaflet@1.9.4):
-    resolution: {integrity: sha512-6lIyG8RvSVdFjVjiQgBPyNASjymSyqzsiUeBW0pA+q41lB5fAg4SDC6SfJvWdEyDHa81Jb5FWjUkCc9O+u0gbg==}
+  /@geoman-io/leaflet-geoman-free@2.15.0(leaflet@1.9.4):
+    resolution: {integrity: sha512-esann1pQ8cCX3pMR7XkXuf1vwwJLz1mAbkeyRWOfoLMKA8LBnbRxChIBZzzwzyGIxybNO93Bl6LaK8wEj8uzlA==}
     peerDependencies:
       leaflet: ^1.2.0
     dependencies:
