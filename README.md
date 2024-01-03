@@ -2,6 +2,8 @@
 
 A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap and Google Maps
 
+Also includes Airportcalc 2
+
 All data is sourced from staff documents and the server dynamic map. You may need to hard refresh your page (shift+f5) to get the latest updates.
 
 ## Collaborators
@@ -14,5 +16,3 @@ All data is sourced from staff documents and the server dynamic map. You may nee
 - megascatterbomb
 - Airplaneguy9
 - Scarycrumb45
-
-MRT Map and Airportcalc logo by Cortesi

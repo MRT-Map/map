@@ -1,9 +1,9 @@
-import L from "leaflet";
-import { resetOffset } from "./ui";
-import { mapcoord } from "./utils";
-import { mapLayers } from "./map-cities";
-import { g, gcm } from "./globals";
 import $ from "jquery";
+import L from "leaflet";
+import { mapcoord } from "../utils/coord";
+import { g, gcm } from "./globals";
+import { mapLayers } from "./map-cities";
+import { resetOffset } from "./ui";
 
 interface Member {
   Username: string | number;
@@ -55,10 +55,9 @@ function townSearch(query: string) {
   //hide old search
   map.removeLayer(gcm().searchLayer);
   //redefine feature group
-  gcm().searchLayer =
-    L.featureGroup() as L.FeatureGroup<L.Marker>;
+  gcm().searchLayer = L.featureGroup() as L.FeatureGroup<L.Marker>;
   //tell other functions not to display towns
-  window.globals.displayTowns = false;
+  window.mapGlobals.displayTowns = false;
   //get members with names (including old names) matching query
   const relevantNames: string[] = [];
   for (const member of MRTMembers) {
@@ -74,13 +73,13 @@ function townSearch(query: string) {
     }
   }
   //filter towns by search query
-  const relevantTowns = window.globals.cityMap.towns.filter(
-    (t) =>
+  const relevantTowns = window.mapGlobals.cityMap.towns.filter(
+    t =>
       t.Name?.toString().toLowerCase().includes(query.toLowerCase()) ??
       relevantNames.includes(t.Mayor.toString().toLowerCase())
   );
   //remove other markers from map
-  for (const layer of window.globals.cityMap.cityLayers.values()) {
+  for (const layer of window.mapGlobals.cityMap.cityLayers.values()) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     map.removeLayer(layer);
   }
@@ -124,7 +123,7 @@ function startSearch() {
   //console.log(value)
   if (value == null || value == "") {
     $(".results__container").css("display", "none");
-    window.globals.displayTowns = true;
+    window.mapGlobals.displayTowns = true;
     mapLayers();
     document.getElementById("search__results")!.innerHTML = "";
   } else {
@@ -136,17 +135,9 @@ function startSearch() {
         "<div>No Results</div>";
     }
     for (const result of results) {
-      const ele = document.getElementById(
-        "search__results"
-      )!;
-      ele.innerHTML += `<div class="result"><div class="result__name">${
-        result.Name
-      }</div><div class="result__details"><div class="result__rank">Rank: ${
-        result["Town Rank"]
-      }</div><div class="result__mayor">Mayor: ${
-        result.Mayor
-      }</div></div></div>`;
-      ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Z)
+      const ele = document.getElementById("search__results")!;
+      ele.innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+      ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Z);
     }
   }
 }
@@ -203,6 +194,6 @@ export function focusMap(x: number, z: number) {
       "This town cannot be displayed because it contains invalid coordinates. Please contact a staff member to fix."
     );
 
-  console.log(x, z)
+  console.log(x, z);
   g().map.flyTo(mapcoord([x, z]), 5);
 }
