@@ -14,5 +14,3 @@ All data is sourced from staff documents and the server dynamic map. You may nee
 - megascatterbomb
 - Airplaneguy9
 - Scarycrumb45
-
-MRT Map and Airportcalc logo by Cortesi

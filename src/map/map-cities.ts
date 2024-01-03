@@ -1,7 +1,7 @@
-import L from "leaflet";
-import { mapcoord } from "./utils";
-import { CityMap, Town, g, gb, gcm } from "./globals";
 import $ from "jquery";
+import L from "leaflet";
+import { mapcoord } from "../utils/coord";
+import { CityMap, Town, g, gb, gcm } from "./globals";
 
 export async function initMapCities() {
   const res = await fetch(

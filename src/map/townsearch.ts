@@ -1,9 +1,9 @@
-import L from "leaflet";
-import { resetOffset } from "./ui";
-import { mapcoord } from "./utils";
-import { mapLayers } from "./map-cities";
-import { g, gcm } from "./globals";
 import $ from "jquery";
+import L from "leaflet";
+import { mapcoord } from "../utils/coord";
+import { g, gcm } from "./globals";
+import { mapLayers } from "./map-cities";
+import { resetOffset } from "./ui";
 
 interface Member {
   Username: string | number;
@@ -58,7 +58,7 @@ function townSearch(query: string) {
   gcm().searchLayer =
     L.featureGroup() as L.FeatureGroup<L.Marker>;
   //tell other functions not to display towns
-  window.globals.displayTowns = false;
+  window.mapGlobals.displayTowns = false;
   //get members with names (including old names) matching query
   const relevantNames: string[] = [];
   for (const member of MRTMembers) {
@@ -74,13 +74,13 @@ function townSearch(query: string) {
     }
   }
   //filter towns by search query
-  const relevantTowns = window.globals.cityMap.towns.filter(
+  const relevantTowns = window.mapGlobals.cityMap.towns.filter(
     (t) =>
       t.Name?.toString().toLowerCase().includes(query.toLowerCase()) ??
       relevantNames.includes(t.Mayor.toString().toLowerCase())
   );
   //remove other markers from map
-  for (const layer of window.globals.cityMap.cityLayers.values()) {
+  for (const layer of window.mapGlobals.cityMap.cityLayers.values()) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     map.removeLayer(layer);
   }
@@ -124,7 +124,7 @@ function startSearch() {
   //console.log(value)
   if (value == null || value == "") {
     $(".results__container").css("display", "none");
-    window.globals.displayTowns = true;
+    window.mapGlobals.displayTowns = true;
     mapLayers();
     document.getElementById("search__results")!.innerHTML = "";
   } else {

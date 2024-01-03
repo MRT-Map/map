@@ -1,5 +1,4 @@
 import L from "leaflet";
-import { Globals } from "./globals";
 
 //override the default
 class CustomTileLayer extends L.TileLayer {
@@ -39,7 +38,7 @@ const customTileLayer = function (
   return new CustomTileLayer(templateUrl, options);
 };
 
-export function initMap() {
+export function initMap(): L.Map {
   const map = L.map("map", {
     crs: L.CRS.Simple,
   }).setView([0, 0], 8);
@@ -64,5 +63,5 @@ export function initMap() {
     })
     .addTo(map);
 
-  window.globals = new Globals(map);
+  return map
 }

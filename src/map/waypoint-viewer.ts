@@ -1,5 +1,5 @@
 import * as L from "leaflet";
-import { mapcoord } from "./utils";
+import { mapcoord } from "../utils/coord";
 import { g } from "./globals";
 
 const params = new URL(document.location.toString()).searchParams;

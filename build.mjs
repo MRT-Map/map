@@ -10,11 +10,14 @@ import postcssPresetEnv from "postcss-preset-env";
 const postcssPlugins = [autoprefixer(), postcssPresetEnv({ stage: 0 })];
 
 let ctx = await esbuild.context({
-  entryPoints: ["src/index.ts"],
+  entryPoints: [
+    {in: "src/map/index.ts", out:"out-map"},
+    {in: "src/airportcalc/index.ts", out:"out-ac"},
+  ],
   bundle: true,
   minify: true,
   sourcemap: true,
-  outfile: "out/out.js",
+  outdir: "out",
   publicPath: process.argv[2] == "prod" ? "https://mrt-map.github.io/map" : undefined,
   plugins: [
     sassPlugin({
@@ -34,6 +37,7 @@ let ctx = await esbuild.context({
 });
 if (!fs.existsSync("out")) fs.mkdirSync("out");
 fs.copyFileSync("./index.html", "./out/index.html");
+fs.copyFileSync("./airportcalc.html", "./out/airportcalc.html");
 fs.copyFileSync("./manifest.json", "./out/manifest.json");
 fse.copySync("./media", "./out/media");
 
