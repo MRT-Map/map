@@ -1,13 +1,15 @@
 import L from "leaflet";
-import { g } from "../airportcalc/globals";
+import { g } from "./globals";
 import { Feature, GeoJson } from "../utils/geojson";
 import { airportcalcGroup, clear, showNotif } from "./airportcalc";
 
-export const importer = document.getElementById("importer")! as HTMLInputElement;
+export const importer = document.getElementById(
+  "importer"
+)! as HTMLInputElement;
 
 export function exportAirportcalc(): GeoJson {
   const features: Feature[] = [];
-  (airportcalcGroup.getLayers() as (L.Polygon | L.Circle)[]).forEach((l) => {
+  (airportcalcGroup.getLayers() as (L.Polygon | L.Circle)[]).forEach(l => {
     const feature: Feature = {
       type: "feature",
       geometry: {
@@ -27,7 +29,8 @@ export function exportAirportcalc(): GeoJson {
     } else {
       //console.log(JSON.stringify(l._latlngs))
       const latlngs = l.getLatLngs() as L.LatLng[][];
-      feature.geometry.coordinates = latlngs.map((ll) => ll.map((sll): [number, number] => [sll.lat, sll.lng])
+      feature.geometry.coordinates = latlngs.map(ll =>
+        ll.map((sll): [number, number] => [sll.lat, sll.lng])
       );
     }
     features.push(feature);
@@ -38,7 +41,7 @@ export function exportAirportcalc(): GeoJson {
   };
 }
 export function importAirportcalc(geojson: GeoJson) {
-  geojson.features.forEach((f) => {
+  geojson.features.forEach(f => {
     if (f.properties.shape == "Circle")
       airportcalcGroup.addLayer(
         L.circle(f.geometry.coordinates as [number, number], {
@@ -56,7 +59,6 @@ export function importAirportcalc(geojson: GeoJson) {
           { color: f.properties.color }
         ).addTo(g().map)
       );
-
     else
       airportcalcGroup.addLayer(
         L.polygon(f.geometry.coordinates as [number, number][], {

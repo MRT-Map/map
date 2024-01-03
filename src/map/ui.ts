@@ -6,11 +6,11 @@ let lastY: number;
 let offset = 0;
 let lastScrollTop = 0;
 
-container.on("touchstart", (e) => {
+container.on("touchstart", e => {
   lastY = e.touches[0].clientY;
 });
 
-container.on("touchmove", (e) => {
+container.on("touchmove", e => {
   if (window.innerWidth > 1000) {
     container.css("transform", "none");
     return;

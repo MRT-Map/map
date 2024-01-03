@@ -55,8 +55,7 @@ function townSearch(query: string) {
   //hide old search
   map.removeLayer(gcm().searchLayer);
   //redefine feature group
-  gcm().searchLayer =
-    L.featureGroup() as L.FeatureGroup<L.Marker>;
+  gcm().searchLayer = L.featureGroup() as L.FeatureGroup<L.Marker>;
   //tell other functions not to display towns
   window.mapGlobals.displayTowns = false;
   //get members with names (including old names) matching query
@@ -75,7 +74,7 @@ function townSearch(query: string) {
   }
   //filter towns by search query
   const relevantTowns = window.mapGlobals.cityMap.towns.filter(
-    (t) =>
+    t =>
       t.Name?.toString().toLowerCase().includes(query.toLowerCase()) ??
       relevantNames.includes(t.Mayor.toString().toLowerCase())
   );
@@ -136,17 +135,9 @@ function startSearch() {
         "<div>No Results</div>";
     }
     for (const result of results) {
-      const ele = document.getElementById(
-        "search__results"
-      )!;
-      ele.innerHTML += `<div class="result"><div class="result__name">${
-        result.Name
-      }</div><div class="result__details"><div class="result__rank">Rank: ${
-        result["Town Rank"]
-      }</div><div class="result__mayor">Mayor: ${
-        result.Mayor
-      }</div></div></div>`;
-      ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Z)
+      const ele = document.getElementById("search__results")!;
+      ele.innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+      ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Z);
     }
   }
 }
@@ -203,6 +194,6 @@ export function focusMap(x: number, z: number) {
       "This town cannot be displayed because it contains invalid coordinates. Please contact a staff member to fix."
     );
 
-  console.log(x, z)
+  console.log(x, z);
   g().map.flyTo(mapcoord([x, z]), 5);
 }

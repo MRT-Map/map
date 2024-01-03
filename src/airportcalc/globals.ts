@@ -14,7 +14,7 @@ export class Globals {
 
 export class Buttons {
   guide: Control.EasyButton;
-  home: Control.EasyButton
+  home: Control.EasyButton;
 
   constructor(map: L.Map) {
     this.guide = L.easyButton(
@@ -27,14 +27,14 @@ export class Buttons {
       .setPosition("topright")
       .addTo(map);
     this.home = L.easyButton(
-        "fa-house",
-        () => {
-          window.open("./", "_self");
-        },
-        "Return to MRT City Map"
-      )
-        .setPosition("topright")
-        .addTo(map);
+      "fa-house",
+      () => {
+        window.open("./", "_self");
+      },
+      "Return to MRT City Map"
+    )
+      .setPosition("topright")
+      .addTo(map);
   }
 }
 

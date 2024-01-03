@@ -1,4 +1,4 @@
-import { initAirportcalc } from "../airportcalc/airportcalc.ts";
+import { initAirportcalc } from "./airportcalc.ts";
 import { initMap } from "../map.ts";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -20,7 +20,7 @@ L.Icon.Default.mergeOptions({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
 window.acGlobals = new Globals(initMap());

@@ -12,7 +12,7 @@ export async function initMapCities() {
   mapLayers();
   gb().city.enable();
   gb().airportCalc.enable();
-  $("#search__input").removeAttr("disabled")
+  $("#search__input").removeAttr("disabled");
 }
 
 //when we zoom the map
@@ -33,7 +33,7 @@ export function mapLayers() {
     return;
   } else {
     map.removeLayer(searchLayer);
-    console.log(cityLayers.entries())
+    console.log(cityLayers.entries());
     map.addLayer(cityLayers.get("Community")!);
     map.addLayer(cityLayers.get("Premier")!);
     map.addLayer(cityLayers.get("Governor")!);
@@ -111,31 +111,29 @@ function mapTowns(towns: Town[]) {
         cityMarkers.set(town["Town Rank"], []);
       }
       //create marker and add it to array
-      cityMarkers
-        .get(town["Town Rank"])!
-        .push(
-          L.circleMarker(coords, {
-            color: rankColors[town["Town Rank"]],
-            radius: 7,
-          }).bindPopup(
-            `Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${
-              town["Deputy Mayor"]
-            }<br>Rank: ${
-              town["Town Rank"]
-            }<br><a href="https://mrtrapidroute.com?from=Current+Location&to=${encodeURIComponent(
-              town.Name
-            )}" target="_blank">Navigate to here with RapidRoute</a>`
-          )
-        );
+      cityMarkers.get(town["Town Rank"])!.push(
+        L.circleMarker(coords, {
+          color: rankColors[town["Town Rank"]],
+          radius: 7,
+        }).bindPopup(
+          `Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${
+            town["Deputy Mayor"]
+          }<br>Rank: ${
+            town["Town Rank"]
+          }<br><a href="https://mrtrapidroute.com?from=Current+Location&to=${encodeURIComponent(
+            town.Name
+          )}" target="_blank">Navigate to here with RapidRoute</a>`
+        )
+      );
     }
   }
 
   //for each type of city
-  CityMap.cityTypes.forEach((type) => {
+  CityMap.cityTypes.forEach(type => {
     //create a new feature group
     const featureGroup = L.featureGroup() as L.FeatureGroup<L.CircleMarker>;
     //and add all cities of type
-    cityMarkers.get(type)!.forEach((city) => {
+    cityMarkers.get(type)!.forEach(city => {
       featureGroup.addLayer(city);
     });
     cityLayers.set(type, featureGroup);

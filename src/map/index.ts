@@ -23,7 +23,7 @@ L.Icon.Default.mergeOptions({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
 window.mapGlobals = new Globals(initMap());

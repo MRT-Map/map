@@ -11,14 +11,15 @@ const postcssPlugins = [autoprefixer(), postcssPresetEnv({ stage: 0 })];
 
 let ctx = await esbuild.context({
   entryPoints: [
-    {in: "src/map/index.ts", out:"out-map"},
-    {in: "src/airportcalc/index.ts", out:"out-ac"},
+    { in: "src/map/index.ts", out: "out-map" },
+    { in: "src/airportcalc/index.ts", out: "out-ac" },
   ],
   bundle: true,
   minify: true,
   sourcemap: true,
   outdir: "out",
-  publicPath: process.argv[2] == "prod" ? "https://mrt-map.github.io/map" : undefined,
+  publicPath:
+    process.argv[2] == "prod" ? "https://mrt-map.github.io/map" : undefined,
   plugins: [
     sassPlugin({
       async transform(source) {

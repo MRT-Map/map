@@ -63,5 +63,5 @@ export function initMap(): L.Map {
     })
     .addTo(map);
 
-  return map
+  return map;
 }
