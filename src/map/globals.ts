@@ -111,7 +111,7 @@ export class Buttons {
     this.city.disable();
 
     this.airportCalc = L.easyButton(
-      "fa-ruler",
+      "fa-plane",
       () => {
         window.open("./airportcalc.html", "_self");
       },
