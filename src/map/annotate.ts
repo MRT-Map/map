@@ -31,6 +31,12 @@ export function initAnnotator() {
             fillColor: fillColor.value
           });
         });
+        ele.querySelector("#fill-reset")!.addEventListener("click", () => {
+          fillColor.value = "";
+          layer.setStyle({
+            fillColor: undefined
+          });
+        })
 
         const strokeColor: HTMLInputElement = ele.querySelector("#stroke")!;
         strokeColor.value = layer.options.color ?? strokeColor.value;
@@ -39,6 +45,12 @@ export function initAnnotator() {
             color: strokeColor.value
           });
         });
+        ele.querySelector("#stroke-reset")!.addEventListener("click", () => {
+          strokeColor.value = "#3388ff";
+          layer.setStyle({
+            color: "#3388ff"
+          });
+        })
       });
     } else if (layer instanceof L.Marker && shape == "Text") {
       layer.bindPopup(
@@ -54,12 +66,20 @@ export function initAnnotator() {
         backgroundColor.addEventListener("change", () => {
           layer.pm.getElement().style.backgroundColor = backgroundColor.value
         });
+        ele.querySelector("#background-reset")!.addEventListener("click", () => {
+          backgroundColor.value = "";
+          layer.pm.getElement().style.backgroundColor = ""
+        })
 
         const textColor: HTMLInputElement = ele.querySelector("#text")!;
         textColor.value = layer.pm.getElement().style.color ?? textColor.value;
         textColor.addEventListener("change", () => {
           layer.pm.getElement().style.color = textColor.value
         });
+        ele.querySelector("#text-reset")!.addEventListener("click", () => {
+          textColor.value = "";
+          layer.pm.getElement().style.color = ""
+        })
       });
     }
   });
