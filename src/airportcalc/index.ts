@@ -1,5 +1,5 @@
-import { initAirportcalc } from "./airportcalc.ts";
 import { initMap } from "../map.ts";
+import { initAirportcalc } from "./airportcalc.ts";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";

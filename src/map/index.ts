@@ -1,9 +1,10 @@
 import { initMap } from "../map.ts";
+import { initAnnotator } from "./annotate.ts";
+import { Globals } from "./globals.ts";
 import { initMapCities } from "./map-cities.ts";
 import { initTownSearch } from "./townsearch.ts";
 import "./ui.ts";
 import { initAirways, initWaypoints } from "./waypoint-viewer.ts";
-import { Globals } from "./globals.ts";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
@@ -31,3 +32,4 @@ void initMapCities();
 void initTownSearch();
 void initWaypoints();
 void initAirways();
+initAnnotator();
