@@ -98,13 +98,12 @@ function townSearch(query: string) {
         L.marker(mapcoord([rawCoords[0], rawCoords[2]]))
           .addTo(map)
           .bindPopup(
-            `Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${
-              town["Deputy Mayor"]
-            }<br>Rank: ${
-              town["Town Rank"]
-            }<br><a href="https://mrtrapidroute.com?from=Current+Location&to=${encodeURIComponent(
-              town.Name!
-            )}" target="_blank">Navigate to here with RapidRoute</a>`
+            document.getElementById("town-popup-template")!.innerHTML
+            .replace("{name}", town.Name!)
+            .replace("{mayor}", town.Mayor)
+            .replace("{deputy}", town["Deputy Mayor"])
+            .replace("{rank}", town["Town Rank"])
+            .replace("{nameEncoded}", encodeURIComponent(town.Name!))
           )
       );
     }
@@ -136,7 +135,8 @@ function startSearch() {
     }
     for (const result of results) {
       const ele = document.getElementById("search__results")!;
-      ele.innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+      const template = document.getElementById("result-template")!.innerHTML;
+      ele.innerHTML += template.replace("{name}", result.Name!).replace("{rank}", result["Town Rank"]).replace("{mayor}", result.Mayor);
       ele.querySelector("div")!.onclick = () => focusMap(result.X, result.Z);
     }
   }

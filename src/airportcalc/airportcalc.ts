@@ -1,8 +1,8 @@
 import L from "leaflet";
 import "leaflet-control-bar";
-import { g } from "./globals";
 import { worldcoord } from "../utils/coord";
 import { GeoJson } from "../utils/geojson";
+import { g } from "./globals";
 import { exportAirportcalc, importAirportcalc } from "./import-export";
 
 const VERSION = "2.2.1 (20240104)";
@@ -130,17 +130,15 @@ export function initAirportcalc() {
     // eslint-disable-next-line prefer-const
     let [cityArea, airportArea, percentage] = calcCityArea();
     if (isNaN(percentage)) percentage = 0;
-    const newdata =
-      `<img src="media/ac2-dark.png" style="height: 100%; float: right;">
-          <b>City area size:</b> ${Math.round(cityArea)}m^2
-          <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
-          <b>| Percentage:</b> <span style="color: ${
-            percentage < 50 ? "green" : "red"
-          };">${Math.round(percentage * 100) / 100}%</span>
-          <b>| Drawing for:</b> ${drawFor}` +
-      (notif != "" ? `<br><b>${notif}</b>` : "");
-    if (bottomBar.getContainer()?.innerHTML != newdata)
-      bottomBar.setContent(newdata);
+    const newContent = document.getElementById("bar-template")!.innerHTML
+          .replace("{citySize}", Math.round(cityArea).toString())
+          .replace("{airportSize}", Math.round(airportArea).toString())
+          .replace("{percentage}", (Math.round(percentage * 100) / 100).toString())
+          .replace("{color}", `style="color: ${percentage < 50 ? "green" : "red"};"`)
+          .replace("{drawFor}", drawFor)
+          .replace("{notif}", notif)
+    if (bottomBar.getContainer()?.innerHTML != newContent)
+      bottomBar.setContent(newContent);
   }, 50);
 
   if (window.localStorage.airportcalc != undefined) {

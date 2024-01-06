@@ -19,6 +19,14 @@
   <body>
     <div id="map"></div>
     <div id="bar"></div>
+    <template id="bar-template">
+      <img src="media/ac2-dark.png" style="height: 100%; float: right;">
+        <b>City area size:</b> {citySize}m^2
+        <b>| Airport area size:</b> {airportSize}m^2
+        <b>| Percentage:</b> <span {color}>{percentage}%</span>
+        <b>| Drawing for:</b> {drawFor}
+        <br><b>{notif}</b>
+    </template>
     <a id="downloader" style="display: none"></a>
     <input
       type="file"

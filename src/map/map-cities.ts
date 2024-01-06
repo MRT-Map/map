@@ -116,13 +116,12 @@ function mapTowns(towns: Town[]) {
           color: rankColors[town["Town Rank"]],
           radius: 7,
         }).bindPopup(
-          `Name: ${town.Name}<br>Mayor: ${town.Mayor}<br>Deputy Mayor: ${
-            town["Deputy Mayor"]
-          }<br>Rank: ${
-            town["Town Rank"]
-          }<br><a href="https://mrtrapidroute.com?from=Current+Location&to=${encodeURIComponent(
-            town.Name
-          )}" target="_blank">Navigate to here with RapidRoute</a>`
+          document.getElementById("town-popup-template")!.innerHTML
+          .replace("{name}", town.Name)
+          .replace("{mayor}", town.Mayor)
+          .replace("{deputy}", town["Deputy Mayor"])
+          .replace("{rank}", town["Town Rank"])
+          .replace("{nameEncoded}", encodeURIComponent(town.Name))
         )
       );
     }

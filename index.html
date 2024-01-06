@@ -25,9 +25,23 @@
       <div class="results__container">
         <div class="pill"></div>
         <div id="search__results"></div>
+        <template id="result-template"><div class="result">
+          <div class="result__name">{name}</div>
+          <div class="result__details">
+            <div class="result__rank">Rank: {rank}</div>
+            <div class="result__mayor">Mayor: {mayor}</div>
+          </div>
+        </div></template>
       </div>
     </div>
 
     <div id="map"></div>
+    <template id="town-popup-template">
+      Name: {name}<br>
+      Mayor: {mayor}<br>
+      Deputy Mayor: {deputy}<br>
+      Rank: {rank}<br>
+      <a href="https://mrtrapidroute.com?from=Current+Location&to={nameEncoded}" target="_blank">Navigate to here with RapidRoute</a>
+    </template>
   </body>
 </html>
