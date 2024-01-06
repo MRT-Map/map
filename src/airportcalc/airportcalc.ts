@@ -130,13 +130,17 @@ export function initAirportcalc() {
     // eslint-disable-next-line prefer-const
     let [cityArea, airportArea, percentage] = calcCityArea();
     if (isNaN(percentage)) percentage = 0;
-    const newContent = document.getElementById("bar-template")!.innerHTML
-          .replace("{citySize}", Math.round(cityArea).toString())
-          .replace("{airportSize}", Math.round(airportArea).toString())
-          .replace("{percentage}", (Math.round(percentage * 100) / 100).toString())
-          .replace("{color}", `style="color: ${percentage < 50 ? "green" : "red"};"`)
-          .replace("{drawFor}", drawFor)
-          .replace("{notif}", notif)
+    const newContent = document
+      .getElementById("bar-template")!
+      .innerHTML.replace("{citySize}", Math.round(cityArea).toString())
+      .replace("{airportSize}", Math.round(airportArea).toString())
+      .replace("{percentage}", (Math.round(percentage * 100) / 100).toString())
+      .replace(
+        "{color}",
+        `style="color: ${percentage < 50 ? "green" : "red"};"`
+      )
+      .replace("{drawFor}", drawFor)
+      .replace("{notif}", notif);
     if (bottomBar.getContainer()?.innerHTML != newContent)
       bottomBar.setContent(newContent);
   }, 50);
