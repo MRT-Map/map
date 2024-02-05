@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>MRT City Map</title>
@@ -9,17 +9,18 @@
     <meta name="author" content="MRT Mapping Services" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/png" href="./media/favicon.png" />
+    <link rel="icon" type="image/png" href="./media/map192.png" />
+    <link rel="manifest" href="manifest.json" />
 
-    <link rel="stylesheet" href="out.css" />
-    <script defer src="out.js"></script>
+    <link rel="stylesheet" href="out-map.css" />
+    <script defer src="out-map.js"></script>
   </head>
 
   <body>
     <div class="search">
       <div class="search__bar">
         <input id="search__input" placeholder="Search" disabled />
-        <button style="transform: translateY(-1px)"><i class="fa fa-search"></i></button>
+        <button><i class="fa fa-search"></i></button>
       </div>
       <div class="results__container">
         <div class="pill"></div>
@@ -28,14 +29,5 @@
     </div>
 
     <div id="map"></div>
-    <div id="bar"></div>
-    <a id="downloader" style="display: none"></a>
-    <input
-      type="file"
-      name="importer"
-      id="importer"
-      accept=".apc,.json"
-      style="display: none"
-    />
   </body>
 </html>

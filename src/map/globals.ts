@@ -1,9 +1,7 @@
-import { Control } from "leaflet";
-import "leaflet-easybutton";
 import "@geoman-io/leaflet-geoman-free";
-import L from "leaflet";
+import L, { Control } from "leaflet";
+import "leaflet-easybutton";
 import { mapLayers } from "./map-cities";
-import { toggleControls } from "./airportcalc";
 
 export class Globals {
   displayTowns = true; //used by certain later scripts to tell certain functions not to do certain things if a search in progress
@@ -56,7 +54,7 @@ export class Logo extends L.Control {
   override onAdd() {
     const container = L.DomUtil.create("div");
     container.innerHTML =
-      "<img src='media/mrtmapicon_lighttext.png' style='height: 50px;' title='Logo by Cortesi'>";
+      "<img src='media/map-light.png' style='height: 50px;'>";
     return container;
   }
   override onRemove() {
@@ -113,30 +111,31 @@ export class Buttons {
     this.city.disable();
 
     this.airportCalc = L.easyButton(
-      "fa-ruler",
-      toggleControls,
+      "fa-plane",
+      () => {
+        window.open("./airportcalc.html", "_self");
+      },
       "Open Airportcalc 2"
     )
       .setPosition("topright")
       .addTo(map);
-    this.airportCalc.disable();
   }
 }
 
 declare global {
   interface Window {
-    globals: Globals;
+    mapGlobals: Globals;
   }
 }
 
 export function g(): Globals {
-  return window.globals;
+  return window.mapGlobals;
 }
 
 export function gcm(): CityMap {
-  return window.globals.cityMap;
+  return window.mapGlobals.cityMap;
 }
 
 export function gb(): Buttons {
-  return window.globals.buttons;
+  return window.mapGlobals.buttons;
 }

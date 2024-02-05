@@ -1,16 +1,16 @@
-import "./ui.ts";
-import { initMap } from "./map.ts";
+import { initMap } from "../map.ts";
 import { initMapCities } from "./map-cities.ts";
 import { initTownSearch } from "./townsearch.ts";
-import { initAirportcalc } from "./airportcalc.ts";
+import "./ui.ts";
 import { initAirways, initWaypoints } from "./waypoint-viewer.ts";
+import { Globals } from "./globals.ts";
 
-import "./style.css";
-import "leaflet/dist/leaflet.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
-import "leaflet-easybutton/src/easy-button.css";
 import "leaflet-control-bar/src/L.Control.Bar.css";
+import "leaflet-easybutton/src/easy-button.css";
+import "leaflet/dist/leaflet.css";
+import "./../style.css";
 
 import L from "leaflet";
 
@@ -23,12 +23,11 @@ L.Icon.Default.mergeOptions({
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   iconUrl: require("leaflet/dist/images/marker-icon.png"),
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png")
+  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
 });
 
-initMap();
+window.mapGlobals = new Globals(initMap());
 void initMapCities();
 void initTownSearch();
-initAirportcalc();
 void initWaypoints();
 void initAirways();

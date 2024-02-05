@@ -1,0 +1,5 @@
+v1: https://github.com/iiiii7d/airportcalc
+v2.0: initial release
+v2.1: added logo, banner content is now selectable
+v2.2: convert to typescript, integrate with rest of refactors
+v2.2.1: split into multiple files and separate from main page
