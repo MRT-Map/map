@@ -29,6 +29,6 @@
     "leaflet-easybutton": "^2.4.0",
     "postcss": "^8.4.34",
     "postcss-preset-env": "^9.3.0",
-    "prettier": "^3.2.4"
+    "prettier": "^3.2.5"
   }
 }
