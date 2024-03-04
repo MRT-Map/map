@@ -21,7 +21,7 @@
     "autoprefixer": "^10.4.17",
     "esbuild": "^0.20.1",
     "esbuild-sass-plugin": "^3.0.0",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "fs-extra": "^11.2.0",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
