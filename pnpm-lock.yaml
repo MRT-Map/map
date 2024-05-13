@@ -18,8 +18,8 @@ devDependencies:
     specifier: ^3.5.29
     version: 3.5.29
   '@types/leaflet':
-    specifier: ^1.9.8
-    version: 1.9.8
+    specifier: ^1.9.12
+    version: 1.9.12
   '@types/node':
     specifier: ^20.12.10
     version: 20.12.10
@@ -968,8 +968,8 @@ packages:
       '@types/node': 20.12.10
     dev: true
 
-  /@types/leaflet@1.9.8:
-    resolution: {integrity: sha512-EXdsL4EhoUtGm2GC2ZYtXn+Fzc6pluVgagvo2VC1RHWToLGlTRwVYoDpqS/7QXa01rmDyBjJk3Catpf60VMkwg==}
+  /@types/leaflet@1.9.12:
+    resolution: {integrity: sha512-BK7XS+NyRI291HIo0HCfE18Lp8oA30H1gpi1tf0mF3TgiCEzanQjOqNZ4x126SXzzi2oNSZhZ5axJp1k0iM6jg==}
     dependencies:
       '@types/geojson': 7946.0.13
     dev: true
@@ -1099,8 +1099,8 @@ packages:
       globby: 11.1.0
       is-glob: 4.0.3
       minimatch: 9.0.3
-      semver: 7.5.4
-      ts-api-utils: 1.0.3(typescript@5.3.3)
+      semver: 7.6.0
+      ts-api-utils: 1.3.0(typescript@5.3.3)
       typescript: 5.3.3
     transitivePeerDependencies:
       - supports-color
@@ -2654,14 +2654,6 @@ packages:
       source-map-js: 1.0.2
     dev: true
 
-  /semver@7.5.4:
-    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
-    dev: true
-
   /semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
     engines: {node: '>=10'}
@@ -2741,15 +2733,6 @@ packages:
     engines: {node: '>=8.0'}
     dependencies:
       is-number: 7.0.0
-    dev: true
-
-  /ts-api-utils@1.0.3(typescript@5.3.3):
-    resolution: {integrity: sha512-wNMeqtMz5NtwpT/UZGY5alT+VoKdSsOOP/kqHFcUW1P/VRhH2wJ48+DN2WwUliNbQ976ETwDL0Ifd2VVvgonvg==}
-    engines: {node: '>=16.13.0'}
-    peerDependencies:
-      typescript: '>=4.2.0'
-    dependencies:
-      typescript: 5.3.3
     dev: true
 
   /ts-api-utils@1.3.0(typescript@5.3.3):
