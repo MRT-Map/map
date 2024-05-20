@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^6.5.1
     version: 6.5.1
   '@geoman-io/leaflet-geoman-free':
-    specifier: ^2.16.0
-    version: 2.16.0(leaflet@1.9.4)
+    specifier: ^2.17.0
+    version: 2.17.0(leaflet@1.9.4)
   '@types/fs-extra':
     specifier: ^11.0.4
     version: 11.0.4
@@ -749,8 +749,8 @@ packages:
     requiresBuild: true
     dev: true
 
-  /@geoman-io/leaflet-geoman-free@2.16.0(leaflet@1.9.4):
-    resolution: {integrity: sha512-BnKAAoTXraWVFfhX/0gT/iBgAz1BPfpbdQ9dJamEFI4lIku9UNXXluu/E0k7YkZETq0tENX2GPnKLB4p+VgrSw==}
+  /@geoman-io/leaflet-geoman-free@2.17.0(leaflet@1.9.4):
+    resolution: {integrity: sha512-vAY9tKB2I/Ui8d3QUBuebWnunI2sGjsfAUTXMMcf5UpISvPz67io4hpbKXid9GNsW6P4LGv1+ZzrmkpM78GzHA==}
     peerDependencies:
       leaflet: ^1.2.0
     dependencies:
@@ -760,7 +760,7 @@ packages:
       '@turf/line-split': 6.5.0
       leaflet: 1.9.4
       lodash: 4.17.21
-      polygon-clipping: 0.15.3
+      polyclip-ts: 0.16.5
     dev: true
 
   /@humanwhocodes/config-array@0.11.14:
@@ -1224,6 +1224,10 @@ packages:
 
   /balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
+    dev: true
+
+  /bignumber.js@9.1.2:
+    resolution: {integrity: sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==}
     dev: true
 
   /binary-extensions@2.3.0:
@@ -1997,10 +2001,11 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /polygon-clipping@0.15.3:
-    resolution: {integrity: sha512-ho0Xx5DLkgxRx/+n4O74XyJ67DcyN3Tu9bGYKsnTukGAW6ssnuak6Mwcyb1wHy9MZc9xsUWqIoiazkZB5weECg==}
+  /polyclip-ts@0.16.5:
+    resolution: {integrity: sha512-ZchnG0zGZReHgEo3EYzEUi6UmfQFFzNnj6AFU+gBm+IJJ4qG9gL4CwjtCV6oi/PittUPpJLiLJxcn/AgrCBO+g==}
     dependencies:
-      splaytree: 3.1.2
+      bignumber.js: 9.1.2
+      splaytree-ts: 1.0.1
     dev: true
 
   /postcss-attribute-case-insensitive@6.0.3(postcss@8.4.38):
@@ -2676,8 +2681,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /splaytree@3.1.2:
-    resolution: {integrity: sha512-4OM2BJgC5UzrhVnnJA4BkHKGtjXNzzUfpQjCO8I05xYPsfS/VuQDwjCGGMi8rYQilHEV4j8NBqTFbls/PZEE7A==}
+  /splaytree-ts@1.0.1:
+    resolution: {integrity: sha512-B+VzCm33/KEchi/fzT6/3NRHm8k5+Kf37SBQO3meHHS/tK2xBnIm4ZvusQ1wUpHgKMCCqEWgXnwFXAa1nD289g==}
     dev: true
 
   /strip-ansi@6.0.1:
