@@ -33,8 +33,8 @@ devDependencies:
     specifier: ^0.20.2
     version: 0.20.2
   esbuild-sass-plugin:
-    specifier: ^3.2.0
-    version: 3.2.0(esbuild@0.20.2)(sass-embedded@1.74.1)
+    specifier: ^3.3.0
+    version: 3.3.0(esbuild@0.20.2)(sass-embedded@1.74.1)
   eslint:
     specifier: ^8.57.0
     version: 8.57.0
@@ -1410,10 +1410,10 @@ packages:
     resolution: {integrity: sha512-rxFVtrMGMFROr4qqU6n95rUi9IlfIm+lIAt+hOToy/9r6CDv0XiEcQdC3VP71y1pE5CFTzKV0RvxOGYCPWWHPw==}
     dev: true
 
-  /esbuild-sass-plugin@3.2.0(esbuild@0.20.2)(sass-embedded@1.74.1):
-    resolution: {integrity: sha512-a+e7rYx4sDHgtKWN2n6/7lH5fgfvJaT6AMHmFhBKZy2ZTSN91X5q12l+DNVYJ8cWViEjJNWEd7k7UVcCg/2S/Q==}
+  /esbuild-sass-plugin@3.3.0(esbuild@0.20.2)(sass-embedded@1.74.1):
+    resolution: {integrity: sha512-btH77lGkASp1VHyji0dAanomatCwq1dmfrjAIjhv+GgR9LK2m1hbRr+t4kbjveyqCwmdBfRkboj+Pfaruok1Mg==}
     peerDependencies:
-      esbuild: ^0.20.1
+      esbuild: '>=0.20.1'
       sass-embedded: ^1.71.1
     dependencies:
       esbuild: 0.20.2
@@ -2660,7 +2660,7 @@ packages:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.4
-      source-map-js: 1.0.2
+      source-map-js: 1.2.0
     dev: true
 
   /semver@7.6.0:
@@ -2686,11 +2686,6 @@ packages:
   /slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
-    dev: true
-
-  /source-map-js@1.0.2:
-    resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
-    engines: {node: '>=0.10.0'}
     dev: true
 
   /source-map-js@1.2.0:
