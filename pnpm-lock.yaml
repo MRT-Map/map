@@ -21,8 +21,8 @@ devDependencies:
     specifier: ^1.9.12
     version: 1.9.12
   '@types/node':
-    specifier: ^20.12.12
-    version: 20.12.12
+    specifier: ^20.14.8
+    version: 20.14.8
   '@typescript-eslint/eslint-plugin':
     specifier: ^7.14.1
     version: 7.14.1(@typescript-eslint/parser@7.1.0)(eslint@8.57.0)(typescript@5.3.3)
@@ -950,7 +950,7 @@ packages:
     resolution: {integrity: sha512-yTbItCNreRooED33qjunPthRcSjERP1r4MqCZc7wv0u2sUkzTFp45tgUfS5+r7FrZPdmCCNflLhVSP/o+SemsQ==}
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 20.12.12
+      '@types/node': 20.14.8
     dev: true
 
   /@types/geojson@7946.0.13:
@@ -970,7 +970,7 @@ packages:
   /@types/jsonfile@6.1.4:
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
     dependencies:
-      '@types/node': 20.12.12
+      '@types/node': 20.14.8
     dev: true
 
   /@types/leaflet@1.9.12:
@@ -979,8 +979,8 @@ packages:
       '@types/geojson': 7946.0.13
     dev: true
 
-  /@types/node@20.12.12:
-    resolution: {integrity: sha512-eWLDGF/FOSPtAvEqeRAQ4C8LSA7M1I7i0ky1I8U7kD1J5ITyW3AsRhQrKVoWf5pFKZ2kILsEGJhsI9r93PYnOw==}
+  /@types/node@20.14.8:
+    resolution: {integrity: sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA==}
     dependencies:
       undici-types: 5.26.5
     dev: true
