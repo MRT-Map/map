@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import autoprefixer from "autoprefixer";
 import * as esbuild from "esbuild";
 import { sassPlugin } from "esbuild-sass-plugin";
@@ -19,6 +18,7 @@ let ctx = await esbuild.context({
   sourcemap: true,
   outdir: "out",
   publicPath:
+    // eslint-disable-next-line no-undef
     process.argv[2] == "prod" ? "https://mrt-map.github.io/map" : undefined,
   plugins: [
     sassPlugin({
@@ -42,8 +42,10 @@ fs.copyFileSync("./airportcalc.html", "./out/airportcalc.html");
 fs.copyFileSync("./manifest.json", "./out/manifest.json");
 fse.copySync("./media", "./out/media");
 
+// eslint-disable-next-line no-undef
 if (process.argv[2] == "prod") {
   await ctx.rebuild();
+  // eslint-disable-next-line no-undef
   process.exit();
 }
 
