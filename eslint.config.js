@@ -10,9 +10,7 @@ export default [
     languageOptions: {
       globals: globals.browser,
     },
-    rules: {
-
-    },
+    rules: {},
   },
   prettierConfig,
 ];
