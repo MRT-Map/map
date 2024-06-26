@@ -1,13 +1,13 @@
-import { initAirportcalc } from "./airportcalc.ts";
-import { initMap } from "../map.ts";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
+import L from "leaflet";
 import "leaflet-control-bar/src/L.Control.Bar.css";
 import "leaflet-easybutton/src/easy-button.css";
 import "leaflet/dist/leaflet.css";
+import { initMap } from "../map.js";
 import "./../style.css";
-import L from "leaflet";
-import { Globals } from "./globals.ts";
+import { initAirportcalc } from "./airportcalc.js";
+import { Globals } from "./globals.js";
 // https://stackoverflow.com/a/58254190
 // @ts-expect-error fix esbuild not making these load by themselves
 delete L.Icon.Default.prototype._getIconUrl;
