@@ -2,38 +2,16 @@ import L from "leaflet";
 import "leaflet-control-bar";
 import { g } from "./globals";
 import { worldcoord } from "../utils/coord";
-import { GeoJson } from "../utils/geojson";
 import { exportAirportcalc, importAirportcalc } from "./import-export";
-
 const VERSION = "2.2.1 (20240104)";
-
-declare module "leaflet" {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace control {
-    function bar(id: string, options: object): ControlBar;
-  }
-}
-
-declare class ControlBar extends L.Control {
-  hide(): void;
-  show(): void;
-  getContainer(): HTMLElement | undefined;
-  setContent(content: string): void;
-  isVisible(): boolean;
-}
-
-export const airportcalcGroup = L.layerGroup([]) as L.LayerGroup<
-  L.Polygon | L.Circle
->;
-
-export const bottomBar: ControlBar = L.control.bar("bar", {
+export const airportcalcGroup = L.layerGroup([]);
+// @ts-ignore
+export const bottomBar = L.control.bar("bar", {
   position: "bottom",
   visible: false,
 });
-
-let drawFor: "city" | "airport" = "city";
+let drawFor = "city";
 let notif = "";
-
 export function initAirportcalc() {
   const map = g().map;
   map.pm.setGlobalOptions({
@@ -43,7 +21,6 @@ export function initAirportcalc() {
       color: "#ff0000",
     },
   });
-
   map.pm.Toolbar.createCustomControl({
     name: "cityspace",
     title: "City Space",
@@ -76,7 +53,6 @@ export function initAirportcalc() {
       drawFor = "airport";
     },
   });
-
   map.pm.Toolbar.createCustomControl({
     name: "clearall",
     title: "Clear All",
@@ -87,7 +63,6 @@ export function initAirportcalc() {
       clear("Are you sure you want to clear all polygons?");
     },
   });
-
   map.pm.Toolbar.createCustomControl({
     name: "export",
     title: "Export",
@@ -95,9 +70,7 @@ export function initAirportcalc() {
     className: "fas fa-file-export icon",
     toggle: false,
     onClick: () => {
-      const downloader = document.getElementById(
-        "downloader"
-      )! as HTMLAnchorElement;
+      const downloader = document.getElementById("downloader");
       const dataStr =
         "data:text/json;charset=utf-8," +
         encodeURIComponent(JSON.stringify(exportAirportcalc(), null, 2));
@@ -107,7 +80,6 @@ export function initAirportcalc() {
       showNotif("Polygons exported");
     },
   });
-
   map.pm.Toolbar.createCustomControl({
     name: "import",
     title: "Import",
@@ -115,48 +87,38 @@ export function initAirportcalc() {
     className: "fas fa-file-import icon",
     toggle: false,
     onClick: () => {
-      document.getElementById("importer")!.click();
+      document.getElementById("importer").click();
     },
   });
-
   map.pm.addControls({
     position: "bottomleft",
     drawCircleMarker: false,
     drawPolyline: false,
     drawMarker: false,
   });
-
   setInterval(() => {
-    // eslint-disable-next-line prefer-const
     let [cityArea, airportArea, percentage] = calcCityArea();
     if (isNaN(percentage)) percentage = 0;
     const newdata =
       `<img src="media/ac2-dark.png" style="height: 100%; float: right;">
           <b>City area size:</b> ${Math.round(cityArea)}m^2
           <b>| Airport area size:</b> ${Math.round(airportArea)}m^2
-          <b>| Percentage:</b> <span style="color: ${
-            percentage < 50 ? "green" : "red"
-          };">${Math.round(percentage * 100) / 100}%</span>
+          <b>| Percentage:</b> <span style="color: ${percentage < 50 ? "green" : "red"};">${Math.round(percentage * 100) / 100}%</span>
           <b>| Drawing for:</b> ${drawFor}` +
       (notif != "" ? `<br><b>${notif}</b>` : "");
     if (bottomBar.getContainer()?.innerHTML != newdata)
       bottomBar.setContent(newdata);
   }, 50);
-
   if (window.localStorage.airportcalc != undefined) {
-    importAirportcalc(
-      JSON.parse(window.localStorage.airportcalc as string) as GeoJson
-    );
+    importAirportcalc(JSON.parse(window.localStorage.airportcalc));
     delete window.localStorage.airportcalc;
   }
-
   map.addLayer(airportcalcGroup);
   map.addControl(bottomBar);
   bottomBar.show();
   showNotif("Airportcalc " + VERSION);
 }
-
-export function clear(prompt_: string) {
+export function clear(prompt_) {
   if (airportcalcGroup.getLayers().length != 0) {
     if (confirm(prompt_)) {
       airportcalcGroup.clearLayers();
@@ -164,18 +126,17 @@ export function clear(prompt_: string) {
     }
   }
 }
-
-function calcCityArea(): [number, number, number] {
+function calcCityArea() {
   let cityArea = 0;
   let airportArea = 0;
-  (airportcalcGroup.getLayers() as (L.Polygon | L.Circle)[]).forEach(l => {
+  airportcalcGroup.getLayers().forEach((l) => {
     let newArea = 0;
     if (l instanceof L.Polygon) {
       for (let s = 0; s < l.getLatLngs().length; s++) {
         let polyArea = 0;
-        const latlngs = (l.getLatLngs()[s] as L.LatLng[]).map(ll =>
-          worldcoord([ll.lat, ll.lng])
-        );
+        const latlngs = l
+          .getLatLngs()
+          [s].map((ll) => worldcoord([ll.lat, ll.lng]));
         //console.log(latlngs)
         for (let i = 0; i < latlngs.length; i++) {
           const thisLatlng = latlngs[i];
@@ -186,7 +147,6 @@ function calcCityArea(): [number, number, number] {
             (thisLatlng[1] + nextLatlng[1]) *
             (nextLatlng[0] - thisLatlng[0]);
         }
-
         if (s == 0) newArea += Math.abs(polyArea);
         else newArea -= Math.abs(polyArea);
       }
@@ -199,8 +159,7 @@ function calcCityArea(): [number, number, number] {
   });
   return [cityArea, airportArea, (airportArea / cityArea) * 100];
 }
-
-export function showNotif(newNotif: string) {
+export function showNotif(newNotif) {
   notif = newNotif;
   setTimeout(() => {
     if (notif == newNotif) notif = "";
