@@ -11,6 +11,7 @@ import { initMapCities } from "./map-cities.js";
 import { initTownSearch } from "./townsearch.js";
 import "./ui.js";
 import { initAirways, initWaypoints } from "./waypoint-viewer.js";
+import { initMapWarps } from "./map-warps.js";
 // https://stackoverflow.com/a/58254190
 // @ts-expect-error fix esbuild not making these load by themselves
 delete L.Icon.Default.prototype._getIconUrl;
@@ -27,3 +28,4 @@ void initMapCities();
 void initTownSearch();
 void initWaypoints();
 void initAirways();
+void initMapWarps();

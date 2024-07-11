@@ -76,11 +76,20 @@ export class Buttons {
         g().displayTowns = g().displayTowns ? false : true;
         mapLayers();
       },
-      "Show/Hide towns",
+      "Show/Hide Towns",
     )
       .setPosition("topright")
       .addTo(map);
     this.city.disable();
+    this.warps = L.easyButton(
+      "fa-rocket",
+      () => {
+
+      },
+      "Show/Hide Warps"
+    )
+      .setPosition("topright")
+      .addTo(map);
     this.airportCalc = L.easyButton(
       "fa-plane",
       () => {

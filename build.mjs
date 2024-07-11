@@ -40,6 +40,7 @@ if (!fs.existsSync("out")) fs.mkdirSync("out");
 fs.copyFileSync("./index.html", "./out/index.html");
 fs.copyFileSync("./airportcalc.html", "./out/airportcalc.html");
 fs.copyFileSync("./manifest.json", "./out/manifest.json");
+fs.copyFileSync("./warps.json", "./out/warps.json");
 fse.copySync("./media", "./out/media");
 
 // eslint-disable-next-line no-undef
