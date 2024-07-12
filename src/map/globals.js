@@ -19,6 +19,7 @@ export class CityMap {
     this.cityLayers = new Map();
     this.cityMarkers = new Map();
     this.towns = [];
+    this.warpLayer = L.featureGroup();
   }
 }
 CityMap.cityTypes = [
@@ -76,11 +77,22 @@ export class Buttons {
         g().displayTowns = g().displayTowns ? false : true;
         mapLayers();
       },
-      "Show/Hide towns",
+      "Show/Hide Towns",
     )
       .setPosition("topright")
       .addTo(map);
     this.city.disable();
+    this.warps = L.easyButton(
+      "fa-bolt",
+      () => {
+        if (g().map.hasLayer(gcm().warpLayer)) g().map.removeLayer(gcm().warpLayer);
+        else g().map.addLayer(gcm().warpLayer);
+      },
+      "Show/Hide Warps"
+    )
+      .setPosition("topright")
+      .addTo(map);
+    this.warps.disable();
     this.airportCalc = L.easyButton(
       "fa-plane",
       () => {

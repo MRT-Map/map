@@ -29,6 +29,7 @@ const customTileLayer = function (templateUrl, options) {
 export function initMap() {
   const map = L.map("map", {
     crs: L.CRS.Simple,
+    preferCanvas: true
   }).setView([0, 0], 8);
   customTileLayer("unused url; check custom function", {
     maxZoom: 8,

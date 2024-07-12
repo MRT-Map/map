@@ -56,3 +56,4 @@ dkms.conf
 .DS_Store
 node_modules/
 out/
+package-lock.json
