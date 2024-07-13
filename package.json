@@ -27,7 +27,7 @@
     "globals": "^15.8.0",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
-    "leaflet-control-bar": "github:mapshakers/leaflet-control-bar",
+    "leaflet-control-bar": "mapshakers/leaflet-control-bar",
     "leaflet-easybutton": "^2.4.0",
     "postcss": "^8.4.39",
     "postcss-preset-env": "^9.6.0",
