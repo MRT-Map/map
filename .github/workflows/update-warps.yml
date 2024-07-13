@@ -1,0 +1,22 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 0 */3 * *
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18.4.0
+      - run: "node get-warp-data.js"
+      - run: |
+          git config --global user.name "github actions"
+          git config --global user.email "username@users.noreply.github.com"
+      - run: git commit -am "Warp update @ $(date +%Y%m%dT%H:%M:%S%Z)"
+      - run: git push
