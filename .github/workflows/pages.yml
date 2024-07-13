@@ -1,6 +1,10 @@
 on:
   push:
     branches: ["main"]
+  workflow_run:
+    workflows: ["Update Warps"]
+    types:
+      - completed
 
 permissions:
   contents: write
