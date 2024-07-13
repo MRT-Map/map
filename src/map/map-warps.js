@@ -13,7 +13,7 @@ export async function initMapWarps() {
                 color: "#ff0000",
                 radius: 3
             })
-                .bindPopup(`Warp: ${warp.name}<br><button onclick="navigator.clipboard.writeText('/warp point ${warp.name}')">Copy Compass Point Command</button>`)
+                .bindPopup(`Warp: ${warp.name}<br>Visited <strong>${warp.visits}</strong> times<br><button onclick="navigator.clipboard.writeText('/warp point ${warp.name}')">Copy Compass Point Command</button>`)
         )
     }
 

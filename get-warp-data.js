@@ -10,7 +10,8 @@ async function getData() {
         warpData.push({
             name: warp.name,
             x: Math.round(warp.x),
-            z: Math.round(warp.z)
+            z: Math.round(warp.z),
+            visits: warp.visits
         })
     }
 
