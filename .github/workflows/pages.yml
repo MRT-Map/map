@@ -22,6 +22,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: |
+             git config --global url."https://github.com/".insteadOf git@github.com:
+             git config --global url."https://".insteadOf git://
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm run prod
       - run: cd out; echo > .nojekyll; cd ..
