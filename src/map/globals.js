@@ -58,7 +58,7 @@ export class Buttons {
       .setPosition("topright")
       .addTo(map);
     const streetMap = L.tileLayer(
-      new URLSearchParams(window.location.search).has("v5") ? "https://raw.githubusercontent.com/MRT-Map/map-data/v5/tiles/{z}/{x}/{y}.png" : "https://raw.githubusercontent.com/MRT-Map/map-data/main/tiles/{z}/{x}/{y}.webp",
+      new URLSearchParams(window.location.search).has("v5") ? "https://raw.githubusercontent.com/MRT-Map/map-data/v5/tiles/{z}/{x}/{y}.webp" : "https://raw.githubusercontent.com/MRT-Map/map-data/main/tiles/{z}/{x}/{y}.webp",
     );
     this.streetMap = L.easyButton(
       "fa-map",
