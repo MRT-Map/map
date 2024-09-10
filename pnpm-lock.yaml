@@ -66,8 +66,8 @@ importers:
         specifier: ^8.4.41
         version: 8.4.41
       postcss-preset-env:
-        specifier: ^10.0.2
-        version: 10.0.2(postcss@8.4.41)
+        specifier: ^10.0.3
+        version: 10.0.3(postcss@8.4.41)
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -727,8 +727,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  cssdb@8.1.0:
-    resolution: {integrity: sha512-BQN57lfS4dYt2iL0LgyrlDbefZKEtUyrO8rbzrbGrqBk6OoyNTQLF+porY9DrpDBjLo4NEvj2IJttC7vf3x+Ew==}
+  cssdb@8.1.1:
+    resolution: {integrity: sha512-kRbSRgZoxtZNl5snb3nOzBkFOt5AwnephcUTIEFc2DebKG9PN50/cHarlwOooTxYQ/gxsnKs3BxykhNLmfvyLg==}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -1290,11 +1290,11 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  postcss-opacity-percentage@2.0.0:
-    resolution: {integrity: sha512-lyDrCOtntq5Y1JZpBFzIWm2wG9kbEdujpNt4NLannF+J9c8CgFIzPa80YQfdza+Y+yFfzbYj/rfoOsYsooUWTQ==}
-    engines: {node: ^14 || ^16 || >=18}
+  postcss-opacity-percentage@3.0.0:
+    resolution: {integrity: sha512-K6HGVzyxUxd/VgZdX04DCtdwWJ4NGLG212US4/LA1TLAbHgmAsTWVR86o+gGIbFtnTkfOpb9sCRBx8K7HO66qQ==}
+    engines: {node: '>=18'}
     peerDependencies:
-      postcss: ^8.2
+      postcss: ^8.4
 
   postcss-overflow-shorthand@6.0.0:
     resolution: {integrity: sha512-BdDl/AbVkDjoTofzDQnwDdm/Ym6oS9KgmO7Gr+LHYjNWJ6ExORe4+3pcLQsLA9gIROMkiGVjjwZNoL/mpXHd5Q==}
@@ -1313,8 +1313,8 @@ packages:
     peerDependencies:
       postcss: ^8.4
 
-  postcss-preset-env@10.0.2:
-    resolution: {integrity: sha512-PMxqnz0RQYMUmUi6p4P7BhC9EVGyEUCIdwn4vJ7Fy1jvc2QP4mMH75BSBB1mBFqjl3x4xYwyCNMhGZ8y0+/qOA==}
+  postcss-preset-env@10.0.3:
+    resolution: {integrity: sha512-1nrZ4IeBXEEj53IMoRKE+k/Ub6nQb3gFjaxTeyUNG5zv3JQclFDY5GKKhAi3nsa1lnPMWgzQX+/1y6wUt2+I7Q==}
     engines: {node: '>=18'}
     peerDependencies:
       postcss: ^8.4
@@ -2283,7 +2283,7 @@ snapshots:
     dependencies:
       postcss: 8.4.41
 
-  cssdb@8.1.0: {}
+  cssdb@8.1.1: {}
 
   cssesc@3.0.0: {}
 
@@ -2882,7 +2882,7 @@ snapshots:
       postcss: 8.4.41
       postcss-selector-parser: 6.1.0
 
-  postcss-opacity-percentage@2.0.0(postcss@8.4.41):
+  postcss-opacity-percentage@3.0.0(postcss@8.4.41):
     dependencies:
       postcss: 8.4.41
 
@@ -2900,7 +2900,7 @@ snapshots:
       postcss: 8.4.41
       postcss-value-parser: 4.2.0
 
-  postcss-preset-env@10.0.2(postcss@8.4.41):
+  postcss-preset-env@10.0.3(postcss@8.4.41):
     dependencies:
       '@csstools/postcss-cascade-layers': 5.0.0(postcss@8.4.41)
       '@csstools/postcss-color-function': 4.0.2(postcss@8.4.41)
@@ -2937,7 +2937,7 @@ snapshots:
       css-blank-pseudo: 7.0.0(postcss@8.4.41)
       css-has-pseudo: 7.0.0(postcss@8.4.41)
       css-prefers-color-scheme: 10.0.0(postcss@8.4.41)
-      cssdb: 8.1.0
+      cssdb: 8.1.1
       postcss: 8.4.41
       postcss-attribute-case-insensitive: 7.0.0(postcss@8.4.41)
       postcss-clamp: 4.1.0(postcss@8.4.41)
@@ -2957,7 +2957,7 @@ snapshots:
       postcss-lab-function: 7.0.2(postcss@8.4.41)
       postcss-logical: 8.0.0(postcss@8.4.41)
       postcss-nesting: 13.0.0(postcss@8.4.41)
-      postcss-opacity-percentage: 2.0.0(postcss@8.4.41)
+      postcss-opacity-percentage: 3.0.0(postcss@8.4.41)
       postcss-overflow-shorthand: 6.0.0(postcss@8.4.41)
       postcss-page-break: 3.0.4(postcss@8.4.41)
       postcss-place: 10.0.0(postcss@8.4.41)
