@@ -24,8 +24,8 @@ importers:
         specifier: ^3.5.32
         version: 3.5.32
       '@types/leaflet':
-        specifier: ^1.9.12
-        version: 1.9.12
+        specifier: ^1.9.14
+        version: 1.9.14
       '@types/node':
         specifier: ^22.8.2
         version: 22.8.2
@@ -605,8 +605,8 @@ packages:
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
-  '@types/leaflet@1.9.12':
-    resolution: {integrity: sha512-BK7XS+NyRI291HIo0HCfE18Lp8oA30H1gpi1tf0mF3TgiCEzanQjOqNZ4x126SXzzi2oNSZhZ5axJp1k0iM6jg==}
+  '@types/leaflet@1.9.14':
+    resolution: {integrity: sha512-sx2q6MDJaajwhKeVgPSvqXd8rhNJSTA3tMidQGduZn9S6WBYxDkCpSpV5xXEmSg7Cgdk/5vJGhVF1kMYLzauBg==}
 
   '@types/node@22.8.2':
     resolution: {integrity: sha512-NzaRNFV+FZkvK/KLCsNdTvID0SThyrs5SHB6tsD/lajr22FGC73N2QeDPM2wHtVde8mgcXuSsHQkH5cX1pbPLw==}
@@ -2134,7 +2134,7 @@ snapshots:
     dependencies:
       '@types/node': 22.8.2
 
-  '@types/leaflet@1.9.12':
+  '@types/leaflet@1.9.14':
     dependencies:
       '@types/geojson': 7946.0.14
 
