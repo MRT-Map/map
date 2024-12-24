@@ -24,7 +24,7 @@
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "fs-extra": "^11.2.0",
-    "globals": "^15.13.0",
+    "globals": "^15.14.0",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
     "leaflet-control-bar": "mapshakers/leaflet-control-bar",
