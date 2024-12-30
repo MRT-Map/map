@@ -15,8 +15,8 @@ importers:
         specifier: ^6.7.2
         version: 6.7.2
       '@geoman-io/leaflet-geoman-free':
-        specifier: ^2.18.0
-        version: 2.18.0(leaflet@1.9.4)
+        specifier: ^2.18.1
+        version: 2.18.1(leaflet@1.9.4)
       '@types/fs-extra':
         specifier: ^11.0.4
         version: 11.0.4
@@ -517,8 +517,8 @@ packages:
     resolution: {integrity: sha512-JUOtgFW6k9u4Y+xeIaEiLr3+cjoUPiAuLXoyKOJSia6Duzb7pq+A76P9ZdPDoAoxHdHzq6gE9/jKBGXlZT8FbA==}
     engines: {node: '>=6'}
 
-  '@geoman-io/leaflet-geoman-free@2.18.0':
-    resolution: {integrity: sha512-cM3cSCDSvcD4No0zjIHT/Kz1F/0ILqTp02msjRvOGwjZ9gOfDVup/TMIV604f5y5kOGq/JmoDvkN0I86swflaA==}
+  '@geoman-io/leaflet-geoman-free@2.18.1':
+    resolution: {integrity: sha512-6xb2hekgDTMeFcznKjM5i7JpZvPwQYYQpwmqZhWzVHt+SdA5Ijnn4ViblEmIDYNBiA33UgjJ3DaA+3E+5LiCJw==}
     peerDependencies:
       leaflet: ^1.2.0
 
@@ -2007,7 +2007,7 @@ snapshots:
 
   '@fortawesome/fontawesome-free@6.7.2': {}
 
-  '@geoman-io/leaflet-geoman-free@2.18.0(leaflet@1.9.4)':
+  '@geoman-io/leaflet-geoman-free@2.18.1(leaflet@1.9.4)':
     dependencies:
       '@turf/boolean-contains': 6.5.0
       '@turf/kinks': 6.5.0
