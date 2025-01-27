@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 18.4.0
-      - run: "node get-warp-data.js"
+      - run: "node warp-data/get-warp-data.js"
       - run: echo "message=Warp update @ $(date +%Y%m%dT%H:%M:%S%Z)" >> "$GITHUB_ENV"
       - uses: EndBug/add-and-commit@v9
         with:

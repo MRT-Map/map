@@ -1,4 +1,6 @@
 import * as fs from "fs";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const warpData = [];
 
@@ -19,7 +21,8 @@ async function getData() {
     if (oldLength != warpData.length) getData();
     else {
         console.log(warpData.length + " warps found")
-        fs.writeFileSync("./warps.json", JSON.stringify({
+        const dir = dirname(fileURLToPath(import.meta.url))
+        fs.writeFileSync(dir+"/warps.json", JSON.stringify({
             warps: warpData,
             lastUpdated: new Date().toUTCString()
         }));

@@ -1,4 +1,5 @@
 import { mapcoord } from "../utils/coord";
+import L from "leaflet";
 import { gb, gcm } from "./globals";
 
 export async function initMapWarps() {
