@@ -17,7 +17,7 @@
     "@types/fs-extra": "^11.0.4",
     "@types/jquery": "^3.5.32",
     "@types/leaflet": "^1.9.16",
-    "@types/node": "^22.13.4",
+    "@types/node": "^22.13.5",
     "autoprefixer": "^10.4.20",
     "esbuild": "^0.25.0",
     "esbuild-sass-plugin": "^3.3.1",
