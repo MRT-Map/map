@@ -21,7 +21,7 @@
     "autoprefixer": "^10.4.20",
     "esbuild": "^0.25.0",
     "esbuild-sass-plugin": "^3.3.1",
-    "eslint": "^9.21.0",
+    "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.0.2",
     "fs-extra": "^11.3.0",
     "globals": "^16.0.0",
