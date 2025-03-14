@@ -20,6 +20,7 @@ export class CityMap {
     this.cityMarkers = new Map();
     this.towns = [];
     this.warpLayer = L.featureGroup();
+    this.radius = new this.radius();
   }
 }
 CityMap.cityTypes = [
@@ -94,6 +95,13 @@ export class Buttons {
       .setPosition("topright")
       .addTo(map);
     this.warps.disable();
+    this.radius = L.easyButton(
+      "fa-bullseye",
+      () => {
+        gcm().radius.toggle();
+      },
+      "300/500 Radius"
+    )
     this.airportCalc = L.easyButton(
       "fa-plane",
       () => {
