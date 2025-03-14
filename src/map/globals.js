@@ -2,6 +2,7 @@ import "@geoman-io/leaflet-geoman-free";
 import L from "leaflet";
 import "leaflet-easybutton";
 import { mapLayers } from "./map-cities";
+import { Radius } from "./radius.js";
 export class Globals {
   constructor(map) {
     this.displayTowns = true; //used by certain later scripts to tell certain functions not to do certain things if a search in progress
@@ -20,7 +21,7 @@ export class CityMap {
     this.cityMarkers = new Map();
     this.towns = [];
     this.warpLayer = L.featureGroup();
-    this.radius = new this.radius();
+    this.radius = new Radius();
   }
 }
 CityMap.cityTypes = [
@@ -60,7 +61,7 @@ export class Buttons {
       .addTo(map);
     const streetMap = L.tileLayer(
       "https://raw.githubusercontent.com/MRT-Map/map-data/main/tiles/{z}/{x}/{y}.webp",
-      {maxZoom: 9},
+      { maxZoom: 9 },
     );
     this.streetMap = L.easyButton(
       "fa-map",
@@ -87,10 +88,11 @@ export class Buttons {
     this.warps = L.easyButton(
       "fa-bolt",
       () => {
-        if (g().map.hasLayer(gcm().warpLayer)) g().map.removeLayer(gcm().warpLayer);
+        if (g().map.hasLayer(gcm().warpLayer))
+          g().map.removeLayer(gcm().warpLayer);
         else g().map.addLayer(gcm().warpLayer);
       },
-      "Show/Hide Warps"
+      "Show/Hide Warps",
     )
       .setPosition("topright")
       .addTo(map);
@@ -100,8 +102,10 @@ export class Buttons {
       () => {
         gcm().radius.toggle();
       },
-      "300/500 Radius"
+      "300/500 Radius",
     )
+      .setPosition("topright")
+      .addTo(map);
     this.airportCalc = L.easyButton(
       "fa-plane",
       () => {
