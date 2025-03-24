@@ -27,8 +27,8 @@ importers:
         specifier: ^1.9.16
         version: 1.9.16
       '@types/node':
-        specifier: ^22.13.10
-        version: 22.13.10
+        specifier: ^22.13.13
+        version: 22.13.13
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
@@ -74,8 +74,8 @@ importers:
 
 packages:
 
-  '@bufbuild/protobuf@2.2.3':
-    resolution: {integrity: sha512-tFQoXHJdkEOSwj5tRIZSPNUuXK3RaR7T1nUrPgbYX1pUbvqqaaZAsfo+NXBPsz5rZMSKVFrgK1WL8Q/MSLvprg==}
+  '@bufbuild/protobuf@2.2.5':
+    resolution: {integrity: sha512-/g5EzJifw5GF8aren8wZ/G5oMuPoGeS6MQD3ca8ddcvdXR5UELUfdTZITCGNhNXynY/AYl3Z4plmxdj/tRl/hQ==}
 
   '@csstools/cascade-layer-name-parser@2.0.4':
     resolution: {integrity: sha512-7DFHlPuIxviKYZrOiwVU/PiHLm3lLUR23OMuEEtfEOQTOp9hzQ2JjdY6X5H18RVuUPJqSCI+qNnD5iOLMVE0bA==}
@@ -703,8 +703,8 @@ packages:
   '@types/leaflet@1.9.16':
     resolution: {integrity: sha512-wzZoyySUxkgMZ0ihJ7IaUIblG8Rdc8AbbZKLneyn+QjYsj5q1QU7TEKYqwTr10BGSzY5LI7tJk9Ifo+mEjdFRw==}
 
-  '@types/node@22.13.10':
-    resolution: {integrity: sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==}
+  '@types/node@22.13.13':
+    resolution: {integrity: sha512-ClsL5nMwKaBRwPcCvH8E7+nU4GxHVx1axNvMZTFHMEfNI7oahimt26P5zjVCRrjiIWj6YFXfE1v3dEp94wLcGQ==}
 
   '@types/sizzle@2.3.9':
     resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
@@ -1530,7 +1530,7 @@ packages:
 
 snapshots:
 
-  '@bufbuild/protobuf@2.2.3': {}
+  '@bufbuild/protobuf@2.2.5': {}
 
   '@csstools/cascade-layer-name-parser@2.0.4(@csstools/css-parser-algorithms@3.0.4(@csstools/css-tokenizer@3.0.3))(@csstools/css-tokenizer@3.0.3)':
     dependencies:
@@ -2093,7 +2093,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 22.13.10
+      '@types/node': 22.13.13
 
   '@types/geojson@7946.0.16': {}
 
@@ -2107,13 +2107,13 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 22.13.10
+      '@types/node': 22.13.13
 
   '@types/leaflet@1.9.16':
     dependencies:
       '@types/geojson': 7946.0.16
 
-  '@types/node@22.13.10':
+  '@types/node@22.13.13':
     dependencies:
       undici-types: 6.20.0
 
@@ -2849,7 +2849,7 @@ snapshots:
 
   sass-embedded@1.85.1:
     dependencies:
-      '@bufbuild/protobuf': 2.2.3
+      '@bufbuild/protobuf': 2.2.5
       buffer-builder: 0.2.0
       colorjs.io: 0.5.2
       immutable: 5.0.3
