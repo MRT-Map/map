@@ -3,7 +3,7 @@ import L from "leaflet";
 import { gb, gcm } from "./globals";
 
 export async function initMapWarps() {
-  const res = await fetch("./warps.json");
+  const res = await fetch("https://raw.githubusercontent.com/MRT-Map/map/refs/heads/main/warp-data/warps.json");
   const warpData = await res.json();
   console.log(warpData.warps.length + " warps loaded");
 
