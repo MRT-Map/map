@@ -11,7 +11,8 @@ export default defineConfig({
         main: fileURLToPath(new URL("index.html", import.meta.url)),
         ac: fileURLToPath(new URL("airportcalc.html", import.meta.url))
       }
-    }
+    },
+    commonjsOptions: { transformMixedEsModules: true }
   },
   publicDir: "media",
 });
