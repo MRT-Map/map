@@ -11,13 +11,16 @@ import { Globals } from "./globals.js";
 // https://stackoverflow.com/a/58254190
 // @ts-expect-error fix esbuild not making these load by themselves
 delete L.Icon.Default.prototype._getIconUrl;
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 L.Icon.Default.mergeOptions({
   // eslint-disable-next-line no-undef
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
+  iconRetinaUrl: markerIcon2x,
   // eslint-disable-next-line no-undef
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
+  iconUrl: markerIcon,
   // eslint-disable-next-line no-undef
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
+  shadowUrl: markerShadow,
 });
 window.acGlobals = new Globals(initMap());
 initAirportcalc();
