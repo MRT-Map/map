@@ -5,7 +5,7 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     outDir: "out",
-    base: process.env.NODE_ENV == "production" ? "https://mrt-map.github.com/map" : "/",
+    base: process.env.NODE_ENV == "production" ? "https://mrt-map.github.io/map" : "/",
     rollupOptions: {
       input: {
         main: fileURLToPath(new URL("index.html", import.meta.url)),
