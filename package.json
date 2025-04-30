@@ -30,7 +30,7 @@
     "postcss": "^8.5.3",
     "postcss-preset-env": "^10.1.6",
     "prettier": "^3.5.3",
-    "vite": "^6.3.3"
+    "vite": "^6.3.4"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
