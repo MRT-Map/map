@@ -28,7 +28,7 @@
     "leaflet-control-bar": "github:mapshakers/leaflet-control-bar",
     "leaflet-easybutton": "^2.4.0",
     "postcss": "^8.5.3",
-    "postcss-preset-env": "^10.1.6",
+    "postcss-preset-env": "^10.2.0",
     "prettier": "^3.5.3",
     "vite": "^6.3.5"
   },
