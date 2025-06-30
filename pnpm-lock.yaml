@@ -27,8 +27,8 @@ importers:
         specifier: ^1.9.18
         version: 1.9.18
       '@types/node':
-        specifier: ^24.0.3
-        version: 24.0.3
+        specifier: ^24.0.7
+        version: 24.0.7
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
@@ -67,12 +67,12 @@ importers:
         version: 3.5.3
       vite:
         specifier: ^6.3.5
-        version: 6.3.5(@types/node@24.0.3)(sass-embedded@1.85.1)(sass@1.86.0)
+        version: 6.3.5(@types/node@24.0.7)(sass-embedded@1.85.1)(sass@1.86.0)
 
 packages:
 
-  '@bufbuild/protobuf@2.5.2':
-    resolution: {integrity: sha512-foZ7qr0IsUBjzWIq+SuBLfdQCpJ1j8cTuNNT4owngTHoN5KsJb8L9t65fzz7SCeSWzescoOil/0ldqiL041ABg==}
+  '@bufbuild/protobuf@2.6.0':
+    resolution: {integrity: sha512-6cuonJVNOIL7lTj5zgo/Rc2bKAo4/GvN+rKCrUj7GdEHRzCk8zKOfFwUsL9nAVk5rSIsRmlgcpLzTRysopEeeg==}
 
   '@csstools/cascade-layer-name-parser@2.0.5':
     resolution: {integrity: sha512-p1ko5eHgV+MgXFVa4STPKpvPxr6ReS8oS2jzTukjR74i5zJNyWO1ZM1m8YKBXnzDKWfBN1ztLYlHxbVemDD88A==}
@@ -813,8 +813,8 @@ packages:
   '@types/leaflet@1.9.18':
     resolution: {integrity: sha512-ht2vsoPjezor5Pmzi5hdsA7F++v5UGq9OlUduWHmMZiuQGIpJ2WS5+Gg9HaAA79gNh1AIPtCqhzejcIZ3lPzXQ==}
 
-  '@types/node@24.0.3':
-    resolution: {integrity: sha512-R4I/kzCYAdRLzfiCabn9hxWfbuHS573x+r0dJMkkzThEa7pbrcDWK+9zu3e7aBOouf+rQAciqPFMnxwr0aWgKg==}
+  '@types/node@24.0.7':
+    resolution: {integrity: sha512-YIEUUr4yf8q8oQoXPpSlnvKNVKDQlPMWrmOcgzoduo7kvA2UF0/BwJ/eMKFTiTtkNL17I0M6Xe2tvwFU7be6iw==}
 
   '@types/sizzle@2.3.9':
     resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
@@ -1688,7 +1688,7 @@ packages:
 
 snapshots:
 
-  '@bufbuild/protobuf@2.5.2':
+  '@bufbuild/protobuf@2.6.0':
     optional: true
 
   '@csstools/cascade-layer-name-parser@2.0.5(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)':
@@ -2327,7 +2327,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 24.0.3
+      '@types/node': 24.0.7
 
   '@types/geojson@7946.0.16': {}
 
@@ -2341,13 +2341,13 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.7
 
   '@types/leaflet@1.9.18':
     dependencies:
       '@types/geojson': 7946.0.16
 
-  '@types/node@24.0.3':
+  '@types/node@24.0.7':
     dependencies:
       undici-types: 7.8.0
 
@@ -3110,7 +3110,7 @@ snapshots:
 
   sass-embedded@1.85.1:
     dependencies:
-      '@bufbuild/protobuf': 2.5.2
+      '@bufbuild/protobuf': 2.6.0
       buffer-builder: 0.2.0
       colorjs.io: 0.5.2
       immutable: 5.1.3
@@ -3221,7 +3221,7 @@ snapshots:
   varint@6.0.0:
     optional: true
 
-  vite@6.3.5(@types/node@24.0.3)(sass-embedded@1.85.1)(sass@1.86.0):
+  vite@6.3.5(@types/node@24.0.7)(sass-embedded@1.85.1)(sass@1.86.0):
     dependencies:
       esbuild: 0.25.4
       fdir: 6.4.4(picomatch@4.0.2)
@@ -3230,7 +3230,7 @@ snapshots:
       rollup: 4.40.2
       tinyglobby: 0.2.13
     optionalDependencies:
-      '@types/node': 24.0.3
+      '@types/node': 24.0.7
       fsevents: 2.3.3
       sass: 1.86.0
       sass-embedded: 1.85.1
