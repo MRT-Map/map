@@ -27,8 +27,8 @@ importers:
         specifier: ^1.9.20
         version: 1.9.20
       '@types/node':
-        specifier: ^24.0.7
-        version: 24.0.7
+        specifier: ^24.0.13
+        version: 24.0.13
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.6)
@@ -67,7 +67,7 @@ importers:
         version: 3.6.2
       vite:
         specifier: ^7.0.4
-        version: 7.0.4(@types/node@24.0.7)(sass-embedded@1.85.1)(sass@1.86.0)
+        version: 7.0.4(@types/node@24.0.13)(sass-embedded@1.85.1)(sass@1.86.0)
 
 packages:
 
@@ -812,8 +812,8 @@ packages:
   '@types/leaflet@1.9.20':
     resolution: {integrity: sha512-rooalPMlk61LCaLOvBF2VIf9M47HgMQqi5xQ9QRi7c8PkdIe0WrIi5IxXUXQjAdL0c+vcQ01mYWbthzmp9GHWw==}
 
-  '@types/node@24.0.7':
-    resolution: {integrity: sha512-YIEUUr4yf8q8oQoXPpSlnvKNVKDQlPMWrmOcgzoduo7kvA2UF0/BwJ/eMKFTiTtkNL17I0M6Xe2tvwFU7be6iw==}
+  '@types/node@24.0.13':
+    resolution: {integrity: sha512-Qm9OYVOFHFYg3wJoTSrz80hoec5Lia/dPp84do3X7dZvLikQvM1YpmvTBEdIr/e+U8HTkFjLHLnl78K/qjf+jQ==}
 
   '@types/sizzle@2.3.9':
     resolution: {integrity: sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w==}
@@ -2323,7 +2323,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 24.0.7
+      '@types/node': 24.0.13
 
   '@types/geojson@7946.0.16': {}
 
@@ -2337,13 +2337,13 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 24.0.7
+      '@types/node': 24.0.13
 
   '@types/leaflet@1.9.20':
     dependencies:
       '@types/geojson': 7946.0.16
 
-  '@types/node@24.0.7':
+  '@types/node@24.0.13':
     dependencies:
       undici-types: 7.8.0
 
@@ -3218,7 +3218,7 @@ snapshots:
   varint@6.0.0:
     optional: true
 
-  vite@7.0.4(@types/node@24.0.7)(sass-embedded@1.85.1)(sass@1.86.0):
+  vite@7.0.4(@types/node@24.0.13)(sass-embedded@1.85.1)(sass@1.86.0):
     dependencies:
       esbuild: 0.25.6
       fdir: 6.4.6(picomatch@4.0.2)
@@ -3227,7 +3227,7 @@ snapshots:
       rollup: 4.45.0
       tinyglobby: 0.2.14
     optionalDependencies:
-      '@types/node': 24.0.7
+      '@types/node': 24.0.13
       fsevents: 2.3.3
       sass: 1.86.0
       sass-embedded: 1.85.1
