@@ -12,8 +12,8 @@ importers:
         specifier: ^9.34.0
         version: 9.34.0
       '@fortawesome/fontawesome-free':
-        specifier: ^7.0.0
-        version: 7.0.0
+        specifier: ^7.0.1
+        version: 7.0.1
       '@geoman-io/leaflet-geoman-free':
         specifier: ^2.18.3
         version: 2.18.3(leaflet@1.9.4)
@@ -538,8 +538,8 @@ packages:
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@fortawesome/fontawesome-free@7.0.0':
-    resolution: {integrity: sha512-X48nISrSOa89zu2VMljC4XaRf8NmgTwQBVHfS2Nu5G00ZwM31oOVrAtGxZF3b6wDYf9lJsf/Eq4cCSFKIkOWPQ==}
+  '@fortawesome/fontawesome-free@7.0.1':
+    resolution: {integrity: sha512-RLmb9U6H2rJDnGxEqXxzy7ANPrQz7WK2/eTjdZqyU9uRU5W+FkAec9uU5gTYzFBH7aoXIw2WTJSCJR4KPlReQw==}
     engines: {node: '>=6'}
 
   '@geoman-io/leaflet-geoman-free@2.18.3':
@@ -2104,7 +2104,7 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@fortawesome/fontawesome-free@7.0.0': {}
+  '@fortawesome/fontawesome-free@7.0.1': {}
 
   '@geoman-io/leaflet-geoman-free@2.18.3(leaflet@1.9.4)':
     dependencies:
