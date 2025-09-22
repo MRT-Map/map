@@ -115,10 +115,21 @@ function startSearch() {
       document.getElementById("search__results").innerHTML =
         "<div>No Results</div>";
     }
+    //Add each element as a div
+    var idx = 0;
     for (const result of results) {
       const ele = document.getElementById("search__results");
-      ele.innerHTML += `<div class="result"><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
-      ele.querySelector("div").onclick = () => focusMap(result.X, result.Z);
+      ele.innerHTML += `<div class="result" id=result${idx}><div class="result__name">${result.Name}</div><div class="result__details"><div class="result__rank">Rank: ${result["Town Rank"]}</div><div class="result__mayor">Mayor: ${result.Mayor}</div></div></div>`;
+      idx++;
+    }
+
+    //Separate loop to add all the event listeners
+    var idx2 = 0;
+    for (const result of results) 
+    {
+      const ele = document.getElementById(`result${idx2}`)
+      ele.onclick = () => focusMap(result.X, result.Z);
+      idx2++
     }
   }
 }
