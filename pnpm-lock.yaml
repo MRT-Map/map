@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@eslint/js':
-        specifier: ^9.35.0
-        version: 9.35.0
+        specifier: ^9.36.0
+        version: 9.36.0
       '@fortawesome/fontawesome-free':
         specifier: ^7.0.1
         version: 7.0.1
@@ -71,8 +71,8 @@ importers:
 
 packages:
 
-  '@bufbuild/protobuf@2.8.0':
-    resolution: {integrity: sha512-r1/0w5C9dkbcdjyxY8ZHsC5AOWg4Pnzhm2zu7LO4UHSounp2tMm6Y+oioV9zlGbLveE7YaWRDUk48WLxRDgoqg==}
+  '@bufbuild/protobuf@2.9.0':
+    resolution: {integrity: sha512-rnJenoStJ8nvmt9Gzye8nkYd6V22xUAnu4086ER7h1zJ508vStko4pMvDeQ446ilDTFpV5wnoc5YS7XvMwwMqA==}
 
   '@csstools/cascade-layer-name-parser@2.0.5':
     resolution: {integrity: sha512-p1ko5eHgV+MgXFVa4STPKpvPxr6ReS8oS2jzTukjR74i5zJNyWO1ZM1m8YKBXnzDKWfBN1ztLYlHxbVemDD88A==}
@@ -528,6 +528,10 @@ packages:
 
   '@eslint/js@9.35.0':
     resolution: {integrity: sha512-30iXE9whjlILfWobBkNerJo+TXYsgVM5ERQwMcMKCHckHflCmf7wXDAHlARoWnh0s1U72WqlbeyE7iAcCzuCPw==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@eslint/js@9.36.0':
+    resolution: {integrity: sha512-uhCbYtYynH30iZErszX78U+nR3pJU3RHGQ57NXy5QupD4SBVwDeU8TNBy+MjMngc1UyIW9noKqsRqfjQTBU2dw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.6':
@@ -1701,7 +1705,7 @@ packages:
 
 snapshots:
 
-  '@bufbuild/protobuf@2.8.0':
+  '@bufbuild/protobuf@2.9.0':
     optional: true
 
   '@csstools/cascade-layer-name-parser@2.0.5(@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4))(@csstools/css-tokenizer@3.0.4)':
@@ -2097,6 +2101,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@9.35.0': {}
+
+  '@eslint/js@9.36.0': {}
 
   '@eslint/object-schema@2.1.6': {}
 
@@ -3143,7 +3149,7 @@ snapshots:
 
   sass-embedded@1.85.1:
     dependencies:
-      '@bufbuild/protobuf': 2.8.0
+      '@bufbuild/protobuf': 2.9.0
       buffer-builder: 0.2.0
       colorjs.io: 0.5.2
       immutable: 5.1.3
