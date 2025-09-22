@@ -124,12 +124,12 @@ function startSearch() {
     }
 
     //Separate loop to add all the event listeners
-    var idx2 = 0;
+    idx = 0;
     for (const result of results) 
     {
-      const ele = document.getElementById(`result${idx2}`)
+      const ele = document.getElementById(`result${idx}`)
       ele.onclick = () => focusMap(result.X, result.Z);
-      idx2++
+      idx++
     }
   }
 }
