@@ -17,7 +17,7 @@ All data is sourced from staff documents and the server dynamic map. You may nee
 
 ## Development
 
-This project uses `esbuild`. Run the `dev` task to start a dev server. To compile for production, run the `prod` task.
+This project uses `vite`. Run the `dev` task to start a dev server. To compile for production, run the `prod` task.
 
 ## Collaborators
 
