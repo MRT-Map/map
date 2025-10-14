@@ -16,7 +16,7 @@
     "@geoman-io/leaflet-geoman-free": "^2.18.3",
     "@types/fs-extra": "^11.0.4",
     "@types/jquery": "^3.5.33",
-    "@types/leaflet": "^1.9.20",
+    "@types/leaflet": "^1.9.21",
     "@types/node": "^24.7.2",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.37.0",
