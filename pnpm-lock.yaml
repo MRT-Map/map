@@ -9,64 +9,64 @@ importers:
   .:
     devDependencies:
       '@eslint/js':
-        specifier: ^9.39.0
+        specifier: 9.39.0
         version: 9.39.0
       '@fortawesome/fontawesome-free':
         specifier: ^7.1.0
         version: 7.1.0
       '@geoman-io/leaflet-geoman-free':
-        specifier: ^2.18.3
+        specifier: 2.18.3
         version: 2.18.3(leaflet@1.9.4)
       '@types/fs-extra':
-        specifier: ^11.0.4
+        specifier: 11.0.4
         version: 11.0.4
       '@types/jquery':
-        specifier: ^3.5.33
+        specifier: 3.5.33
         version: 3.5.33
       '@types/leaflet':
-        specifier: ^1.9.21
+        specifier: 1.9.21
         version: 1.9.21
       '@types/node':
-        specifier: ^24.9.2
+        specifier: 24.9.2
         version: 24.9.2
       autoprefixer:
-        specifier: ^10.4.21
+        specifier: 10.4.21
         version: 10.4.21(postcss@8.5.6)
       eslint:
-        specifier: ^9.39.0
+        specifier: 9.39.0
         version: 9.39.0
       eslint-config-prettier:
-        specifier: ^10.1.8
+        specifier: 10.1.8
         version: 10.1.8(eslint@9.39.0)
       fs-extra:
-        specifier: ^11.3.2
+        specifier: 11.3.2
         version: 11.3.2
       globals:
-        specifier: ^16.5.0
+        specifier: 16.5.0
         version: 16.5.0
       jquery:
-        specifier: ^3.7.1
+        specifier: 3.7.1
         version: 3.7.1
       leaflet:
-        specifier: ^1.9.4
+        specifier: 1.9.4
         version: 1.9.4
       leaflet-control-bar:
         specifier: github:mapshakers/leaflet-control-bar
         version: https://codeload.github.com/mapshakers/leaflet-control-bar/tar.gz/1c823dbbb53d8c19d329c1b831a4df4978b34efd
       leaflet-easybutton:
-        specifier: ^2.4.0
+        specifier: 2.4.0
         version: 2.4.0
       postcss:
-        specifier: ^8.5.6
+        specifier: 8.5.6
         version: 8.5.6
       postcss-preset-env:
-        specifier: ^10.4.0
+        specifier: 10.4.0
         version: 10.4.0(postcss@8.5.6)
       prettier:
-        specifier: ^3.6.2
+        specifier: 3.6.2
         version: 3.6.2
       vite:
-        specifier: ^7.1.12
+        specifier: 7.1.12
         version: 7.1.12(@types/node@24.9.2)(sass-embedded@1.85.1)(sass@1.86.0)
 
 packages:
