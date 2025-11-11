@@ -3,5 +3,11 @@
   "extends": [
     "github>mrt-map/renovate-config:no-dev",
     "config:js-app"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["leaflet-easybutton"],
+      "abandonmentThreshold": null
+    }
   ]
 }
