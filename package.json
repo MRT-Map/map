@@ -21,7 +21,7 @@
     "autoprefixer": "10.4.23",
     "eslint": "9.39.2",
     "eslint-config-prettier": "10.1.8",
-    "fs-extra": "11.3.2",
+    "fs-extra": "11.3.3",
     "globals": "16.5.0",
     "jquery": "3.7.1",
     "leaflet": "1.9.4",
