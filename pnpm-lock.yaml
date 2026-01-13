@@ -27,8 +27,8 @@ importers:
         specifier: 1.9.21
         version: 1.9.21
       '@types/node':
-        specifier: 24.10.6
-        version: 24.10.6
+        specifier: 24.10.7
+        version: 24.10.7
       autoprefixer:
         specifier: 10.4.23
         version: 10.4.23(postcss@8.5.6)
@@ -67,7 +67,7 @@ importers:
         version: 3.7.4
       vite:
         specifier: 7.3.1
-        version: 7.3.1(@types/node@24.10.6)
+        version: 7.3.1(@types/node@24.10.7)
 
 packages:
 
@@ -782,8 +782,8 @@ packages:
   '@types/leaflet@1.9.21':
     resolution: {integrity: sha512-TbAd9DaPGSnzp6QvtYngntMZgcRk+igFELwR2N99XZn7RXUdKgsXMR+28bUO0rPsWp8MIu/f47luLIQuSLYv/w==}
 
-  '@types/node@24.10.6':
-    resolution: {integrity: sha512-B8h60xgJMR/xmgyX9fncRzEW9gCxoJjdenUhke2v1JGOd/V66KopmWrLPXi5oUI4VuiGK+d+HlXJjDRZMj21EQ==}
+  '@types/node@24.10.7':
+    resolution: {integrity: sha512-+054pVMzVTmRQV8BhpGv3UyfZ2Llgl8rdpDTon+cUH9+na0ncBVXj3wTUKh14+Kiz18ziM3b4ikpP5/Pc0rQEQ==}
 
   '@types/sizzle@2.3.10':
     resolution: {integrity: sha512-TC0dmN0K8YcWEAEfiPi5gJP14eJe30TTGjkvek3iM/1NdHHsdCA/Td6GvNndMOo/iSnIsZ4HuuhrYPDAmbxzww==}
@@ -2105,7 +2105,7 @@ snapshots:
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 24.10.6
+      '@types/node': 24.10.7
 
   '@types/geojson@7946.0.16': {}
 
@@ -2117,13 +2117,13 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 24.10.6
+      '@types/node': 24.10.7
 
   '@types/leaflet@1.9.21':
     dependencies:
       '@types/geojson': 7946.0.16
 
-  '@types/node@24.10.6':
+  '@types/node@24.10.7':
     dependencies:
       undici-types: 7.16.0
 
@@ -2820,7 +2820,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite@7.3.1(@types/node@24.10.6):
+  vite@7.3.1(@types/node@24.10.7):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2829,7 +2829,7 @@ snapshots:
       rollup: 4.55.1
       tinyglobby: 0.2.15
     optionalDependencies:
-      '@types/node': 24.10.6
+      '@types/node': 24.10.7
       fsevents: 2.3.3
 
   which@2.0.2:
