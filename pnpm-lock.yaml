@@ -15,8 +15,8 @@ importers:
         specifier: 7.1.0
         version: 7.1.0
       '@geoman-io/leaflet-geoman-free':
-        specifier: 2.19.0
-        version: 2.19.0(leaflet@1.9.4)
+        specifier: 2.19.1
+        version: 2.19.1(leaflet@1.9.4)
       '@types/fs-extra':
         specifier: 11.0.4
         version: 11.0.4
@@ -575,8 +575,8 @@ packages:
     resolution: {integrity: sha512-+WxNld5ZCJHvPQCr/GnzCTVREyStrAJjisUPtUxG5ngDA8TMlPnKp6dddlTpai4+1GNmltAeuk1hJEkBohwZYA==}
     engines: {node: '>=6'}
 
-  '@geoman-io/leaflet-geoman-free@2.19.0':
-    resolution: {integrity: sha512-UXH6Atgwp09HpkPzYPncBFdMPYsoUVSNlpvQLiqhw2iVc5HF4hDRT59Co8wJ2bLzJBC9TnUqhgvt/TnvMh99Hg==}
+  '@geoman-io/leaflet-geoman-free@2.19.1':
+    resolution: {integrity: sha512-b/epe9L1t0nMvDbPLOw3kC572bPPx75ekOd2SvLiJKw9mx/AJF7jnD2NH14QCAxmVFzihgD11cxQ3O9C9vCK1w==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       leaflet: ^1.2.0
@@ -1109,8 +1109,8 @@ packages:
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
-  lodash@4.17.21:
-    resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
+  lodash@4.17.23:
+    resolution: {integrity: sha512-LgVTMpQtIopCi79SJeDiP0TfWi5CNEc/L/aRdTh3yIvmZXTnheWpKjSZhnvMl8iXbC1tFg9gdHHDMLoV7CnG+w==}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -1916,14 +1916,14 @@ snapshots:
 
   '@fortawesome/fontawesome-free@7.1.0': {}
 
-  '@geoman-io/leaflet-geoman-free@2.19.0(leaflet@1.9.4)':
+  '@geoman-io/leaflet-geoman-free@2.19.1(leaflet@1.9.4)':
     dependencies:
       '@turf/boolean-contains': 7.3.3
       '@turf/kinks': 7.3.3
       '@turf/line-intersect': 7.3.3
       '@turf/line-split': 7.3.3
       leaflet: 1.9.4
-      lodash: 4.17.21
+      lodash: 4.17.23
       polyclip-ts: 0.16.8
 
   '@humanfs/core@0.19.1': {}
@@ -2468,7 +2468,7 @@ snapshots:
 
   lodash.merge@4.6.2: {}
 
-  lodash@4.17.21: {}
+  lodash@4.17.23: {}
 
   minimatch@3.1.2:
     dependencies:
