@@ -12,7 +12,7 @@
   "license": "GNU-GPL3",
   "devDependencies": {
     "@eslint/js": "10.0.1",
-    "@fortawesome/fontawesome-free": "7.1.0",
+    "@fortawesome/fontawesome-free": "7.2.0",
     "@geoman-io/leaflet-geoman-free": "2.19.2",
     "@types/fs-extra": "11.0.4",
     "@types/jquery": "3.5.33",
