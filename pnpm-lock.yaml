@@ -21,8 +21,8 @@ importers:
         specifier: 11.0.4
         version: 11.0.4
       '@types/jquery':
-        specifier: 3.5.34
-        version: 3.5.34
+        specifier: 4.0.0
+        version: 4.0.0
       '@types/leaflet':
         specifier: 1.9.21
         version: 1.9.21
@@ -799,8 +799,8 @@ packages:
   '@types/geojson@7946.0.16':
     resolution: {integrity: sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg==}
 
-  '@types/jquery@3.5.34':
-    resolution: {integrity: sha512-3m3939S3erqmTLJANS/uy0B6V7BorKx7RorcGZVjZ62dF5PAGbKEDZK1CuLtKombJkFA2T1jl8LAIIs7IV6gBQ==}
+  '@types/jquery@4.0.0':
+    resolution: {integrity: sha512-Z+to+A2VkaHq1DfI2oSwsoCdhCHMpTSgjWzNcbNlRGYzksDBpPUgEcAL+RQjOBJRaLoEAOHXxqDGBVP+BblBwg==}
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
@@ -813,9 +813,6 @@ packages:
 
   '@types/node@24.10.13':
     resolution: {integrity: sha512-oH72nZRfDv9lADUBSo104Aq7gPHpQZc4BTx38r9xf9pg5LfP6EzSyH2n7qFmmxRQXh7YlUXODcYsg6PuTDSxGg==}
-
-  '@types/sizzle@2.3.10':
-    resolution: {integrity: sha512-TC0dmN0K8YcWEAEfiPi5gJP14eJe30TTGjkvek3iM/1NdHHsdCA/Td6GvNndMOo/iSnIsZ4HuuhrYPDAmbxzww==}
 
   acorn-jsx@5.3.2:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
@@ -2087,9 +2084,7 @@ snapshots:
 
   '@types/geojson@7946.0.16': {}
 
-  '@types/jquery@3.5.34':
-    dependencies:
-      '@types/sizzle': 2.3.10
+  '@types/jquery@4.0.0': {}
 
   '@types/json-schema@7.0.15': {}
 
@@ -2104,8 +2099,6 @@ snapshots:
   '@types/node@24.10.13':
     dependencies:
       undici-types: 7.16.0
-
-  '@types/sizzle@2.3.10': {}
 
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
