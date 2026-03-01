@@ -18,7 +18,7 @@
     "@types/jquery": "4.0.0",
     "@types/leaflet": "1.9.21",
     "@types/node": "24.10.14",
-    "autoprefixer": "10.4.24",
+    "autoprefixer": "10.4.27",
     "eslint": "10.0.2",
     "eslint-config-prettier": "10.1.8",
     "fs-extra": "11.3.3",
