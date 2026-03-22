@@ -1,25 +1,35 @@
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+  workflow_run:
+    workflows: ["Update Warps"]
+    types:
+      - completed
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v2
-      with:
-        version: latest
-    - name: Use Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-    - run: pnpm install --no-frozen-lockfile
-    - run: pnpm run prod
-    - run: cd out; echo > .nojekyll; cd ..
-    - name: Deploy
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./out
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v5.0.0
+        with:
+          version: latest
+      - name: Use Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: 24.14.0
+      - run: |
+             git config --global url."https://github.com/".insteadOf git@github.com:
+             git config --global url."https://".insteadOf git://
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm run prod
+      - run: cd out; echo > .nojekyll; cd ..
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out

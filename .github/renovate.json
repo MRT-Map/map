@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>mrt-map/renovate-config:no-dev",
+    ":pinAllExceptPeerDependencies"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["leaflet-easybutton"],
+      "abandonmentThreshold": null
+    }
+  ]
+}

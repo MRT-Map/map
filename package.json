@@ -4,33 +4,39 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node build.mjs",
-    "prod": "node build.mjs prod"
+    "dev": "vite",
+    "prod": "vite build"
   },
   "keywords": [],
   "author": "",
   "license": "GNU-GPL3",
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^6.5.1",
-    "@geoman-io/leaflet-geoman-free": "^2.15.0",
-    "@types/fs-extra": "^11.0.4",
+    "@eslint/js": "10.0.1",
+    "@fortawesome/fontawesome-free": "7.2.0",
+    "@geoman-io/leaflet-geoman-free": "2.19.2",
+    "@types/fs-extra": "11.0.4",
+    "@types/jquery": "4.0.0",
     "@types/geojson": "^7946.0.13",
-    "@types/jquery": "^3.5.29",
-    "@types/leaflet": "^1.9.8",
-    "@types/node": "^20.10.8",
-    "@typescript-eslint/eslint-plugin": "^6.18.1",
-    "autoprefixer": "^10.4.16",
-    "esbuild": "^0.19.11",
-    "esbuild-sass-plugin": "^2.16.1",
-    "eslint": "^8.56.0",
-    "fs-extra": "^11.2.0",
+    "@types/leaflet": "1.9.21",
+    "@types/node": "24.12.0",
+    "autoprefixer": "10.4.27",
+    "eslint": "10.0.3",
+    "eslint-config-prettier": "10.1.8",
+    "fs-extra": "11.3.4",
     "geojson": "^0.5.0",
-    "jquery": "^3.7.1",
-    "leaflet": "^1.9.4",
+    "globals": "17.4.0",
+    "jquery": "4.0.0",
+    "leaflet": "1.9.4",
     "leaflet-control-bar": "github:mapshakers/leaflet-control-bar",
-    "leaflet-easybutton": "^2.4.0",
-    "postcss": "^8.4.33",
-    "postcss-preset-env": "^9.3.0",
-    "prettier": "^3.1.1"
+    "leaflet-easybutton": "2.4.0",
+    "postcss": "8.5.8",
+    "postcss-preset-env": "11.2.0",
+    "prettier": "3.8.1",
+    "vite": "8.0.1"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   }
 }

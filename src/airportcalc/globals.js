@@ -1,28 +1,20 @@
 import "@geoman-io/leaflet-geoman-free";
-import L, { Control } from "leaflet";
+import L from "leaflet";
 import "leaflet-easybutton";
-
 export class Globals {
-  map: L.Map;
-  buttons: Buttons;
-
-  constructor(map: L.Map) {
+  constructor(map) {
     this.map = map;
     this.buttons = new Buttons(this.map);
   }
 }
-
 export class Buttons {
-  guide: Control.EasyButton;
-  home: Control.EasyButton;
-
-  constructor(map: L.Map) {
+  constructor(map) {
     this.guide = L.easyButton(
       "fa-question",
       () => {
         window.open("https://github.com/mrt-map/map/wiki/City-Map", "_blank");
       },
-      "Guide"
+      "Guide",
     )
       .setPosition("topright")
       .addTo(map);
@@ -31,23 +23,15 @@ export class Buttons {
       () => {
         window.open("./", "_self");
       },
-      "Return to MRT City Map"
+      "Return to MRT City Map",
     )
       .setPosition("topright")
       .addTo(map);
   }
 }
-
-declare global {
-  interface Window {
-    acGlobals: Globals;
-  }
-}
-
-export function g(): Globals {
+export function g() {
   return window.acGlobals;
 }
-
-export function gb(): Buttons {
+export function gb() {
   return window.acGlobals.buttons;
 }

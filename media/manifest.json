@@ -1,14 +1,14 @@
-{
+{,
   "name": "MRT City Map",
   "description": "A detailed map of the Minecart Rapid Transit server, inspired by OpenStreetMap",
   "icons": [
     {
-      "src": "/map/media/map512.png",
+      "src": "/map/map512.png",
       "type": "image/png",
       "sizes": "512x512"
     },
     {
-      "src": "/map/media/map192.png",
+      "src": "/map/map192.png",
       "type": "image/png",
       "sizes": "192x192"
     }
