@@ -135,56 +135,58 @@ body {
 }
 
 .line-total-tooltip {
-    background: transparent;
-    border: none;
-    box-shadow: none;
-    color: #000;
-    font-weight: 400;
-    font-size: 10px;
-    pointer-events: none;
-    white-space: nowrap;
-    text-shadow: -1px  0 0 white,
-                 -1px -1px 0 white,
-                  0 -1px 0 white,
-                  1px -1px 0 white,
-                  1px  0 0 white,
-                  1px  1px 0 white,
-                  0  1px 0 white,
-                 -1px  1px 0 white;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #000;
+  font-weight: 400;
+  font-size: 10px;
+  pointer-events: none;
+  white-space: nowrap;
+  text-shadow:
+    -1px 0 0 white,
+    -1px -1px 0 white,
+    0 -1px 0 white,
+    1px -1px 0 white,
+    1px 0 0 white,
+    1px 1px 0 white,
+    0 1px 0 white,
+    -1px 1px 0 white;
 }
 
 .line-total-tooltip::before {
-    display: none;
+  display: none;
 }
 
 .leaflet-measure-path-measurement {
-    position: absolute;
-    font-size: 10px;
-    color: black;
-    text-shadow: -1px  0 0 white,
-                 -1px -1px 0 white,
-                  0 -1px 0 white,
-                  1px -1px 0 white,
-                  1px  0 0 white,
-                  1px  1px 0 white,
-                  0  1px 0 white,
-                 -1px  1px 0 white;
-    white-space: nowrap;
-    transform-origin: 0;
-    pointer-events: none;
+  position: absolute;
+  font-size: 10px;
+  color: black;
+  text-shadow:
+    -1px 0 0 white,
+    -1px -1px 0 white,
+    0 -1px 0 white,
+    1px -1px 0 white,
+    1px 0 0 white,
+    1px 1px 0 white,
+    0 1px 0 white,
+    -1px 1px 0 white;
+  white-space: nowrap;
+  transform-origin: 0;
+  pointer-events: none;
 }
 
 .leaflet-measure-path-measurement > div {
-    position: relative;
-    top: -10px; 
-    left: -50%;
+  position: relative;
+  top: -10px;
+  left: -50%;
 }
 
 .leaflet-marker-icon.marker-icon {
-    width: 6px !important;
-    height: 6px !important;
-    margin-left: -4px !important;
-    margin-top: -4px !important;
+  width: 6px !important;
+  height: 6px !important;
+  margin-left: -4px !important;
+  margin-top: -4px !important;
 }
 
 .leaflet-bottom.leaflet-left {
@@ -194,55 +196,169 @@ body {
 }
 
 .annotation-list-control {
-  background: white;
-  resize: both;
-  overflow: auto;
-  min-width: 220px;
-  min-height: 100px;
-  width: 220px;
+  background: var(--color-background-primary, white);
+  border: 0.5px solid var(--color-border-secondary, #ccc);
+  border-radius: 14px;
+  width: 270px;
+  min-width: 200px;
+  min-height: 210px;
+  max-height: 360px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.annotation-list-drag-handle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 0 2px;
+  cursor: grab;
+  flex-shrink: 0;
+}
+
+.annotation-list-drag-handle:active {
+  cursor: grabbing;
+}
+
+.annotation-list-drag-pip {
+  width: 28px;
+  height: 3px;
+  border-radius: 99px;
+  background: var(--color-border-secondary, #ccc);
+}
+
+.annotation-list-divider {
+  height: 0.5px;
+  background: var(--color-border-tertiary, #e8e8e8);
+  flex-shrink: 0;
 }
 
 .annotation-list-tabs {
   display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-  margin-bottom: 6px;
+  gap: 3px;
+  padding: 6px 8px;
+  flex-shrink: 0;
 }
 
 .annotation-list-tabs button {
   flex: 1;
-  padding: 2px 4px;
+  padding: 3px 0;
+  font-size: 11px;
   cursor: pointer;
-  background: #eee;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  background: var(--color-background-secondary, #f5f5f5);
+  border: 0.5px solid var(--color-border-tertiary, #e0e0e0);
+  border-radius: 99px;
+  color: var(--color-text-secondary, #666);
+  transition:
+    background 0.12s,
+    color 0.12s,
+    border-color 0.12s;
+  line-height: 1.5;
+}
+
+.annotation-list-tabs button:hover {
+  border-color: var(--color-border-secondary, #bbb);
+  color: var(--color-text-primary, #111);
+  background: var(--color-background-tertiary, #ececec);
 }
 
 .annotation-list-tabs button.active {
-  background: #666;
-  color: white;
+  background: var(--color-text-primary, #111);
+  color: var(--color-background-primary, white);
+  border-color: var(--color-text-primary, #111);
 }
 
-.annotation-entry button.inactive i {
-  opacity: 0.3;
+.annotation-master-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px 8px;
+  background: var(--color-background-secondary, #f9f9f9);
+  flex-shrink: 0;
+}
+
+.annotation-master-label {
+  flex: 1;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-tertiary, #aaa);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .annotation-list-content {
-  min-height: 60px;
-  max-height: calc(100% - 40px);
   overflow-y: auto;
+  flex: 1;
+  padding: 4px 0;
+  min-height: 90px;
+  max-height: 450px;
 }
 
 .annotation-entry {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 2px 0;
-  border-bottom: 1px solid #eee;
+  gap: 2px;
+  padding: 4px 8px;
+  transition: background 0.1s;
+  border-bottom: 0.5px solid var(--color-border-tertiary, #f0f0f0);
+}
+
+.annotation-entry:last-child {
+  border-bottom: none;
+}
+
+.annotation-entry:nth-child(even) {
+  background: var(--color-background-secondary, #fafafa);
+}
+
+.annotation-entry:hover {
+  background: var(--color-background-tertiary, #f0f0f0);
+}
+
+.annotation-entry.selected {
+  background: var(--color-background-tertiary, #ececec);
+  border-left: 2px solid var(--color-text-secondary, #888);
+  padding-left: 6px;
+  border-radius: 0;
 }
 
 .annotation-entry span {
   flex: 1;
+  font-size: 12px;
+  color: var(--color-text-primary, #111);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+  cursor: pointer;
+}
+
+.annotation-entry button,
+.annotation-master-row button {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 3px 4px;
+  border-radius: 5px;
+  color: var(--color-text-secondary, #888);
+  font-size: 11px;
+  line-height: 1;
+  transition:
+    background 0.1s,
+    color 0.1s;
+}
+
+.annotation-entry button:hover,
+.annotation-master-row button:hover {
+  background: var(--color-border-tertiary, #eee);
+  color: var(--color-text-primary, #111);
+}
+
+.annotation-entry button.inactive i,
+.annotation-master-row button.inactive i {
+  opacity: 0.25;
 }
 
 /* MOBILE */
@@ -310,5 +426,10 @@ body {
 
   ::-webkit-scrollbar {
     width: 0px;
+  }
+
+  /* Hide logo to prevent overlapping with annotation list */
+  .map-logo {
+    display: none;
   }
 }

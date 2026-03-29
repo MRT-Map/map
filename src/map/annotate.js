@@ -11,6 +11,7 @@ import { g } from "./globals";
 import "leaflet-measure-path";
 import "leaflet-measure-path/leaflet-measure-path.css";
 import { markersCanvas } from "../map.js";
+import { createRadiusOverlay } from "./annotation-list.js";
 
 const drawingRenderer = L.svg();
 
@@ -71,7 +72,12 @@ export function initAnnotator() {
     className: "fas fa-list icon",
     toggle: false,
     onClick: () => {
-      const container = g().annotationList._container;
+      const list = g().annotationList;
+      const hasAny = annotationsGroup
+        .getLayers()
+        .some((l) => g().map.hasLayer(l));
+      if (!hasAny) return;
+      const container = list._container;
       const isVisible = container.style.display !== "none";
       container.style.display = isVisible ? "none" : "";
     },
@@ -172,6 +178,62 @@ export function initAnnotator() {
     });
   });
 
+  map.on("pm:cut", ({ layer, originalLayer }) => {
+    if (originalLayer.options.radiusOverlay) {
+      g().map.removeLayer(originalLayer.options.radiusOverlay);
+      originalLayer.options.radiusOverlay = null;
+    }
+
+    const wasVisible = layer.options.radiusOverlayVisible;
+    const shape = originalLayer.options.pmShape;
+    const label = originalLayer.options.annotationLabel;
+    const hideMeasurements = originalLayer.options.hideMeasurements;
+    const latlngs = layer.getLatLngs();
+
+    const isMultiRing =
+      Array.isArray(latlngs[0]) &&
+      Array.isArray(latlngs[0][0]) &&
+      !Array.isArray(latlngs[0][0][0]) &&
+      latlngs.length > 1;
+
+    const initLayer = (newLayer, i) => {
+      newLayer.options.pmShape = shape;
+      newLayer.options.annotationLabel =
+        latlngs.length > 1 ? `${label} (${i + 1})` : label;
+      newLayer.options.radiusEventsbound = false;
+      newLayer.options.radiusOverlay = null;
+      newLayer.options.radiusOverlayVisible = wasVisible;
+
+      showMeasurements(newLayer);
+      if (hideMeasurements) {
+        newLayer.hideMeasurements?.();
+        newLayer.options.hideMeasurements = true;
+      }
+
+      createRadiusOverlay(newLayer);
+      if (wasVisible) {
+        g().map.addLayer(newLayer.options.radiusOverlay);
+        newLayer.options.radiusOverlayVisible = true;
+      }
+    };
+
+    // Split into multiple polygons
+    if (isMultiRing) {
+      annotationsGroup.removeLayer(layer);
+      g().map.removeLayer(layer);
+      latlngs.forEach((ring, i) => {
+        const newLayer = L.polygon(ring, { ...layer.options }).addTo(
+          annotationsGroup,
+        );
+        initLayer(newLayer, i);
+      });
+    } else {
+      initLayer(layer, 0);
+    }
+
+    g().annotationList.refresh();
+  });
+
   map.on("pm:create", ({ shape, layer }) => {
     // console.log(shape);
     if (!g().map.hasLayer(layer)) return;
@@ -181,6 +243,10 @@ export function initAnnotator() {
     g().annotationList.activeTab = shape;
     g().annotationList.keepTab = true;
     g().annotationList.refresh();
+    g().annotationList.selectLayer(layer);
+    if (shape === "Circle" || shape === "Line") {
+      layer.pm.setOptions({ allowCutting: false });
+    }
     if (layer instanceof L.Path) {
       layer.bindPopup(
         document.getElementById("annotation-popup-path-template").innerHTML,
@@ -189,6 +255,11 @@ export function initAnnotator() {
       showMeasurements(layer);
 
       layer.on("popupopen", (e) => {
+        const list = g().annotationList;
+        list.activeTab = layer.options.pmShape;
+        list.keepTab = true;
+        list.refresh();
+        list.selectLayer(layer);
         const ele = e.popup
           .getElement()
           .querySelector(".leaflet-popup-content");
@@ -263,6 +334,18 @@ export function initAnnotator() {
       };
 
       const element = layer.pm.getElement();
+
+      layer.on("pm:textblur", () => {
+        const text = layer.pm.getText();
+        if (!text || !text.trim()) {
+          annotationsGroup.removeLayer(layer);
+          g().map.removeLayer(layer);
+          g().annotationList.refresh();
+          return;
+        }
+        layer.pm.disable();
+      });
+
       if (!layer.options.textEventsbound) {
         layer.options.textEventsbound = true;
         element.addEventListener("keydown", (e) => {
@@ -279,17 +362,14 @@ export function initAnnotator() {
         element.removeAttribute("readonly");
         element.focus();
         element.select();
-
-        element.addEventListener(
-          "blur",
-          () => {
-            layer.pm.disable();
-          },
-          { once: true },
-        );
       });
 
       layer.on("popupopen", (e) => {
+        const list = g().annotationList;
+        list.activeTab = layer.options.pmShape;
+        list.keepTab = true;
+        list.refresh();
+        list.selectLayer(layer);
         const ele = e.popup
           .getElement()
           .querySelector(".leaflet-popup-content");
@@ -515,6 +595,7 @@ function clear(prompt_) {
   if (annotationsGroup.getLayers().length != 0) {
     if (confirm(prompt_)) {
       annotationsGroup.clearLayers();
+      g().annotationList.refresh();
     }
   }
 }

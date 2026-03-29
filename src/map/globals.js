@@ -38,9 +38,8 @@ CityMap.cityTypes = [
 ];
 export class Logo extends L.Control {
   onAdd() {
-    const container = L.DomUtil.create("div");
-    container.innerHTML =
-      "<img src='map-light.png' style='height: 50px;'>";
+    const container = L.DomUtil.create("div", "map-logo");
+    container.innerHTML = "<img src='map-light.png' style='height: 50px;'>";
     return container;
   }
   onRemove() {

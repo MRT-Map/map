@@ -19,7 +19,41 @@ export class AnnotationList extends L.Control {
     L.DomEvent.disableClickPropagation(container);
     L.DomEvent.disableScrollPropagation(container);
 
+    const dragHandle = L.DomUtil.create(
+      "div",
+      "annotation-list-drag-handle",
+      container,
+    );
+    L.DomUtil.create("div", "annotation-list-drag-pip", dragHandle);
+    let dragging = false,
+      ox = 0,
+      oy = 0;
+    L.DomEvent.on(dragHandle, "mousedown", (e) => {
+      dragging = true;
+      if (container.style.position !== "absolute") {
+        const rect = container.getBoundingClientRect();
+        const parentRect = container.offsetParent.getBoundingClientRect();
+        container.style.position = "absolute";
+        container.style.bottom = "auto";
+        container.style.left = rect.left - parentRect.left + "px";
+        container.style.top = rect.top - parentRect.top + "px";
+      }
+      ox = e.clientX - container.offsetLeft;
+      oy = e.clientY - container.offsetTop;
+      L.DomEvent.preventDefault(e);
+    });
+    L.DomEvent.on(document, "mousemove", (e) => {
+      if (!dragging) return;
+      container.style.left = e.clientX - ox + "px";
+      container.style.bottom = "auto";
+      container.style.top = e.clientY - oy + "px";
+    });
+    L.DomEvent.on(document, "mouseup", () => {
+      dragging = false;
+    });
+
     const tabBar = L.DomUtil.create("div", "annotation-list-tabs", container);
+    L.DomUtil.create("div", "annotation-list-divider", container);
     const tabIcons = {
       Line: "fas fa-minus",
       Polygon: "fas fa-draw-polygon",
@@ -62,12 +96,22 @@ export class AnnotationList extends L.Control {
     const content = this._container?.querySelector(".annotation-list-content");
     if (!content) return;
 
+    this._container
+      .querySelectorAll(".annotation-list-tabs button")
+      .forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.shape === this.activeTab);
+      });
+    content.innerHTML = "";
+
     // Auto show/hide list if there are annotations on the map
-    const hasAny = annotationsGroup
-      .getLayers()
-      .some((l) => g().map.hasLayer(l));
-    this._container.style.display = hasAny ? "" : "none";
-    if (!hasAny) return;
+    const hasAny = annotationsGroup.getLayers().length > 0;
+    if (!hasAny) {
+      this._container.style.display = "none";
+      content.innerHTML =
+        "<div style='color:#aaa;padding:4px'>No annotations</div>";
+      return;
+    }
+    this._container.style.display = "";
 
     // Auto switch to a different tab if the current one no longer has any annotations
     const currentHasLayers = annotationsGroup
@@ -109,13 +153,89 @@ export class AnnotationList extends L.Control {
         "<div style='color:#aaa;padding:4px'>No annotations</div>";
       return;
     }
+
+    // Master controls
+    const masterRow = L.DomUtil.create("div", "annotation-master-row", content);
+    L.DomUtil.create("div", "annotation-list-divider", this._container);
+    masterRow.style.cssText =
+      "display:flex; align-items:center; gap:4px; padding:3px 6px 5px; border-bottom:1px solid #eee; margin-bottom:2px;";
+    const masterLabel = L.DomUtil.create("span", "", masterRow);
+    masterLabel.textContent = "ANNOTATIONS";
+    masterLabel.className = "annotation-master-label";
+
+    // Master visibility
+    const allHidden = layers.every((l) => l.options.hidden);
+    const masterVisibiliyButton = L.DomUtil.create("button", "", masterRow);
+    const masterVisibilityIcon = L.DomUtil.create(
+      "i",
+      allHidden ? "fas fa-eye-slash" : "fas fa-eye",
+      masterVisibiliyButton,
+    );
+    masterVisibiliyButton.title = "Toggle all visibility";
+    masterVisibiliyButton.addEventListener("click", () => {
+      const turnOn = layers.every((l) => l.options.hidden);
+      annotationsGroup.off("layerremove");
+      layers.forEach((l) => this.toggleVisibility(l, turnOn));
+      annotationsGroup.on("layerremove", () => g().annotationList.refresh());
+      this.refresh();
+    });
+
+    // Master measurements
+    let masterMeasureButton;
+    if (this.activeTab !== "Marker") {
+      const allMeasured = layers.every((l) => !l.options.hideMeasurements);
+      masterMeasureButton = L.DomUtil.create("button", "", masterRow);
+      if (!allMeasured) masterMeasureButton.classList.add("inactive");
+      L.DomUtil.create("i", "fas fa-ruler", masterMeasureButton);
+      masterMeasureButton.title = "Toggle all measurements";
+      masterMeasureButton.addEventListener("click", () => {
+        const turnOn = !layers.every((l) => !l.options.hideMeasurements);
+        layers.forEach((l) => {
+          if (turnOn) {
+            showMeasurements(l);
+            l.options.hideMeasurements = false;
+          } else {
+            l.hideMeasurements?.();
+            l.options.hideMeasurements = true;
+          }
+        });
+        this.refresh();
+      });
+    }
+
+    // Master radius
+    let masterRadiusButton;
+    if (this.activeTab !== "Marker" && this.activeTab !== "Text") {
+      const allRadius = layers.every(
+        (l) =>
+          l.options.radiusOverlay && g().map.hasLayer(l.options.radiusOverlay),
+      );
+      masterRadiusButton = L.DomUtil.create("button", "", masterRow);
+      if (!allRadius) masterRadiusButton.classList.add("inactive");
+      L.DomUtil.create("i", "fas fa-bullseye", masterRadiusButton);
+      masterRadiusButton.title = "Toggle all radius overlays";
+      masterRadiusButton.addEventListener("click", () => {
+        const turnOn = !layers.every(
+          (l) =>
+            l.options.radiusOverlay &&
+            g().map.hasLayer(l.options.radiusOverlay),
+        );
+        layers.forEach((l) => {
+          const isOn =
+            l.options.radiusOverlay &&
+            g().map.hasLayer(l.options.radiusOverlay);
+          if (turnOn !== isOn) toggleRadiusOverlay(l);
+        });
+        this.refresh();
+      });
+    }
+
+    // Annotation entries
     layers.forEach((layer, i) => {
       const entry = L.DomUtil.create("div", "annotation-entry", content);
       const label = L.DomUtil.create("span", "", entry);
       label.textContent =
-        layer.options.text ||
-        layer.options?.annotationLabel ||
-        `${this.activeTab} ${i + 1}`;
+        layer.options?.annotationLabel || `${this.activeTab} ${i + 1}`;
       label.style.cursor = "pointer";
       entry.style.cssText = "display:flex; align-items:center; gap:2px;";
       label.style.cssText =
@@ -123,6 +243,10 @@ export class AnnotationList extends L.Control {
 
       // Single click to focus on annotation
       label.addEventListener("click", () => {
+        content
+          .querySelectorAll(".annotation-entry")
+          .forEach((e) => e.classList.remove("selected"));
+        entry.classList.add("selected");
         if (layer.getBounds) {
           g().map.fitBounds(layer.getBounds(), { animate: true });
         } else if (layer.getLatLng) {
@@ -273,6 +397,10 @@ export class AnnotationList extends L.Control {
         const visible = !layer.options.hidden;
         this.toggleVisibility(layer, !visible);
         visibilityIcon.className = visible ? "fas fa-eye-slash" : "fas fa-eye";
+        const allHidden = layers.every((l) => l.options.hidden);
+        masterVisibilityIcon.className = allHidden
+          ? "fas fa-eye-slash"
+          : "fas fa-eye";
       });
       if (layer.options.hidden) visibilityIcon.className = "fas fa-eye-slash";
 
@@ -294,12 +422,16 @@ export class AnnotationList extends L.Control {
             layer.options.hideMeasurements = true;
             measureButton.classList.add("inactive");
           }
+          const allMeasured = layers.every((l) => !l.options.hideMeasurements);
+          masterMeasureButton.classList.toggle("inactive", !allMeasured);
         });
       }
 
       // 300/500 block radius toggle button
-      if (layer.options.pmShape !== "Marker" &&
-        layer.options.pmShape !== "Text") {
+      if (
+        layer.options.pmShape !== "Marker" &&
+        layer.options.pmShape !== "Text"
+      ) {
         const radiusButton = L.DomUtil.create("button", "", entry);
         L.DomUtil.create("i", "fas fa-bullseye", radiusButton);
         radiusButton.style.cursor = "pointer";
@@ -315,6 +447,12 @@ export class AnnotationList extends L.Control {
             "inactive",
             !g().map.hasLayer(layer.options.radiusOverlay),
           );
+          const allRadius = layers.every(
+            (l) =>
+              l.options.radiusOverlay &&
+              g().map.hasLayer(l.options.radiusOverlay),
+          );
+          masterRadiusButton.classList.toggle("inactive", !allRadius);
         });
       }
     });
@@ -322,27 +460,39 @@ export class AnnotationList extends L.Control {
 
   toggleVisibility(layer, visible) {
     layer.options.hidden = !visible;
-    if (visible) {
-      g().map.addLayer(layer);
-      if (!(layer instanceof L.Marker) && !layer.options.hideMeasurements) {
-        showMeasurements(layer);
-      }
-      if (
-        layer.options.radiusOverlay &&
-        layer.options.radiusOverlayWasVisible
-      ) {
-        g().map.addLayer(layer.options.radiusOverlay);
-      }
+    const el = layer.getElement?.();
+    if (el) el.style.display = visible ? "" : "none";
+    if (visible && !layer.options.hideMeasurements && !(layer instanceof L.Marker)) {
+      showMeasurements(layer);
     } else {
-      layer.options.radiusOverlayWasVisible =
-        layer.options.radiusOverlay &&
-        g().map.hasLayer(layer.options.radiusOverlay);
-      g().map.removeLayer(layer);
+      layer.hideMeasurements?.();
     }
+    if (layer.options.radiusOverlay) {
+      if (visible && layer.options.radiusOverlayVisible) {
+        g().map.addLayer(layer.options.radiusOverlay);
+      } else {
+        g().map.removeLayer(layer.options.radiusOverlay);
+      }
+    }
+  }
+
+  selectLayer(layer) {
+    if (!this._container) return;
+    this._container
+      .querySelectorAll(".annotation-entry")
+      .forEach((e) => e.classList.remove("selected"));
+    if (!layer) return;
+    const layers = annotationsGroup
+      .getLayers()
+      .filter((l) => l.options?.pmShape === this.activeTab);
+    const idx = layers.indexOf(layer);
+    if (idx === -1) return;
+    const entries = this._container.querySelectorAll(".annotation-entry");
+    entries[idx]?.classList.add("selected");
   }
 }
 
-function createRadiusOverlay(layer) {
+export function createRadiusOverlay(layer) {
   const reader = new GeoJSONReader();
   const writer = new GeoJSONWriter();
   const remap = (coords) => {
@@ -410,7 +560,7 @@ function createRadiusOverlay(layer) {
       }
     });
     layer.on(
-      "pm:markerdragend pm:vertexadded pm:vertexremoved pm:dragend",
+      "pm:markerdragend pm:vertexadded pm:vertexremoved pm:dragend pm:rotateend",
       () => {
         const wasVisible =
           layer.options.radiusOverlay &&
