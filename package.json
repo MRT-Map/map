@@ -30,7 +30,7 @@
     "postcss": "8.5.9",
     "postcss-preset-env": "11.2.0",
     "prettier": "3.8.1",
-    "vite": "8.0.7"
+    "vite": "8.0.8"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
