@@ -6,6 +6,15 @@ import { worldcoord, mapcoord } from "../utils/coord.js";
 import GeoJSONReader from "jsts/org/locationtech/jts/io/GeoJSONReader.js";
 import GeoJSONWriter from "jsts/org/locationtech/jts/io/GeoJSONWriter.js";
 import BufferOp from "jsts/org/locationtech/jts/operation/buffer/BufferOp.js";
+import {
+  FA_PRESETS,
+  getCustomIconUrls,
+  addCustomIconUrl,
+  removeCustomIconUrl,
+  applyIconToMarker,
+  defaultIconOpts,
+} from "./marker-icon.js";
+import { saveCache } from "./annotate.js";
 
 export class AnnotationList extends L.Control {
   constructor(map, options) {
@@ -18,6 +27,11 @@ export class AnnotationList extends L.Control {
     const container = L.DomUtil.create("div", "annotation-list-control");
     L.DomEvent.disableClickPropagation(container);
     L.DomEvent.disableScrollPropagation(container);
+    L.DomEvent.on(
+      container,
+      "mousedown click dblclick",
+      L.DomEvent.stopPropagation,
+    );
 
     const dragHandle = L.DomUtil.create(
       "div",
@@ -53,7 +67,6 @@ export class AnnotationList extends L.Control {
     });
 
     const tabBar = L.DomUtil.create("div", "annotation-list-tabs", container);
-    L.DomUtil.create("div", "annotation-list-divider", container);
     const tabIcons = {
       Line: "fas fa-minus",
       Polygon: "fas fa-draw-polygon",
@@ -95,6 +108,10 @@ export class AnnotationList extends L.Control {
   refresh() {
     const content = this._container?.querySelector(".annotation-list-content");
     if (!content) return;
+
+    this._container
+      .querySelectorAll(".icon-picker-panel")
+      .forEach((p) => p.remove());
 
     this._container
       .querySelectorAll(".annotation-list-tabs button")
@@ -156,9 +173,6 @@ export class AnnotationList extends L.Control {
 
     // Master controls
     const masterRow = L.DomUtil.create("div", "annotation-master-row", content);
-    L.DomUtil.create("div", "annotation-list-divider", this._container);
-    masterRow.style.cssText =
-      "display:flex; align-items:center; gap:4px; padding:3px 6px 5px; border-bottom:1px solid #eee; margin-bottom:2px;";
     const masterLabel = L.DomUtil.create("span", "", masterRow);
     masterLabel.textContent = "ANNOTATIONS";
     masterLabel.className = "annotation-master-label";
@@ -178,11 +192,12 @@ export class AnnotationList extends L.Control {
       layers.forEach((l) => this.toggleVisibility(l, turnOn));
       annotationsGroup.on("layerremove", () => g().annotationList.refresh());
       this.refresh();
+      saveCache();
     });
 
     // Master measurements
     let masterMeasureButton;
-    if (this.activeTab !== "Marker") {
+    if (this.activeTab !== "Marker" && this.activeTab !== "Text") {
       const allMeasured = layers.every((l) => !l.options.hideMeasurements);
       masterMeasureButton = L.DomUtil.create("button", "", masterRow);
       if (!allMeasured) masterMeasureButton.classList.add("inactive");
@@ -200,6 +215,7 @@ export class AnnotationList extends L.Control {
           }
         });
         this.refresh();
+        saveCache();
       });
     }
 
@@ -227,6 +243,7 @@ export class AnnotationList extends L.Control {
           if (turnOn !== isOn) toggleRadiusOverlay(l);
         });
         this.refresh();
+        saveCache();
       });
     }
 
@@ -273,6 +290,7 @@ export class AnnotationList extends L.Control {
           label.textContent = input.value || label.textContent;
           layer.options.annotationLabel = label.textContent;
           if (input.parentNode === entry) entry.replaceChild(label, input);
+          saveCache();
         };
 
         let cancelled = false;
@@ -289,6 +307,40 @@ export class AnnotationList extends L.Control {
           }
         });
       });
+
+      // Icon picker button
+      if (this.activeTab === "Marker" && !layer.options.textMarker) {
+        const iconButton = L.DomUtil.create(
+          "button",
+          "icon-picker-button",
+          entry,
+        );
+        iconButton.title = "Change icon";
+        const currentIcon = layer.options.markerIcon ?? defaultIconOpts();
+        if (currentIcon.type === "fa") {
+          L.DomUtil.create("i", currentIcon.cls, iconButton);
+          iconButton.querySelector("i").style.color =
+            currentIcon.color ?? "#000000";
+        } else if (currentIcon.type === "url") {
+          const img = document.createElement("img");
+          img.src = currentIcon.url;
+          img.style.cssText =
+            "width:14px;height:14px;object-fit:contain;vertical-align:middle;";
+          iconButton.appendChild(img);
+        } else {
+          L.DomUtil.create("i", "fas fa-map-pin", iconButton);
+        }
+
+        iconButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          this._container
+            .querySelectorAll(".icon-picker-panel")
+            .forEach((p) => p.remove());
+
+          const panel = this.buildIconPicker(layer, iconButton, entry);
+          content.insertBefore(panel, entry);
+        });
+      }
 
       // Stroke color picker
       if (!(layer.options.pmShape === "Marker" && !layer.options.textMarker)) {
@@ -316,7 +368,38 @@ export class AnnotationList extends L.Control {
           if (layer.options.textMarker) {
             layer.pm.getElement().style.color = strokeInput.value;
             layer.options.textColor = strokeInput.value;
-          } else layer.setStyle({ color: strokeInput.value });
+          } else {
+            layer.setStyle({ color: strokeInput.value });
+          }
+          saveCache();
+        });
+      }
+      if (
+        this.activeTab === "Marker" &&
+        !layer.options.textMarker &&
+        layer.options.markerIcon?.type === "fa"
+      ) {
+        const currentColor = layer.options.markerIcon.color ?? "#000000";
+        const colorLabel = L.DomUtil.create("label", "", entry);
+        colorLabel.title = "Icon color";
+        colorLabel.style.cursor = "pointer";
+
+        const colorSwatch = L.DomUtil.create("i", "", colorLabel);
+        colorSwatch.style.cssText = `display:inline-block; width:14px; height:14px; background:${currentColor}; border-radius:50%; vertical-align:middle; margin:0 2px; outline:1px solid #888;`;
+
+        const colorInput = L.DomUtil.create("input", "", colorLabel);
+        colorInput.type = "color";
+        colorInput.value = currentColor;
+        colorInput.style.cssText =
+          "opacity:0; width:0; height:0; position:absolute;";
+
+        colorInput.addEventListener("input", () => {
+          colorSwatch.style.background = colorInput.value;
+          const opts = { ...layer.options.markerIcon, color: colorInput.value };
+          applyIconToMarker(layer, opts);
+          saveCache();
+          const button = entry.querySelector(".icon-picker-button i");
+          if (button) button.style.color = colorInput.value;
         });
       }
 
@@ -349,41 +432,8 @@ export class AnnotationList extends L.Control {
           if (layer.options.textMarker)
             layer.pm.getElement().style.backgroundColor = fillInput.value;
           else layer.setStyle({ fillColor: fillInput.value });
+          saveCache();
         });
-        if (layer.options.textMarker) {
-          const backgroundToggle = L.DomUtil.create("button", "", entry);
-          L.DomUtil.create("i", "fas fa-fill", backgroundToggle);
-          backgroundToggle.title = "Toggle background";
-
-          const computedBackground = getComputedStyle(
-            layer.pm.getElement(),
-          ).backgroundColor;
-          const hasBackground =
-            computedBackground &&
-            computedBackground !== "rgba(0, 0, 0, 0)" &&
-            computedBackground !== "transparent";
-          if (!hasBackground) backgroundToggle.classList.add("inactive");
-          backgroundToggle.addEventListener("click", () => {
-            const element = layer.pm.getElement();
-            const computedBg = getComputedStyle(element).backgroundColor;
-            const isTransparent =
-              !computedBg ||
-              computedBg === "rgba(0, 0, 0, 0)" ||
-              computedBg === "transparent";
-
-            if (!isTransparent) {
-              layer.options._savedBg = computedBg;
-              element.style.backgroundColor = "transparent";
-              backgroundToggle.classList.add("inactive");
-              fillIcon.style.background = "transparent";
-            } else {
-              const restore = layer.options._savedBg ?? fillInput.value;
-              element.style.backgroundColor = restore;
-              backgroundToggle.classList.remove("inactive");
-              fillIcon.style.background = restore;
-            }
-          });
-        }
       }
 
       // Visibility toggle
@@ -401,6 +451,7 @@ export class AnnotationList extends L.Control {
         masterVisibilityIcon.className = allHidden
           ? "fas fa-eye-slash"
           : "fas fa-eye";
+        saveCache();
       });
       if (layer.options.hidden) visibilityIcon.className = "fas fa-eye-slash";
 
@@ -409,7 +460,7 @@ export class AnnotationList extends L.Control {
         const measureButton = L.DomUtil.create("button", "", entry);
         L.DomUtil.create("i", "fas fa-ruler", measureButton);
         measureButton.style.cursor = "pointer";
-        if (layer.options.hideMeasurements)
+        if (layer.options.hideMeasurements || layer.options.hidden)
           measureButton.classList.add("inactive");
 
         measureButton.addEventListener("click", () => {
@@ -422,8 +473,11 @@ export class AnnotationList extends L.Control {
             layer.options.hideMeasurements = true;
             measureButton.classList.add("inactive");
           }
-          const allMeasured = layers.every((l) => !l.options.hideMeasurements);
+          const allMeasured = layers.every(
+            (l) => !l.options.hideMeasurements && !l.options.hidden,
+          );
           masterMeasureButton.classList.toggle("inactive", !allMeasured);
+          saveCache();
         });
       }
 
@@ -436,6 +490,7 @@ export class AnnotationList extends L.Control {
         L.DomUtil.create("i", "fas fa-bullseye", radiusButton);
         radiusButton.style.cursor = "pointer";
         if (
+          layer.options.hidden ||
           !layer.options.radiusOverlay ||
           !g().map.hasLayer(layer.options.radiusOverlay)
         )
@@ -449,20 +504,205 @@ export class AnnotationList extends L.Control {
           );
           const allRadius = layers.every(
             (l) =>
+              !l.options.hidden &&
               l.options.radiusOverlay &&
               g().map.hasLayer(l.options.radiusOverlay),
           );
           masterRadiusButton.classList.toggle("inactive", !allRadius);
+          saveCache();
         });
       }
     });
   }
 
+  buildIconPicker(layer, iconButton, entry) {
+    const panel = document.createElement("div");
+    panel.className = "icon-picker-panel";
+
+    const closePanel = () => panel.remove();
+
+    const outsideHandler = (e) => {
+      if (!panel.contains(e.target) && e.target !== iconButton) {
+        closePanel();
+        document.removeEventListener("click", outsideHandler);
+      }
+    };
+    setTimeout(() => document.addEventListener("click", outsideHandler), 0);
+
+    const header = document.createElement("div");
+    header.className = "icon-picker-header";
+    header.textContent = "Choose icon";
+    panel.appendChild(header);
+
+    const grid = document.createElement("div");
+    grid.className = "icon-picker-grid";
+    panel.appendChild(grid);
+
+    const defaultCell = document.createElement("button");
+    defaultCell.className = "icon-cell";
+    defaultCell.title = "Default pin";
+    const defaultImg = document.createElement("img");
+    defaultImg.src =
+      "https://unpkg.com/leaflet@latest/dist/images/marker-icon.png";
+    defaultImg.className = "icon-cell-img";
+    defaultCell.appendChild(defaultImg);
+
+    const currentIcon = layer.options.markerIcon ?? defaultIconOpts();
+    if (currentIcon.type === "default")
+      defaultCell.classList.add("icon-cell-active");
+
+    defaultCell.addEventListener("click", () => {
+      applyIconToMarker(layer, defaultIconOpts());
+      saveCache();
+      closePanel();
+      document.removeEventListener("click", outsideHandler);
+      g().annotationList.refresh();
+    });
+    grid.appendChild(defaultCell);
+
+    FA_PRESETS.forEach((preset) => {
+      const cell = document.createElement("button");
+      cell.className = "icon-cell";
+      cell.title = preset.label;
+      const ic = document.createElement("i");
+      ic.className = preset.cls;
+      const isActive =
+        currentIcon.type === "fa" && currentIcon.cls === preset.cls;
+      ic.style.color = currentIcon.color ?? "#555";
+      if (isActive) cell.classList.add("icon-cell-active");
+      cell.appendChild(ic);
+      cell.addEventListener("click", () => {
+        const prevColor =
+          currentIcon.type === "fa"
+            ? (currentIcon.color ?? "#000000")
+            : "#000000";
+        applyIconToMarker(layer, {
+          type: "fa",
+          cls: preset.cls,
+          color: prevColor,
+        });
+        saveCache();
+        closePanel();
+        document.removeEventListener("click", outsideHandler);
+        g().annotationList.refresh();
+      });
+      grid.appendChild(cell);
+    });
+
+    const customUrls = getCustomIconUrls();
+    if (customUrls.length > 0) {
+      const urlHeader = document.createElement("div");
+      urlHeader.className = "icon-picker-subheader";
+      urlHeader.textContent = "Custom icons";
+      panel.appendChild(urlHeader);
+
+      const urlGrid = document.createElement("div");
+      urlGrid.className = "icon-picker-grid";
+      panel.appendChild(urlGrid);
+
+      customUrls.forEach((url) => {
+        const cell = document.createElement("div");
+        cell.className = "icon-url-cell";
+
+        const imgButton = document.createElement("button");
+        imgButton.title = url;
+        imgButton.className = "icon-url-button";
+        const img = document.createElement("img");
+        img.src = url;
+        img.className = "icon-url-img";
+        imgButton.appendChild(img);
+
+        const isActive = currentIcon.type === "url" && currentIcon.url === url;
+        if (isActive) imgButton.classList.add("icon-cell-active");
+
+        imgButton.addEventListener("click", () => {
+          applyIconToMarker(layer, { type: "url", url });
+          saveCache();
+          closePanel();
+          document.removeEventListener("click", outsideHandler);
+          g().annotationList.refresh();
+        });
+
+        const delButton = document.createElement("button");
+        delButton.textContent = "×";
+        delButton.title = "Remove from custom icons";
+        delButton.className = "icon-url-del-button";
+        delButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          removeCustomIconUrl(url);
+          if (
+            layer.options.markerIcon?.type === "url" &&
+            layer.options.markerIcon.url === url
+          ) {
+            applyIconToMarker(layer, defaultIconOpts());
+            saveCache();
+          }
+          closePanel();
+          document.removeEventListener("click", outsideHandler);
+          g().annotationList.refresh();
+          setTimeout(() => {
+            const newPanel = this.buildIconPicker(layer, iconButton, entry);
+            entry.parentNode?.insertBefore(newPanel, entry);
+          }, 0);
+        });
+
+        cell.appendChild(imgButton);
+        cell.appendChild(delButton);
+        urlGrid.appendChild(cell);
+      });
+    }
+
+    const addUrlHeader = document.createElement("div");
+    addUrlHeader.className = "icon-picker-subheader";
+    addUrlHeader.textContent = "Add image URL";
+    panel.appendChild(addUrlHeader);
+
+    const addRow = document.createElement("div");
+    addRow.className = "icon-add-row";
+    panel.appendChild(addRow);
+
+    const urlInput = document.createElement("input");
+    urlInput.type = "url";
+    urlInput.placeholder = "https://...";
+    urlInput.className = "icon-add-input";
+    addRow.appendChild(urlInput);
+
+    const addButton = document.createElement("button");
+    addButton.textContent = "Add";
+    addButton.className = "icon-add-button";
+    addButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const url = urlInput.value.trim();
+      if (!url) return;
+      addCustomIconUrl(url);
+      applyIconToMarker(layer, { type: "url", url });
+      saveCache();
+      closePanel();
+      document.removeEventListener("click", outsideHandler);
+      g().annotationList.refresh();
+    });
+    urlInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addButton.click();
+      e.stopPropagation();
+    });
+    addRow.appendChild(addButton);
+
+    return panel;
+  }
+
   toggleVisibility(layer, visible) {
     layer.options.hidden = !visible;
     const el = layer.getElement?.();
-    if (el) el.style.display = visible ? "" : "none";
-    if (visible && !layer.options.hideMeasurements && !(layer instanceof L.Marker)) {
+    if (el) {
+      el.style.display = visible ? "" : "none";
+      const shadow = layer._shadow;
+      if (shadow) shadow.style.display = visible ? "" : "none";
+    }
+    if (
+      visible &&
+      !layer.options.hideMeasurements &&
+      !(layer instanceof L.Marker)
+    ) {
       showMeasurements(layer);
     } else {
       layer.hideMeasurements?.();
@@ -474,6 +714,7 @@ export class AnnotationList extends L.Control {
         g().map.removeLayer(layer.options.radiusOverlay);
       }
     }
+    this.refresh();
   }
 
   selectLayer(layer) {
