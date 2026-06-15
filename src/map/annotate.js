@@ -178,6 +178,9 @@ export function initAnnotator() {
           showMeasurements(layer);
         }
       });
+      map.once("pm:drawend", () => {
+        markersCanvas._container?.style.setProperty("visibility", "visible");
+      });
     } else if (shape === "Circle") {
       const updateCircleTooltip = (e) => {
         const radius = length(layer);
@@ -198,7 +201,12 @@ export function initAnnotator() {
 
       map.once("pm:drawend", () => {
         map.off("mousemove", updateCircleTooltip);
+        markersCanvas._container?.style.setProperty("visibility", "visible");
         liveTooltip.remove();
+      });
+    } else if (shape === "Marker" || shape === "Text") {
+      map.once("pm:drawend", () => {
+        markersCanvas._container?.style.setProperty("visibility", "visible");
       });
     }
 
@@ -271,7 +279,6 @@ export function initAnnotator() {
   map.on("pm:create", ({ shape, layer }) => {
     // console.log(shape);
     if (!g().map.hasLayer(layer)) return;
-    markersCanvas._container?.style.setProperty("visibility", "visible");
     layer.options.pmShape = shape;
     layer.options.annotationLabel = `${shape} ${annotationsGroup.getLayers().length}`;
     if (layer instanceof L.Marker && shape === "Marker") {
