@@ -343,6 +343,7 @@ export class AnnotationList extends L.Control {
       }
 
       // Stroke color picker
+      let fillIcon;
       if (!(layer.options.pmShape === "Marker" && !layer.options.textMarker)) {
         const currentStroke = layer.options.textMarker
           ? (layer.options.textColor ?? "#000000")
@@ -363,16 +364,20 @@ export class AnnotationList extends L.Control {
         strokeInput.style.cssText =
           "opacity:0; width:0; height:0; position:absolute;";
 
-        strokeInput.addEventListener("input", () => {
-          strokeIcon.style.background = strokeInput.value;
-          if (layer.options.textMarker) {
-            layer.pm.getElement().style.color = strokeInput.value;
-            layer.options.textColor = strokeInput.value;
-          } else {
-            layer.setStyle({ color: strokeInput.value });
+      strokeInput.addEventListener("input", () => {
+        strokeIcon.style.background = strokeInput.value;
+        if (layer.options.textMarker) {
+          layer.pm.getElement().style.color = strokeInput.value;
+          layer.options.textColor = strokeInput.value;
+        } else {
+          layer.setStyle({ color: strokeInput.value });
+          // if fillColor isn't explicitly set, update the fill preview to match
+          if (!layer.options.fillColor) {
+            fillIcon.style.background = strokeInput.value;
           }
-          saveCache();
-        });
+        }
+        saveCache();
+      });
       }
       if (
         this.activeTab === "Marker" &&
@@ -410,7 +415,7 @@ export class AnnotationList extends L.Control {
       ) {
         const currentFill = layer.options.textMarker
           ? layer.pm.getElement().style.backgroundColor
-          : (layer.options.fillColor ?? "#3388ff");
+          : layer.options.fillColor || layer.options.color || "#3388ff";
 
         const fillLabel = L.DomUtil.create("label", "", entry);
         fillLabel.title = layer.options.textMarker
@@ -418,7 +423,7 @@ export class AnnotationList extends L.Control {
           : "Fill color";
         fillLabel.style.cursor = "pointer";
 
-        const fillIcon = L.DomUtil.create("i", "", fillLabel);
+        fillIcon = L.DomUtil.create("i", "", fillLabel);
         fillIcon.style.cssText = `display:inline-block; width:18px; height:14px; background:${currentFill || "transparent"}; border-radius:3px; border:1px solid #888; vertical-align:middle; margin:0 2px;`;
 
         const fillInput = L.DomUtil.create("input", "", fillLabel);

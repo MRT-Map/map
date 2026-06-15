@@ -491,40 +491,35 @@ function generateGeoJson() {
     .getLayers()
     .map((layer) => {
       let res;
-      if (layer instanceof L.Marker) {
-        /** @type {AnnotatorFeature<geojson.Point>} */
+      const shape = layer.options.pmShape;
+
+      if (shape === "Text") {
         res = layer.toGeoJSON();
-        if (layer.options.textMarker) {
-          res.properties.shape = "text";
-          res.properties.text = layer.options.text;
-          res.properties.fillColor =
-            layer.pm.getElement().style.backgroundColor;
-          res.properties.strokeColor = layer.pm.getElement().style.color;
-        } else {
-          res.properties.shape = "marker";
-          const iconOpts = serializeIconOpts(layer);
-          if (iconOpts) res.properties.markerIcon = iconOpts;
-        }
-      } else if (layer instanceof L.Rectangle) {
-        /** @type {AnnotatorFeature<geojson.Polygon>} */
+        res.properties.shape = "text";
+        res.properties.text = layer.options.text;
+        res.properties.fillColor = layer.pm.getElement().style.backgroundColor;
+        res.properties.strokeColor = layer.pm.getElement().style.color;
+      } else if (shape === "Marker") {
+        res = layer.toGeoJSON();
+        res.properties.shape = "marker";
+        const iconOpts = serializeIconOpts(layer);
+        if (iconOpts) res.properties.markerIcon = iconOpts;
+      } else if (shape === "Rectangle") {
         res = layer.toGeoJSON();
         res.properties.shape = "rect";
         res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
-      } else if (layer instanceof L.Polygon) {
-        /** @type {AnnotatorFeature<geojson.Polygon>} */
+      } else if (shape === "Polygon") {
         res = layer.toGeoJSON();
         res.properties.shape = "poly";
         res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
-      } else if (layer instanceof L.Polyline) {
-        /** @type {AnnotatorFeature<geojson.LineString>} */
+      } else if (shape === "Line") {
         res = layer.toGeoJSON();
         res.properties.shape = "line";
         res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
-      } else if (layer instanceof L.Circle) {
-        /** @type {AnnotatorFeature<geojson.Polygon>} */
+      } else if (shape === "Circle") {
         res = layer.toGeoJSON();
         res.properties.shape = "circle";
         res.properties.fillColor = layer.options.fillColor;
@@ -533,6 +528,7 @@ function generateGeoJson() {
       } else {
         console.warn("unknown shape", layer);
       }
+
       if (res) {
         res.properties.annotationLabel = layer.options.annotationLabel;
         res.properties.hideMeasurements =
@@ -544,6 +540,7 @@ function generateGeoJson() {
       return res;
     })
     .filter((a) => a !== undefined);
+
   return {
     type: "FeatureCollection",
     features: features,
