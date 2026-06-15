@@ -12,7 +12,11 @@ import "leaflet-measure-path";
 import "leaflet-measure-path/leaflet-measure-path.css";
 import { markersCanvas } from "../map.js";
 import { createRadiusOverlay } from "./annotation-list.js";
-import { buildLeafletIcon, defaultIconOpts } from "./marker-icon.js";
+import {
+  buildLeafletIcon,
+  applyIconToMarker,
+  defaultIconOpts,
+} from "./marker-icon.js";
 
 const drawingRenderer = L.svg();
 
@@ -21,6 +25,276 @@ export const annotationsGroup = L.layerGroup([]);
 const prevTextColor = [undefined, undefined];
 
 const STORAGE_KEY_ANNOTATIONS = "annotator:annotations";
+
+const bindPathPopup = (layer, shape) => {
+  layer.bindPopup(
+    document.getElementById("annotation-popup-path-template").innerHTML,
+  );
+  layer.on("popupopen", (e) => {
+    const list = g().annotationList;
+    list.activeTab = layer.options.pmShape;
+    list.keepTab = true;
+    list.refresh();
+    list.selectLayer(layer);
+
+    const ele = e.popup.getElement().querySelector(".leaflet-popup-content");
+
+    // measurements
+    ele.querySelector("#length").textContent =
+      Math.round(length(layer) * 1000) / 1000;
+    if (shape === "Line") {
+      ele.querySelector("#area-container")?.remove();
+      ele.querySelector("#fill-opacity-row")?.remove();
+    } else {
+      ele.querySelector("#area").textContent =
+        Math.round(area(layer) * 1000) / 1000;
+    }
+
+    // stroke width
+    const strokeWidthInput = ele.querySelector("#stroke-width");
+    const strokeWidthVal = ele.querySelector("#stroke-width-val");
+    strokeWidthInput.value = layer.options.weight ?? 3;
+    strokeWidthVal.textContent = strokeWidthInput.value;
+    strokeWidthInput.addEventListener("input", () => {
+      strokeWidthVal.textContent = strokeWidthInput.value;
+      const weight = parseFloat(strokeWidthInput.value);
+      layer.setStyle({ weight });
+      const activeDash = ele.querySelector(
+        "#dash-group .ann-popup-dash.active",
+      );
+      if (activeDash?.dataset.dash) {
+        const dash = activeDash.dataset.dash;
+        const scaledDash =
+          dash === "8,8"
+            ? `${weight * 2},${weight * 2}`
+            : `${weight * 0.5},${weight * 2}`;
+        layer.setStyle({ dashArray: scaledDash });
+      }
+      saveCache();
+    });
+
+    // dash style
+    const dashButtons = ele.querySelectorAll("#dash-group .ann-popup-dash");
+    const currentDashType = layer.options._dashType ?? "";
+    dashButtons.forEach((btn) => {
+      if (btn.dataset.dash === currentDashType) btn.classList.add("active");
+      btn.addEventListener("click", () => {
+        dashButtons.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const dash = btn.dataset.dash || null;
+        const weight = parseFloat(strokeWidthInput.value);
+        const scaledDash =
+          dash === "8,8"
+            ? `${weight * 2},${weight * 2}`
+            : dash === "2,8"
+              ? `${weight * 0.5},${weight * 2}`
+              : null;
+        layer.setStyle({
+          dashArray: scaledDash,
+          lineCap: dash ? "butt" : "round",
+          lineJoin: dash ? "miter" : "round",
+        });
+        layer.options._dashType = btn.dataset.dash;
+        saveCache();
+      });
+    });
+
+    // fill opacity
+    if (shape !== "Line") {
+      const fillOpacityInput = ele.querySelector("#fill-opacity");
+      const fillOpacityVal = ele.querySelector("#fill-opacity-val");
+      fillOpacityInput.value = layer.options.fillOpacity ?? 0.2;
+      fillOpacityVal.textContent = fillOpacityInput.value;
+      fillOpacityInput.addEventListener("input", () => {
+        fillOpacityVal.textContent = parseFloat(fillOpacityInput.value).toFixed(
+          2,
+        );
+        layer.setStyle({ fillOpacity: parseFloat(fillOpacityInput.value) });
+        saveCache();
+      });
+    }
+  });
+};
+
+const bindTextPopup = (layer) => {
+  layer.bindPopup(
+    document.getElementById("annotation-popup-text-template").innerHTML,
+  );
+  layer.on("popupopen", (e) => {
+    const list = g().annotationList;
+    list.activeTab = layer.options.pmShape;
+    list.keepTab = true;
+    list.refresh();
+    list.selectLayer(layer);
+
+    const ele = e.popup.getElement().querySelector(".leaflet-popup-content");
+    const el = layer.pm.getElement();
+
+    // font size
+    const fontSizeInput = ele.querySelector("#font-size");
+    const fontSizeVal = ele.querySelector("#font-size-val");
+    const currentSize = parseInt(el.style.fontSize) || 14;
+    fontSizeInput.value = currentSize;
+    fontSizeVal.textContent = currentSize;
+    fontSizeInput.addEventListener("input", () => {
+      fontSizeVal.textContent = fontSizeInput.value;
+      const size = parseInt(fontSizeInput.value);
+      el.style.setProperty("font-size", size + "px", "important");
+      const lines = (el.value || el.textContent || "A").split("\n");
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      const fontFamily = el.style.fontFamily || "sans-serif";
+      const fontWeight = el.style.fontWeight || "normal";
+      const fontStyle = el.style.fontStyle || "normal";
+      ctx.font = `${fontStyle} ${fontWeight} ${size}px ${fontFamily}`;
+      const maxWidth = Math.max(...lines.map((l) => ctx.measureText(l).width));
+      canvas.remove();
+      el.style.setProperty(
+        "width",
+        Math.round(maxWidth + size * 0.5) + "px",
+        "important",
+      );
+      el.style.setProperty(
+        "height",
+        Math.round(lines.length * size * 1.4) + "px",
+        "important",
+      );
+      saveCache();
+    });
+
+    // font family
+    const fontFamilySelect = ele.querySelector("#font-family");
+    fontFamilySelect.value = el.style.fontFamily || "sans-serif";
+    fontFamilySelect.addEventListener("change", () => {
+      el.style.fontFamily = fontFamilySelect.value;
+      saveCache();
+    });
+
+    // bold
+    const boldBtn = ele.querySelector("#text-bold");
+    if (el.style.fontWeight === "bold") boldBtn.classList.add("active");
+    boldBtn.addEventListener("click", () => {
+      const isBold = el.style.fontWeight === "bold";
+      el.style.fontWeight = isBold ? "" : "bold";
+      boldBtn.classList.toggle("active", !isBold);
+      saveCache();
+    });
+
+    // italic
+    const italicBtn = ele.querySelector("#text-italic");
+    if (el.style.fontStyle === "italic") italicBtn.classList.add("active");
+    italicBtn.addEventListener("click", () => {
+      const isItalic = el.style.fontStyle === "italic";
+      el.style.fontStyle = isItalic ? "" : "italic";
+      italicBtn.classList.toggle("active", !isItalic);
+      saveCache();
+    });
+
+    // underline / strikethrough
+    const underlineBtn = ele.querySelector("#text-underline");
+    const strikeBtn = ele.querySelector("#text-strikethrough");
+    const getDecoration = () => el.style.textDecoration || "";
+    const setDecoration = () => {
+      const parts = [];
+      if (underlineBtn.classList.contains("active")) parts.push("underline");
+      if (strikeBtn.classList.contains("active")) parts.push("line-through");
+      el.style.textDecoration = parts.join(" ");
+      saveCache();
+    };
+    if (getDecoration().includes("underline"))
+      underlineBtn.classList.add("active");
+    if (getDecoration().includes("line-through"))
+      strikeBtn.classList.add("active");
+    underlineBtn.addEventListener("click", () => {
+      underlineBtn.classList.toggle("active");
+      setDecoration();
+    });
+    strikeBtn.addEventListener("click", () => {
+      strikeBtn.classList.toggle("active");
+      setDecoration();
+    });
+
+    // alignment
+    const alignBtns = {
+      left: ele.querySelector("#text-align-left"),
+      center: ele.querySelector("#text-align-center"),
+      right: ele.querySelector("#text-align-right"),
+    };
+    const currentAlign = el.style.textAlign || "left";
+    alignBtns[currentAlign]?.classList.add("active");
+    Object.entries(alignBtns).forEach(([align, btn]) => {
+      btn.addEventListener("click", () => {
+        Object.values(alignBtns).forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        el.style.textAlign = align;
+        saveCache();
+      });
+    });
+
+    // background opacity
+    const bgOpacityInput = ele.querySelector("#bg-opacity");
+    const bgOpacityVal = ele.querySelector("#bg-opacity-val");
+    const computedBg = getComputedStyle(el).backgroundColor;
+    const rgbaMatch = computedBg.match(/rgba?\([\d\s,]+,?\s*([\d.]+)\)/);
+    const currentAlpha = rgbaMatch ? parseFloat(rgbaMatch[1]) : 1;
+    bgOpacityInput.value = currentAlpha;
+    bgOpacityVal.textContent = currentAlpha.toFixed(2);
+    bgOpacityInput.addEventListener("input", () => {
+      const alpha = parseFloat(bgOpacityInput.value);
+      bgOpacityVal.textContent = alpha.toFixed(2);
+      const computed = getComputedStyle(el).backgroundColor;
+      const match = computed.match(/[\d.]+/g);
+      if (match) {
+        const [r, g, b] = match;
+        el.style.backgroundColor = `rgba(${r},${g},${b},${alpha})`;
+      }
+      saveCache();
+    });
+  });
+};
+
+const bindMarkerPopup = (layer) => {
+  layer.bindPopup(
+    document.getElementById("annotation-popup-marker-template").innerHTML,
+  );
+  layer.on("popupopen", (e) => {
+    const list = g().annotationList;
+    list.activeTab = layer.options.pmShape;
+    list.keepTab = true;
+    list.refresh();
+    list.selectLayer(layer);
+
+    const ele = e.popup.getElement().querySelector(".leaflet-popup-content");
+
+    // icon size
+    const sizeInput = ele.querySelector("#marker-size");
+    const sizeVal = ele.querySelector("#marker-size-val");
+    const currentSize = layer.options.markerIcon?.fontSize ?? 16;
+    sizeInput.value = currentSize;
+    sizeVal.textContent = currentSize;
+    sizeInput.addEventListener("input", () => {
+      sizeVal.textContent = sizeInput.value;
+      const opts = {
+        ...layer.options.markerIcon,
+        fontSize: parseInt(sizeInput.value),
+      };
+      applyIconToMarker(layer, opts);
+      saveCache();
+    });
+
+    // opacity
+    const opacityInput = ele.querySelector("#marker-opacity");
+    const opacityVal = ele.querySelector("#marker-opacity-val");
+    opacityInput.value = layer.options.opacity ?? 1;
+    opacityVal.textContent = opacityInput.value;
+    opacityInput.addEventListener("input", () => {
+      opacityVal.textContent = parseFloat(opacityInput.value).toFixed(2);
+      layer.setOpacity(parseFloat(opacityInput.value));
+      layer.options.opacity = parseFloat(opacityInput.value);
+      saveCache();
+    });
+  });
+};
 
 export function saveCache() {
   try {
@@ -295,97 +569,13 @@ export function initAnnotator() {
       layer.pm.setOptions({ allowCutting: false });
     }
     if (layer instanceof L.Path) {
-      layer.bindPopup(
-        document.getElementById("annotation-popup-path-template").innerHTML,
-      );
-
       showMeasurements(layer);
-
-      layer.on("popupopen", (e) => {
-        const list = g().annotationList;
-        list.activeTab = layer.options.pmShape;
-        list.keepTab = true;
-        list.refresh();
-        list.selectLayer(layer);
-        const ele = e.popup
-          .getElement()
-          .querySelector(".leaflet-popup-content");
-        ele.querySelector("#length").innerHTML = (
-          Math.round(length(layer) * 1000) / 1000
-        ).toString();
-        ele.querySelector("#area").innerHTML = (
-          Math.round(area(layer) * 1000) / 1000
-        ).toString();
-
-        if (shape === "Line") {
-          ele.querySelector("#fill-container")?.remove();
-        } else {
-          /** @type {HTMLInputElement} **/
-          const fillColor = ele.querySelector("#fill");
-          fillColor.value = layer.options.fillColor ?? fillColor.value;
-          fillColor.addEventListener("change", () => {
-            layer.setStyle({
-              fillColor: fillColor.value,
-            });
-            map.pm.setPathOptions({
-              fillColor: fillColor.value,
-            });
-            saveCache();
-          });
-          ele.querySelector("#fill-reset").addEventListener("click", () => {
-            fillColor.value = "";
-            layer.setStyle({
-              fillColor: undefined,
-            });
-            map.pm.setPathOptions({
-              fillColor: undefined,
-            });
-            saveCache();
-          });
-        }
-
-        /** @type {HTMLInputElement} **/
-        const strokeColor = ele.querySelector("#stroke");
-        strokeColor.value = layer.options.color ?? strokeColor.value;
-        strokeColor.addEventListener("change", () => {
-          layer.setStyle({
-            color: strokeColor.value,
-          });
-          map.pm.setPathOptions({
-            color: strokeColor.value,
-          });
-          saveCache();
-        });
-        ele.querySelector("#stroke-reset").addEventListener("click", () => {
-          strokeColor.value = "#3388ff";
-          layer.setStyle({
-            color: "#3388ff",
-          });
-          map.pm.setPathOptions({
-            color: "#3388ff",
-          });
-          saveCache();
-        });
-      });
+      bindPathPopup(layer, shape);
     } else if (layer instanceof L.Marker && shape === "Text") {
-      layer.bindPopup(
-        document.getElementById("annotation-popup-text-template").innerHTML,
-      );
       layer.pm.getElement().style.backgroundColor = prevTextColor[0] ?? "";
       layer.pm.getElement().style.color = prevTextColor[1] ?? "";
 
-      /** @type {(string) => string} **/
-      const rgb2hex = (col) => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        ctx.strokeStyle = col;
-        const hexColor = ctx.strokeStyle;
-        canvas.remove();
-        return hexColor;
-      };
-
       const element = layer.pm.getElement();
-
       layer.on("pm:textblur", () => {
         const text = layer.pm.getText();
         if (!text || !text.trim()) {
@@ -417,50 +607,9 @@ export function initAnnotator() {
         element.select();
       });
 
-      layer.on("popupopen", (e) => {
-        const list = g().annotationList;
-        list.activeTab = layer.options.pmShape;
-        list.keepTab = true;
-        list.refresh();
-        list.selectLayer(layer);
-        const ele = e.popup
-          .getElement()
-          .querySelector(".leaflet-popup-content");
-        console.log(layer.pm.getElement());
-
-        /** @type {HTMLInputElement} **/
-        const backgroundColor = ele.querySelector("#background");
-        backgroundColor.value =
-          rgb2hex(layer.pm.getElement().style.backgroundColor) ??
-          backgroundColor.value;
-        backgroundColor.addEventListener("change", () => {
-          layer.pm.getElement().style.backgroundColor = backgroundColor.value;
-          prevTextColor[0] = backgroundColor.value;
-          saveCache();
-        });
-        ele.querySelector("#background-reset").addEventListener("click", () => {
-          backgroundColor.value = "";
-          layer.pm.getElement().style.backgroundColor = "";
-          prevTextColor[0] = undefined;
-          saveCache();
-        });
-
-        /** @type {HTMLInputElement} **/
-        const textColor = ele.querySelector("#text");
-        textColor.value =
-          rgb2hex(layer.pm.getElement().style.color) ?? textColor.value;
-        textColor.addEventListener("change", () => {
-          layer.pm.getElement().style.color = textColor.value;
-          prevTextColor[1] = textColor.value;
-          saveCache();
-        });
-        ele.querySelector("#text-reset").addEventListener("click", () => {
-          textColor.value = "";
-          layer.pm.getElement().style.color = "";
-          prevTextColor[1] = undefined;
-          saveCache();
-        });
-      });
+      bindTextPopup(layer);
+    } else if (layer instanceof L.Marker && shape === "Marker") {
+      bindMarkerPopup(layer);
     }
     saveCache();
   });
@@ -504,34 +653,64 @@ function generateGeoJson() {
         res = layer.toGeoJSON();
         res.properties.shape = "text";
         res.properties.text = layer.options.text;
-        res.properties.fillColor = layer.pm.getElement().style.backgroundColor;
-        res.properties.strokeColor = layer.pm.getElement().style.color;
+        const el = layer.pm.getElement();
+        res.properties.fillColor = el.style.backgroundColor;
+        res.properties.strokeColor = el.style.color;
+        res.properties.fontSize = el.style.fontSize;
+        res.properties.fontFamily = el.style.fontFamily;
+        res.properties.fontWeight = el.style.fontWeight;
+        res.properties.fontStyle = el.style.fontStyle;
+        res.properties.textDecoration = el.style.textDecoration;
+        res.properties.textAlign = el.style.textAlign;
       } else if (shape === "Marker") {
         res = layer.toGeoJSON();
         res.properties.shape = "marker";
         const iconOpts = serializeIconOpts(layer);
         if (iconOpts) res.properties.markerIcon = iconOpts;
+        res.properties.opacity = layer.options.opacity ?? 1;
       } else if (shape === "Rectangle") {
         res = layer.toGeoJSON();
         res.properties.shape = "rect";
         res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
+        res.properties.weight = layer.options.weight;
+        res.properties.dashType = layer.options._dashType ?? "";
+        res.properties.dashArray = layer.options.dashArray;
+        res.properties.fillOpacity = layer.options.fillOpacity;
+        res.properties.lineCap = layer.options.lineCap;
+        res.properties.lineJoin = layer.options.lineJoin;
       } else if (shape === "Polygon") {
         res = layer.toGeoJSON();
         res.properties.shape = "poly";
         res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
+        res.properties.weight = layer.options.weight;
+        res.properties.dashType = layer.options._dashType ?? "";
+        res.properties.dashArray = layer.options.dashArray;
+        res.properties.fillOpacity = layer.options.fillOpacity;
+        res.properties.lineCap = layer.options.lineCap;
+        res.properties.lineJoin = layer.options.lineJoin;
       } else if (shape === "Line") {
         res = layer.toGeoJSON();
         res.properties.shape = "line";
-        res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
+        res.properties.weight = layer.options.weight;
+        res.properties.dashType = layer.options._dashType ?? "";
+        res.properties.dashArray = layer.options.dashArray;
+        res.properties.lineCap = layer.options.lineCap;
+        res.properties.lineJoin = layer.options.lineJoin;
       } else if (shape === "Circle") {
         res = layer.toGeoJSON();
         res.properties.shape = "circle";
         res.properties.fillColor = layer.options.fillColor;
         res.properties.strokeColor = layer.options.color;
         res.properties.radius = layer.options.radius;
+        res.properties.weight = layer.options.weight;
+        res.properties.dashType = layer.options._dashType ?? "";
+        res.properties.dashArray = layer.options.dashArray;
+        res.properties.fillOpacity = layer.options.fillOpacity;
+        res.properties.lineCap = layer.options.lineCap;
+        res.properties.lineJoin = layer.options.lineJoin;
       } else {
         console.warn("unknown shape", layer);
       }
@@ -550,7 +729,7 @@ function generateGeoJson() {
 
   return {
     type: "FeatureCollection",
-    features: features,
+    features,
   };
 }
 
@@ -558,6 +737,19 @@ function generateGeoJson() {
 function loadGeoJson(fc, { silent = false } = {}) {
   for (const feature of fc.features) {
     const props = feature.properties;
+
+    const restorePathStyle = (layer) => {
+      layer.setStyle({
+        color: props.strokeColor,
+        fillColor: props.fillColor,
+        weight: props.weight,
+        dashArray: props.dashArray ?? null,
+        fillOpacity: props.fillOpacity ?? 0.2,
+        lineCap: props.lineCap ?? "round",
+        lineJoin: props.lineJoin ?? "round",
+      });
+      layer.options._dashType = props.dashType ?? "";
+    };
 
     const restoreCommon = (layer) => {
       layer.options.annotationLabel =
@@ -612,29 +804,50 @@ function loadGeoJson(fc, { silent = false } = {}) {
           L.GeoJSON.coordsToLatLng(feature.geometry.coordinates),
           { text: props.text, textMarker: true },
         ).addTo(annotationsGroup);
-        const el = layer.pm?.getElement?.() ?? layer.getElement();
-        if (el) {
+
+        const applyTextStyles = (el) => {
+          if (!el) return;
           el.style.backgroundColor = props.fillColor ?? "";
           el.style.color = props.strokeColor ?? "";
-        }
+          if (props.fontSize)
+            el.style.setProperty("font-size", props.fontSize, "important");
+          if (props.fontFamily) el.style.fontFamily = props.fontFamily;
+          if (props.fontWeight) el.style.fontWeight = props.fontWeight;
+          if (props.fontStyle) el.style.fontStyle = props.fontStyle;
+          if (props.textDecoration)
+            el.style.textDecoration = props.textDecoration;
+          if (props.textAlign) el.style.textAlign = props.textAlign;
+        };
+
         if (silent) {
           layer.options.pmShape = "Text";
-          layer.once("add", () => {
-            const el = layer.pm?.getElement?.();
-            if (el) {
-              el.style.backgroundColor = props.fillColor ?? "";
-              el.style.color = props.strokeColor ?? "";
+          layer.on("pm:textblur", () => {
+            const text = layer.pm.getText();
+            if (!text || !text.trim()) {
+              annotationsGroup.removeLayer(layer);
+              g().map.removeLayer(layer);
+              g().annotationList.refresh();
+              saveCache();
+              return;
             }
+            layer.pm.disable();
+            saveCache();
           });
+          layer.on("dblclick", () => {
+            layer.pm.enable();
+            const element = layer.pm.getElement();
+            element.removeAttribute("readonly");
+            element.focus();
+            element.select();
+          });
+          bindTextPopup(layer);
+          layer.once("add", () => applyTextStyles(layer.pm?.getElement?.()));
+          setTimeout(() => applyTextStyles(layer.pm?.getElement?.()), 0);
           restoreCommon(layer);
         } else {
           g().map.fire("pm:create", { shape: "Text", layer });
           restoreCommon(layer);
-          const el = layer.pm?.getElement?.();
-          if (el) {
-            el.style.backgroundColor = props.fillColor ?? "";
-            el.style.color = props.strokeColor ?? "";
-          }
+          applyTextStyles(layer.pm?.getElement?.());
         }
         break;
       }
@@ -645,9 +858,12 @@ function loadGeoJson(fc, { silent = false } = {}) {
           { textMarker: false },
         ).addTo(annotationsGroup);
         layer.options.markerIcon = iconOpts;
+        layer.options.opacity = props.opacity ?? 1;
         buildLeafletIcon(iconOpts).then((icon) => layer.setIcon(icon));
+        layer.setOpacity(props.opacity ?? 1);
         if (silent) {
           layer.options.pmShape = "Marker";
+          bindMarkerPopup(layer);
           restoreCommon(layer);
         } else {
           g().map.fire("pm:create", { shape: "Marker", layer });
@@ -656,49 +872,46 @@ function loadGeoJson(fc, { silent = false } = {}) {
         break;
       }
       case "rect": {
-        /** @type {L.Polygon} */
         const layer =
           L.GeoJSON.geometryToLayer(feature).addTo(annotationsGroup);
-        layer.setStyle({
-          fillColor: props.fillColor,
-          color: props.strokeColor,
-        });
+        restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Rectangle";
+          bindPathPopup(layer, "Rectangle");
           restoreGeometry(layer);
         } else {
           g().map.fire("pm:create", { shape: "Rectangle", layer });
+          restorePathStyle(layer);
           restoreCommon(layer);
         }
         break;
       }
       case "poly": {
-        /** @type {L.Polygon} */
         const layer =
           L.GeoJSON.geometryToLayer(feature).addTo(annotationsGroup);
-        layer.setStyle({
-          fillColor: props.fillColor,
-          color: props.strokeColor,
-        });
+        restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Polygon";
+          bindPathPopup(layer, "Polygon");
           restoreGeometry(layer);
         } else {
           g().map.fire("pm:create", { shape: "Polygon", layer });
+          restorePathStyle(layer);
           restoreCommon(layer);
         }
         break;
       }
       case "line": {
-        /** @type {L.Polyline} */
         const layer =
           L.GeoJSON.geometryToLayer(feature).addTo(annotationsGroup);
-        layer.setStyle({ color: props.strokeColor });
+        restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Line";
+          bindPathPopup(layer, "Line");
           restoreGeometry(layer);
         } else {
           g().map.fire("pm:create", { shape: "Line", layer });
+          restorePathStyle(layer);
           restoreCommon(layer);
         }
         break;
@@ -708,15 +921,14 @@ function loadGeoJson(fc, { silent = false } = {}) {
           L.GeoJSON.coordsToLatLng(feature.geometry.coordinates),
           { radius: props.radius },
         ).addTo(annotationsGroup);
-        layer.setStyle({
-          fillColor: props.fillColor,
-          color: props.strokeColor,
-        });
+        restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Circle";
+          bindPathPopup(layer, "Circle");
           restoreGeometry(layer);
         } else {
           g().map.fire("pm:create", { shape: "Circle", layer });
+          restorePathStyle(layer);
           restoreCommon(layer);
         }
         break;

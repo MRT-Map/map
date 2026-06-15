@@ -62,7 +62,7 @@ export function defaultIconOpts() {
 }
 
 export function buildLeafletIcon(opts) {
-  const MAX_SIZE = 32;
+  const MAX_SIZE = 80;
   const MIN_SIZE = 16;
 
   if (!opts || opts.type === "default") {
@@ -83,42 +83,37 @@ export function buildLeafletIcon(opts) {
     );
   }
 
-  if (opts.type === "url") {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        const ratio = img.width / img.height;
-        let iconWidth, iconHeight;
-        if (img.width > img.height) {
-          iconWidth = Math.min(MAX_SIZE, Math.max(MIN_SIZE, img.width));
-          iconHeight = iconWidth / ratio;
-        } else {
-          iconHeight = Math.min(MAX_SIZE, Math.max(MIN_SIZE, img.height));
-          iconWidth = iconHeight * ratio;
-        }
-        resolve(
-          L.icon({
-            iconUrl: opts.url,
-            iconSize: [iconWidth, iconHeight],
-            iconAnchor: [iconWidth / 2, iconHeight],
-            popupAnchor: [0, -iconHeight],
-          }),
-        );
-      };
-      // fallback
-      img.onerror = () => {
-        resolve(
-          L.icon({
-            iconUrl: opts.url,
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32],
-          }),
-        );
-      };
-      img.src = opts.url;
-    });
-  }
+if (opts.type === "url") {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const size = Math.max(MIN_SIZE, Math.min(MAX_SIZE, opts.fontSize ?? 32));
+      const ratio = img.width / img.height;
+      const iconWidth = ratio >= 1 ? size : size * ratio;
+      const iconHeight = ratio >= 1 ? size / ratio : size;
+      resolve(
+        L.icon({
+          iconUrl: opts.url,
+          iconSize: [iconWidth, iconHeight],
+          iconAnchor: [iconWidth / 2, iconHeight],
+          popupAnchor: [0, -iconHeight],
+        }),
+      );
+    };
+    // fallback
+    img.onerror = () => {
+      resolve(
+        L.icon({
+          iconUrl: opts.url,
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+          popupAnchor: [0, -32],
+        }),
+      );
+    };
+    img.src = opts.url;
+  });
+}
 
   return Promise.resolve(new L.Icon.Default());
 }

@@ -364,20 +364,20 @@ export class AnnotationList extends L.Control {
         strokeInput.style.cssText =
           "opacity:0; width:0; height:0; position:absolute;";
 
-      strokeInput.addEventListener("input", () => {
-        strokeIcon.style.background = strokeInput.value;
-        if (layer.options.textMarker) {
-          layer.pm.getElement().style.color = strokeInput.value;
-          layer.options.textColor = strokeInput.value;
-        } else {
-          layer.setStyle({ color: strokeInput.value });
-          // if fillColor isn't explicitly set, update the fill preview to match
-          if (!layer.options.fillColor) {
-            fillIcon.style.background = strokeInput.value;
+        strokeInput.addEventListener("input", () => {
+          strokeIcon.style.background = strokeInput.value;
+          if (layer.options.textMarker) {
+            layer.pm.getElement().style.color = strokeInput.value;
+            layer.options.textColor = strokeInput.value;
+          } else {
+            layer.setStyle({ color: strokeInput.value });
+            // if fillColor isn't explicitly set, update the fill preview to match
+            if (!layer.options.fillColor) {
+              fillIcon.style.background = strokeInput.value;
+            }
           }
-        }
-        saveCache();
-      });
+          saveCache();
+        });
       }
       if (
         this.activeTab === "Marker" &&
