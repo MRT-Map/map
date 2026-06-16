@@ -1,11 +1,10 @@
 on:
   push:
-    branches: ["annotator"]
+    branches: ["main"]
   workflow_run:
     workflows: ["Update Warps"]
     types:
       - completed
-  workflow_dispatch: {}
 
 permissions:
   contents: write
