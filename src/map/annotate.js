@@ -619,6 +619,94 @@ export function initAnnotator() {
     saveCache();
   });
 
+  // track mouse position for paste
+  let lastMouseLatLng = g().map.getCenter();
+  g().map.on("mousemove", (e) => {
+    lastMouseLatLng = e.latlng;
+  });
+
+  // copy paste
+  let copiedFeature = null;
+
+  document.addEventListener("keydown", (e) => {
+    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+    if (!e.ctrlKey && !e.metaKey) return;
+
+    if (e.key === "c") {
+      const list = g().annotationList;
+      const layers = annotationsGroup
+        .getLayers()
+        .filter((l) => l.options?.pmShape === list.activeTab)
+        .filter((l) => g().map.hasLayer(l));
+      const selected = list._container?.querySelector(
+        ".annotation-entry.selected",
+      );
+      if (!selected) return;
+      const idx = Array.from(
+        list._container.querySelectorAll(".annotation-entry"),
+      ).indexOf(selected);
+      const layer = layers[idx];
+      if (!layer) return;
+
+      copiedFeature = serializeLayer(layer) ?? null;
+      if (copiedFeature)
+        console.log("copied:", copiedFeature.properties.annotationLabel);
+    }
+
+    if (e.key === "v" && copiedFeature) {
+      e.preventDefault();
+      const feature = JSON.parse(JSON.stringify(copiedFeature));
+      const mouse = lastMouseLatLng;
+
+      // offset geometry to mouse position
+      if (feature.geometry.type === "Point") {
+        feature.geometry.coordinates = [mouse.lng, mouse.lat];
+      } else {
+        // compute centroid of original
+        const coords = feature.geometry.coordinates.flat(3);
+        const lngs = coords.filter((_, i) => i % 2 === 0);
+        const lats = coords.filter((_, i) => i % 2 !== 0);
+        const centLng = lngs.reduce((a, b) => a + b, 0) / lngs.length;
+        const centLat = lats.reduce((a, b) => a + b, 0) / lats.length;
+        const dLng = mouse.lng - centLng;
+        const dLat = mouse.lat - centLat;
+
+        const offsetCoords = (coords) => {
+          if (typeof coords[0] === "number") {
+            return [coords[0] + dLng, coords[1] + dLat];
+          }
+          return coords.map(offsetCoords);
+        };
+        feature.geometry.coordinates = offsetCoords(
+          feature.geometry.coordinates,
+        );
+      }
+
+      // load via loadGeoJson with a single-feature collection
+      const fc = { type: "FeatureCollection", features: [feature] };
+      loadGeoJson(fc, { silent: true });
+
+      // select the newly added layer
+      const newLayer = annotationsGroup.getLayers().at(-1);
+      if (newLayer) {
+        const shapeTabMap = {
+          text: "Text",
+          marker: "Marker",
+          rect: "Rectangle",
+          poly: "Polygon",
+          line: "Line",
+          circle: "Circle",
+        };
+        g().annotationList.activeTab = shapeTabMap[feature.properties.shape];
+        g().annotationList.keepTab = true;
+        g().annotationList.refresh();
+        g().annotationList.selectLayer(newLayer);
+      }
+
+      saveCache();
+    }
+  });
+
   loadCache();
 }
 
@@ -642,89 +730,90 @@ function serializeIconOpts(layer) {
   return opts;
 }
 
+function serializeLayer(layer) {
+  const shape = layer.options.pmShape;
+  let res;
+
+  if (shape === "Text") {
+    res = layer.toGeoJSON();
+    res.properties.shape = "text";
+    res.properties.text = layer.options.text;
+    const el = layer.pm.getElement();
+    res.properties.fillColor = el.style.backgroundColor;
+    res.properties.strokeColor = el.style.color;
+    res.properties.fontSize = el.style.fontSize;
+    res.properties.fontFamily = el.style.fontFamily;
+    res.properties.fontWeight = el.style.fontWeight;
+    res.properties.fontStyle = el.style.fontStyle;
+    res.properties.textDecoration = el.style.textDecoration;
+    res.properties.textAlign = el.style.textAlign;
+  } else if (shape === "Marker") {
+    res = layer.toGeoJSON();
+    res.properties.shape = "marker";
+    const iconOpts = serializeIconOpts(layer);
+    if (iconOpts) res.properties.markerIcon = iconOpts;
+    res.properties.opacity = layer.options.opacity ?? 1;
+  } else if (shape === "Rectangle") {
+    res = layer.toGeoJSON();
+    res.properties.shape = "rect";
+    res.properties.fillColor = layer.options.fillColor;
+    res.properties.strokeColor = layer.options.color;
+    res.properties.weight = layer.options.weight;
+    res.properties.dashType = layer.options._dashType ?? "";
+    res.properties.dashArray = layer.options.dashArray;
+    res.properties.fillOpacity = layer.options.fillOpacity;
+    res.properties.lineCap = layer.options.lineCap;
+    res.properties.lineJoin = layer.options.lineJoin;
+  } else if (shape === "Polygon") {
+    res = layer.toGeoJSON();
+    res.properties.shape = "poly";
+    res.properties.fillColor = layer.options.fillColor;
+    res.properties.strokeColor = layer.options.color;
+    res.properties.weight = layer.options.weight;
+    res.properties.dashType = layer.options._dashType ?? "";
+    res.properties.dashArray = layer.options.dashArray;
+    res.properties.fillOpacity = layer.options.fillOpacity;
+    res.properties.lineCap = layer.options.lineCap;
+    res.properties.lineJoin = layer.options.lineJoin;
+  } else if (shape === "Line") {
+    res = layer.toGeoJSON();
+    res.properties.shape = "line";
+    res.properties.strokeColor = layer.options.color;
+    res.properties.weight = layer.options.weight;
+    res.properties.dashType = layer.options._dashType ?? "";
+    res.properties.dashArray = layer.options.dashArray;
+    res.properties.lineCap = layer.options.lineCap;
+    res.properties.lineJoin = layer.options.lineJoin;
+  } else if (shape === "Circle") {
+    res = layer.toGeoJSON();
+    res.properties.shape = "circle";
+    res.properties.fillColor = layer.options.fillColor;
+    res.properties.strokeColor = layer.options.color;
+    res.properties.radius = layer.options.radius;
+    res.properties.weight = layer.options.weight;
+    res.properties.dashType = layer.options._dashType ?? "";
+    res.properties.dashArray = layer.options.dashArray;
+    res.properties.fillOpacity = layer.options.fillOpacity;
+    res.properties.lineCap = layer.options.lineCap;
+    res.properties.lineJoin = layer.options.lineJoin;
+  } else {
+    console.warn("unknown shape", layer);
+  }
+
+  if (res) {
+    res.properties.annotationLabel = layer.options.annotationLabel;
+    res.properties.hideMeasurements = layer.options.hideMeasurements ?? false;
+    res.properties.radiusOverlayVisible =
+      layer.options.radiusOverlayVisible ?? false;
+    res.properties.hidden = layer.options.hidden ?? false;
+  }
+  return res;
+}
+
 function generateGeoJson() {
   const features = annotationsGroup
     .getLayers()
-    .map((layer) => {
-      let res;
-      const shape = layer.options.pmShape;
-
-      if (shape === "Text") {
-        res = layer.toGeoJSON();
-        res.properties.shape = "text";
-        res.properties.text = layer.options.text;
-        const el = layer.pm.getElement();
-        res.properties.fillColor = el.style.backgroundColor;
-        res.properties.strokeColor = el.style.color;
-        res.properties.fontSize = el.style.fontSize;
-        res.properties.fontFamily = el.style.fontFamily;
-        res.properties.fontWeight = el.style.fontWeight;
-        res.properties.fontStyle = el.style.fontStyle;
-        res.properties.textDecoration = el.style.textDecoration;
-        res.properties.textAlign = el.style.textAlign;
-      } else if (shape === "Marker") {
-        res = layer.toGeoJSON();
-        res.properties.shape = "marker";
-        const iconOpts = serializeIconOpts(layer);
-        if (iconOpts) res.properties.markerIcon = iconOpts;
-        res.properties.opacity = layer.options.opacity ?? 1;
-      } else if (shape === "Rectangle") {
-        res = layer.toGeoJSON();
-        res.properties.shape = "rect";
-        res.properties.fillColor = layer.options.fillColor;
-        res.properties.strokeColor = layer.options.color;
-        res.properties.weight = layer.options.weight;
-        res.properties.dashType = layer.options._dashType ?? "";
-        res.properties.dashArray = layer.options.dashArray;
-        res.properties.fillOpacity = layer.options.fillOpacity;
-        res.properties.lineCap = layer.options.lineCap;
-        res.properties.lineJoin = layer.options.lineJoin;
-      } else if (shape === "Polygon") {
-        res = layer.toGeoJSON();
-        res.properties.shape = "poly";
-        res.properties.fillColor = layer.options.fillColor;
-        res.properties.strokeColor = layer.options.color;
-        res.properties.weight = layer.options.weight;
-        res.properties.dashType = layer.options._dashType ?? "";
-        res.properties.dashArray = layer.options.dashArray;
-        res.properties.fillOpacity = layer.options.fillOpacity;
-        res.properties.lineCap = layer.options.lineCap;
-        res.properties.lineJoin = layer.options.lineJoin;
-      } else if (shape === "Line") {
-        res = layer.toGeoJSON();
-        res.properties.shape = "line";
-        res.properties.strokeColor = layer.options.color;
-        res.properties.weight = layer.options.weight;
-        res.properties.dashType = layer.options._dashType ?? "";
-        res.properties.dashArray = layer.options.dashArray;
-        res.properties.lineCap = layer.options.lineCap;
-        res.properties.lineJoin = layer.options.lineJoin;
-      } else if (shape === "Circle") {
-        res = layer.toGeoJSON();
-        res.properties.shape = "circle";
-        res.properties.fillColor = layer.options.fillColor;
-        res.properties.strokeColor = layer.options.color;
-        res.properties.radius = layer.options.radius;
-        res.properties.weight = layer.options.weight;
-        res.properties.dashType = layer.options._dashType ?? "";
-        res.properties.dashArray = layer.options.dashArray;
-        res.properties.fillOpacity = layer.options.fillOpacity;
-        res.properties.lineCap = layer.options.lineCap;
-        res.properties.lineJoin = layer.options.lineJoin;
-      } else {
-        console.warn("unknown shape", layer);
-      }
-
-      if (res) {
-        res.properties.annotationLabel = layer.options.annotationLabel;
-        res.properties.hideMeasurements =
-          layer.options.hideMeasurements ?? false;
-        res.properties.radiusOverlayVisible =
-          layer.options.radiusOverlayVisible ?? false;
-        res.properties.hidden = layer.options.hidden ?? false;
-      }
-      return res;
-    })
+    .map(serializeLayer)
     .filter((a) => a !== undefined);
 
   return {
