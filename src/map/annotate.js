@@ -608,6 +608,11 @@ export function initAnnotator() {
         element.select();
       });
 
+      layer.on(
+        "pm:globaleditmodetoggled pm:edit pm:editstart pm:editend pm:update pm:change pm:markerdragend pm:dragend pm:vertexadded pm:vertexremoved pm:rotateend",
+        () => saveCache()
+      );
+
       bindTextPopup(layer);
     } else if (layer instanceof L.Marker && shape === "Marker") {
       bindMarkerPopup(layer);
@@ -734,10 +739,10 @@ function serializeIconOpts(layer) {
 function serializeLayer(layer) {
   const shape = layer.options.pmShape;
   let res;
+  res = layer.toGeoJSON();
+  res.properties = res.properties ?? {};
 
   if (shape === "Text") {
-    res = layer.toGeoJSON();
-    res.properties = res.properties ?? {};
     res.properties.shape = "text";
     res.properties.text = layer.options.text;
     const el = layer.pm.getElement();
@@ -750,15 +755,11 @@ function serializeLayer(layer) {
     res.properties.textDecoration = el.style.textDecoration;
     res.properties.textAlign = el.style.textAlign;
   } else if (shape === "Marker") {
-    res = layer.toGeoJSON();
-    res.properties = res.properties ?? {};
     res.properties.shape = "marker";
     const iconOpts = serializeIconOpts(layer);
     if (iconOpts) res.properties.markerIcon = iconOpts;
     res.properties.opacity = layer.options.opacity ?? 1;
   } else if (shape === "Rectangle") {
-    res = layer.toGeoJSON();
-    res.properties = res.properties ?? {};
     res.properties.shape = "rect";
     res.properties.fillColor = layer.options.fillColor;
     res.properties.strokeColor = layer.options.color;
@@ -769,8 +770,6 @@ function serializeLayer(layer) {
     res.properties.lineCap = layer.options.lineCap;
     res.properties.lineJoin = layer.options.lineJoin;
   } else if (shape === "Polygon") {
-    res = layer.toGeoJSON();
-    res.properties = res.properties ?? {};
     res.properties.shape = "poly";
     res.properties.fillColor = layer.options.fillColor;
     res.properties.strokeColor = layer.options.color;
@@ -781,8 +780,6 @@ function serializeLayer(layer) {
     res.properties.lineCap = layer.options.lineCap;
     res.properties.lineJoin = layer.options.lineJoin;
   } else if (shape === "Line") {
-    res = layer.toGeoJSON();
-    res.properties = res.properties ?? {};
     res.properties.shape = "line";
     res.properties.strokeColor = layer.options.color;
     res.properties.weight = layer.options.weight;
@@ -791,8 +788,6 @@ function serializeLayer(layer) {
     res.properties.lineCap = layer.options.lineCap;
     res.properties.lineJoin = layer.options.lineJoin;
   } else if (shape === "Circle") {
-    res = layer.toGeoJSON();
-    res.properties = res.properties ?? {};
     res.properties.shape = "circle";
     res.properties.fillColor = layer.options.fillColor;
     res.properties.strokeColor = layer.options.color;
@@ -915,6 +910,7 @@ function loadGeoJson(fc, { silent = false } = {}) {
 
         if (silent) {
           layer.options.pmShape = "Text";
+          layer.on("pm:edit", () => saveCache());
           layer.on("pm:textblur", () => {
             const text = layer.pm.getText();
             if (!text || !text.trim()) {
@@ -957,6 +953,7 @@ function loadGeoJson(fc, { silent = false } = {}) {
         layer.setOpacity(props.opacity ?? 1);
         if (silent) {
           layer.options.pmShape = "Marker";
+          layer.on("pm:edit", () => saveCache());
           bindMarkerPopup(layer);
           restoreCommon(layer);
         } else {
@@ -971,6 +968,7 @@ function loadGeoJson(fc, { silent = false } = {}) {
         restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Rectangle";
+          layer.on("pm:edit", () => saveCache());
           bindPathPopup(layer, "Rectangle");
           restoreGeometry(layer);
         } else {
@@ -986,6 +984,7 @@ function loadGeoJson(fc, { silent = false } = {}) {
         restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Polygon";
+          layer.on("pm:edit", () => saveCache());
           bindPathPopup(layer, "Polygon");
           restoreGeometry(layer);
         } else {
@@ -1001,6 +1000,7 @@ function loadGeoJson(fc, { silent = false } = {}) {
         restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Line";
+          layer.on("pm:edit", () => saveCache());
           bindPathPopup(layer, "Line");
           restoreGeometry(layer);
         } else {
@@ -1018,6 +1018,7 @@ function loadGeoJson(fc, { silent = false } = {}) {
         restorePathStyle(layer);
         if (silent) {
           layer.options.pmShape = "Circle";
+          layer.on("pm:edit", () => saveCache());
           bindPathPopup(layer, "Circle");
           restoreGeometry(layer);
         } else {
