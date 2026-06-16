@@ -490,7 +490,7 @@ export function initAnnotator() {
   });
 
   map.on(
-    "pm:dragend pm:markerdragend pm:vertexadded pm:vertexremoved pm:rotateend",
+    "pm:dragend pm:markerdragend pm:vertexadded pm:vertexremoved pm:rotateend pm:edit pm:update",
     () => saveCache(),
   );
 
@@ -531,6 +531,7 @@ export function initAnnotator() {
         g().map.addLayer(newLayer.options.radiusOverlay);
         newLayer.options.radiusOverlayVisible = true;
       }
+      bindPathPopup(newLayer, shape);
     };
 
     // Split into multiple polygons
@@ -736,6 +737,7 @@ function serializeLayer(layer) {
 
   if (shape === "Text") {
     res = layer.toGeoJSON();
+    res.properties = res.properties ?? {};
     res.properties.shape = "text";
     res.properties.text = layer.options.text;
     const el = layer.pm.getElement();
@@ -749,12 +751,14 @@ function serializeLayer(layer) {
     res.properties.textAlign = el.style.textAlign;
   } else if (shape === "Marker") {
     res = layer.toGeoJSON();
+    res.properties = res.properties ?? {};
     res.properties.shape = "marker";
     const iconOpts = serializeIconOpts(layer);
     if (iconOpts) res.properties.markerIcon = iconOpts;
     res.properties.opacity = layer.options.opacity ?? 1;
   } else if (shape === "Rectangle") {
     res = layer.toGeoJSON();
+    res.properties = res.properties ?? {};
     res.properties.shape = "rect";
     res.properties.fillColor = layer.options.fillColor;
     res.properties.strokeColor = layer.options.color;
@@ -766,6 +770,7 @@ function serializeLayer(layer) {
     res.properties.lineJoin = layer.options.lineJoin;
   } else if (shape === "Polygon") {
     res = layer.toGeoJSON();
+    res.properties = res.properties ?? {};
     res.properties.shape = "poly";
     res.properties.fillColor = layer.options.fillColor;
     res.properties.strokeColor = layer.options.color;
@@ -777,6 +782,7 @@ function serializeLayer(layer) {
     res.properties.lineJoin = layer.options.lineJoin;
   } else if (shape === "Line") {
     res = layer.toGeoJSON();
+    res.properties = res.properties ?? {};
     res.properties.shape = "line";
     res.properties.strokeColor = layer.options.color;
     res.properties.weight = layer.options.weight;
@@ -786,6 +792,7 @@ function serializeLayer(layer) {
     res.properties.lineJoin = layer.options.lineJoin;
   } else if (shape === "Circle") {
     res = layer.toGeoJSON();
+    res.properties = res.properties ?? {};
     res.properties.shape = "circle";
     res.properties.fillColor = layer.options.fillColor;
     res.properties.strokeColor = layer.options.color;
@@ -800,13 +807,11 @@ function serializeLayer(layer) {
     console.warn("unknown shape", layer);
   }
 
-  if (res) {
-    res.properties.annotationLabel = layer.options.annotationLabel;
-    res.properties.hideMeasurements = layer.options.hideMeasurements ?? false;
-    res.properties.radiusOverlayVisible =
-      layer.options.radiusOverlayVisible ?? false;
-    res.properties.hidden = layer.options.hidden ?? false;
-  }
+  res.properties.annotationLabel = layer.options.annotationLabel;
+  res.properties.hideMeasurements = layer.options.hideMeasurements ?? false;
+  res.properties.radiusOverlayVisible =
+    layer.options.radiusOverlayVisible ?? false;
+  res.properties.hidden = layer.options.hidden ?? false;
   return res;
 }
 
