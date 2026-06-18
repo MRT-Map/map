@@ -2588,8 +2588,6 @@ snapshots:
 
   fastpriorityqueue@0.7.5: {}
 
-  fastpriorityqueue@0.7.5: {}
-
   fdir@6.5.0(picomatch@4.0.4):
     optionalDependencies:
       picomatch: 4.0.4
