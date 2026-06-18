@@ -390,7 +390,7 @@ export class AnnotationList extends L.Control {
         colorLabel.style.cursor = "pointer";
 
         const colorSwatch = L.DomUtil.create("i", "", colorLabel);
-        colorSwatch.style.cssText = `display:inline-block; width:14px; height:14px; background:${currentColor}; border-radius:50%; vertical-align:middle; margin:0 2px; outline:1px solid #888;`;
+        colorSwatch.style.cssText = `display:inline-block; width:18px; height:14px; background:${currentColor}; border-radius:3px; vertical-align:middle; margin:0 2px; border:1px solid #888;`;
 
         const colorInput = L.DomUtil.create("input", "", colorLabel);
         colorInput.type = "color";
