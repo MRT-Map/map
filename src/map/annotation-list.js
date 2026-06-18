@@ -42,7 +42,7 @@ export class AnnotationList extends L.Control {
     let dragging = false,
       ox = 0,
       oy = 0;
-    L.DomEvent.on(dragHandle, "mousedown", (e) => {
+    const startDrag = (clientX, clientY) => {
       dragging = true;
       if (container.style.position !== "absolute") {
         const rect = container.getBoundingClientRect();
@@ -52,19 +52,41 @@ export class AnnotationList extends L.Control {
         container.style.left = rect.left - parentRect.left + "px";
         container.style.top = rect.top - parentRect.top + "px";
       }
-      ox = e.clientX - container.offsetLeft;
-      oy = e.clientY - container.offsetTop;
+      ox = clientX - container.offsetLeft;
+      oy = clientY - container.offsetTop;
+    };
+    const moveDrag = (clientX, clientY) => {
+      if (!dragging) return;
+      container.style.left = clientX - ox + "px";
+      container.style.bottom = "auto";
+      container.style.top = clientY - oy + "px";
+    };
+    const endDrag = () => {
+      dragging = false;
+    };
+
+    // Mouse events
+    L.DomEvent.on(dragHandle, "mousedown", (e) => {
+      startDrag(e.clientX, e.clientY);
       L.DomEvent.preventDefault(e);
     });
-    L.DomEvent.on(document, "mousemove", (e) => {
-      if (!dragging) return;
-      container.style.left = e.clientX - ox + "px";
-      container.style.bottom = "auto";
-      container.style.top = e.clientY - oy + "px";
+    L.DomEvent.on(document, "mousemove", (e) => moveDrag(e.clientX, e.clientY));
+    L.DomEvent.on(document, "mouseup", endDrag);
+
+    // Touch events for mobile
+    L.DomEvent.on(dragHandle, "touchstart", (e) => {
+      const t = e.touches[0];
+      if (!t) return;
+      startDrag(t.clientX, t.clientY);
+      L.DomEvent.preventDefault(e);
     });
-    L.DomEvent.on(document, "mouseup", () => {
-      dragging = false;
+    L.DomEvent.on(document, "touchmove", (e) => {
+      const t = e.touches[0];
+      if (!t || !dragging) return;
+      moveDrag(t.clientX, t.clientY);
+      L.DomEvent.preventDefault(e);
     });
+    L.DomEvent.on(document, "touchend touchcancel", endDrag);
 
     const tabBar = L.DomUtil.create("div", "annotation-list-tabs", container);
     const tabIcons = {
