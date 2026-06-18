@@ -411,6 +411,35 @@ export function initAnnotator() {
     className: "line-total-tooltip",
   });
 
+  const copyFeedbackTooltip = L.tooltip({
+    direction: "center",
+    className: "copy-feedback-tooltip",
+  });
+  let copyFeedbackTimeout = null;
+
+  const showCopyFeedback = (layer, text) => {
+    const center = layer.getBounds
+      ? layer.getBounds().getCenter()
+      : layer.getLatLng();
+
+    clearTimeout(copyFeedbackTimeout);
+    copyFeedbackTooltip.setLatLng(center).setContent(text);
+    if (!map.hasLayer(copyFeedbackTooltip)) {
+      copyFeedbackTooltip.addTo(map);
+    }
+
+    const el = copyFeedbackTooltip.getElement();
+    if (el) {
+      el.style.animation = "none";
+      void el.offsetWidth;
+      el.style.animation = "";
+    }
+
+    copyFeedbackTimeout = setTimeout(() => {
+      copyFeedbackTooltip.remove();
+    }, 1500);
+  };
+
   map.on("pm:drawstart", ({ shape, workingLayer: layer }) => {
     annotationsGroup.getLayers().forEach((l) => l.pm.disable());
     // Hiding city markers while drawing will improve performance for some reason
@@ -610,7 +639,7 @@ export function initAnnotator() {
 
       layer.on(
         "pm:globaleditmodetoggled pm:edit pm:editstart pm:editend pm:update pm:change pm:markerdragend pm:dragend pm:vertexadded pm:vertexremoved pm:rotateend",
-        () => saveCache()
+        () => saveCache(),
       );
 
       bindTextPopup(layer);
@@ -657,6 +686,7 @@ export function initAnnotator() {
       copiedFeature = serializeLayer(layer) ?? null;
       if (copiedFeature)
         console.log("copied:", copiedFeature.properties.annotationLabel);
+      showCopyFeedback(layer, "Copied");
     }
 
     if (e.key === "v" && copiedFeature) {

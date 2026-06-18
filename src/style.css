@@ -158,6 +158,34 @@ body {
   display: none;
 }
 
+.copy-feedback-tooltip {
+  background: #ffffff;
+  border: none;
+  border-radius: 4px;
+  box-shadow: none;
+  color: #000000;
+  font-weight: 500;
+  font-size: 11px;
+  padding: 2px 8px;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: copy-feedback-fade 1.5s ease-out forwards;
+}
+
+.copy-feedback-tooltip::before {
+  display: none;
+}
+
+@keyframes copy-feedback-fade {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 .leaflet-measure-path-measurement {
   position: absolute;
   font-size: 10px;
