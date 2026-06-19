@@ -37,10 +37,5 @@
     "postcss-preset-env": "11.3.1",
     "prettier": "3.8.4",
     "vite": "8.0.16"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild"
-    ]
   }
 }

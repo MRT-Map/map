@@ -25,7 +25,7 @@ jobs:
       - run: |
              git config --global url."https://github.com/".insteadOf git@github.com:
              git config --global url."https://".insteadOf git://
-      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm install 
       - run: pnpm run prod
       - run: cd out; echo > .nojekyll; cd ..
       - name: Deploy
