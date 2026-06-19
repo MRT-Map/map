@@ -10,12 +10,21 @@
   "keywords": [],
   "author": "",
   "license": "GNU-GPL3",
-  "devDependencies": {
-    "@eslint/js": "10.0.1",
+  "dependencies": {
     "@fortawesome/fontawesome-free": "7.2.0",
     "@geoman-io/leaflet-geoman-free": "2.19.3",
+    "geojson": "0.5.0",
+    "jsts": "2.12.1",
+    "jquery": "4.0.0",
+    "leaflet": "1.9.4",
+    "leaflet-control-bar": "github:mapshakers/leaflet-control-bar",
+    "leaflet-easybutton": "2.4.0",
+    "leaflet-measure-path": "1.5.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@types/fs-extra": "11.0.4",
-    "@types/geojson": "^7946.0.13",
+    "@types/geojson": "7946.0.13",
     "@types/jquery": "4.0.1",
     "@types/leaflet": "1.9.21",
     "@types/node": "24.13.2",
@@ -23,12 +32,7 @@
     "eslint": "10.4.1",
     "eslint-config-prettier": "10.1.8",
     "fs-extra": "11.3.5",
-    "geojson": "^0.5.0",
     "globals": "17.6.0",
-    "jquery": "4.0.0",
-    "leaflet": "1.9.4",
-    "leaflet-control-bar": "github:mapshakers/leaflet-control-bar",
-    "leaflet-easybutton": "2.4.0",
     "postcss": "8.5.15",
     "postcss-preset-env": "11.3.0",
     "prettier": "3.8.4",
@@ -38,9 +42,5 @@
     "onlyBuiltDependencies": [
       "esbuild"
     ]
-  },
-  "dependencies": {
-    "jsts": "^2.12.1",
-    "leaflet-measure-path": "^1.5.0"
   }
 }
