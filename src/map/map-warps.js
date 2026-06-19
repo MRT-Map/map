@@ -1,6 +1,7 @@
 import { mapcoord } from "../utils/coord";
 import L from "leaflet";
 import { gb, gcm } from "./globals";
+import { markersCanvas } from "../map.js";
 
 export async function initMapWarps() {
   const res = await fetch("https://raw.githubusercontent.com/MRT-Map/map/refs/heads/main/warp-data/warps.json");
@@ -10,8 +11,10 @@ export async function initMapWarps() {
   for (const warp of warpData.warps) {
     gcm().warpLayer.addLayer(
       L.circleMarker(mapcoord([warp.x, warp.z]), {
+        renderer: markersCanvas,
         color: "#ff0000",
         radius: 3,
+        pmIgnore: true,
       }).bindPopup(
         `Warp: ${warp.name}<br>Visited <strong>${warp.visits}</strong> times<br><button onclick="navigator.clipboard.writeText('/warp point ${warp.name}')">Copy Compass Point Command</button>`,
       ),

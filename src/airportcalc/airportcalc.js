@@ -2,7 +2,6 @@ import L from "leaflet";
 import "leaflet-control-bar";
 import { g } from "./globals";
 import { worldcoord } from "../utils/coord";
-import { GeoJson } from "../utils/geojson";
 import { exportAirportcalc, importAirportcalc } from "./import-export";
 const VERSION = "2.2.1 (20240104)";
 export const airportcalcGroup = L.layerGroup([]);
@@ -101,7 +100,7 @@ export function initAirportcalc() {
     let [cityArea, airportArea, percentage] = calcCityArea();
     if (isNaN(percentage)) percentage = 0;
     const newContent = document
-      .getElementById("bar-template")!
+      .getElementById("bar-template")
       .innerHTML.replace("{citySize}", Math.round(cityArea).toString())
       .replace("{airportSize}", Math.round(airportArea).toString())
       .replace("{percentage}", (Math.round(percentage * 100) / 100).toString())

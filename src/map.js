@@ -26,10 +26,13 @@ class CustomTileLayer extends L.TileLayer {
 const customTileLayer = function (templateUrl, options) {
   return new CustomTileLayer(templateUrl, options);
 };
+
+export const markersCanvas = L.canvas({ padding: 0.5, pane: "markersPane" });
+
 export function initMap() {
   const map = L.map("map", {
     crs: L.CRS.Simple,
-    preferCanvas: true,
+    //preferCanvas: true,
   }).setView([0, 0], 8);
   customTileLayer("unused url; check custom function", {
     maxZoom: 8,
@@ -49,5 +52,7 @@ export function initMap() {
       position: "topright",
     })
     .addTo(map);
+  map.createPane("markersPane");
+  map.getPane("markersPane").style.zIndex = 350;
   return map;
 }

@@ -2,7 +2,7 @@
 
 ![Website](https://img.shields.io/website?url=https%3A%2F%2Fgithub.com%2FMRT-Map%2Fmap%2Fwiki&label=wiki)
 ![GitHub License](https://img.shields.io/github/license/MRT-Map/map)
-![GitHub Pages Status](<https://img.shields.io/github/actions/workflow/status/MRT-Map/map/.github%2Fworkflows%2Fpages.yml?style=flat&label=build%20(pages)&link=https%3A%2F%2Fmrt-map.github.io/map>)
+![GitHub Pages Status](https://img.shields.io/github/actions/workflow/status/MRT-Map/map/.github%2Fworkflows%2Fpages.yml?style=flat&label=build%20(pages)&link=https%3A%2F%2Fmrt-map.github.io/map)
 
 ![GitHub code size](https://img.shields.io/github/languages/code-size/MRT-Map/map)
 ![GitHub repo size](https://img.shields.io/github/repo-size/MRT-Map/map)
@@ -23,6 +23,7 @@ This project uses `vite`. Run the `dev` task to start a dev server. To compile f
 
 - Dinty1
 - \_\_7d
+- AlphaDS
 - AP_Red
 - CaptainObi
 - sesese9
