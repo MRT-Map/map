@@ -11,10 +11,10 @@
 
     <link rel="icon" type="image/png" href="map192.png" />
     <link rel="manifest" href="manifest.json" />
-
-    <script type="module" crossorigin src="./assets/main-DjlaI3Nv.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/marker-shadow-lHssGrbe.js">
-    <link rel="stylesheet" crossorigin href="./assets/marker-shadow-DRzBYDeH.css">
+    <script type="module" crossorigin src="./assets/main-CVyb_UOi.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/marker-shadow-BKg36MMZ.js">
+    <link rel="stylesheet" crossorigin href="./assets/marker-shadow-Dc-lF48o.css">
+    <link rel="stylesheet" crossorigin href="./assets/main-DB7Dyi0M.css">
   </head>
 
   <body>
@@ -26,9 +26,239 @@
       <div class="results__container">
         <div class="pill"></div>
         <div id="search__results"></div>
+        <template id="result-template"
+          ><div class="result">
+            <div class="result__name">{name}</div>
+            <div class="result__details">
+              <div class="result__rank">Rank: {rank}</div>
+              <div class="result__mayor">Mayor: {mayor}</div>
+            </div>
+          </div></template
+        >
       </div>
     </div>
 
     <div id="map"></div>
+    <template id="town-popup-template">
+      Name: {name}<br />
+      Mayor: {mayor}<br />
+      Deputy Mayor: {deputy}<br />
+      Rank: {rank}<br />
+      <a
+        href="https://mrtrapidroute.com?from=Current+Location&to={nameEncoded}"
+        target="_blank"
+        >Navigate to here with RapidRoute</a
+      >
+    </template>
+    <template id="annotation-popup-path-template">
+      <div class="ann-popup">
+        <div class="ann-popup-row" id="measurements-row">
+          <span class="ann-popup-stat" id="length-container">
+            <i class="fas fa-ruler-horizontal"></i> <span id="length">-</span> m
+          </span>
+          <span class="ann-popup-stat" id="area-container">
+            <i class="fas fa-draw-polygon"></i> <span id="area">-</span> m<sup
+              >2</sup
+            >
+          </span>
+        </div>
+        <div class="ann-popup-divider"></div>
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Stroke width</label>
+          <input
+            type="range"
+            id="stroke-width"
+            min="1"
+            max="10"
+            step="0.5"
+            value="3"
+            class="ann-popup-slider"
+          />
+          <span class="ann-popup-slider-val" id="stroke-width-val">3</span>
+        </div>
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Stroke style</label>
+          <div class="ann-popup-dash-group" id="dash-group">
+            <button class="ann-popup-dash" data-dash="" title="Solid">
+              <svg width="16" height="3" viewBox="0 0 16 3">
+                <line
+                  x1="0"
+                  y1="1.5"
+                  x2="16"
+                  y2="1.5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="butt"
+                />
+              </svg>
+            </button>
+            <button class="ann-popup-dash" data-dash="8,8" title="Dashed">
+              <svg width="16" height="3" viewBox="0 0 16 3">
+                <line
+                  x1="0"
+                  y1="1.5"
+                  x2="16"
+                  y2="1.5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-dasharray="4,3"
+                  stroke-linecap="butt"
+                />
+              </svg>
+            </button>
+            <button class="ann-popup-dash" data-dash="2,8" title="Dotted">
+              <svg width="16" height="3" viewBox="0 0 16 3">
+                <line
+                  x1="0"
+                  y1="1.5"
+                  x2="16"
+                  y2="1.5"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-dasharray="2,3"
+                  stroke-linecap="butt"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="ann-popup-row" id="fill-opacity-row">
+          <label class="ann-popup-label">Fill opacity</label>
+          <input
+            type="range"
+            id="fill-opacity"
+            min="0"
+            max="1"
+            step="0.05"
+            value="0.2"
+            class="ann-popup-slider"
+          />
+          <span class="ann-popup-slider-val" id="fill-opacity-val">0.2</span>
+        </div>
+      </div>
+    </template>
+
+    <template id="annotation-popup-text-template">
+      <div class="ann-popup">
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Font size</label>
+          <input
+            type="range"
+            id="font-size"
+            min="8"
+            max="48"
+            step="1"
+            value="14"
+            class="ann-popup-slider"
+          />
+          <span class="ann-popup-slider-val" id="font-size-val">14</span>
+        </div>
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Font</label>
+          <select id="font-family" class="ann-popup-select">
+            <option value="sans-serif">Sans-serif</option>
+            <option value="serif">Serif</option>
+            <option value="monospace">Monospace</option>
+            <option value="cursive">Cursive</option>
+            <option value="'Georgia', serif">Georgia</option>
+          </select>
+        </div>
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Style</label>
+          <div class="ann-popup-style-group">
+            <button class="ann-popup-style-btn" id="text-bold" title="Bold">
+              <b>B</b>
+            </button>
+            <button class="ann-popup-style-btn" id="text-italic" title="Italic">
+              <i>I</i>
+            </button>
+            <button
+              class="ann-popup-style-btn"
+              id="text-underline"
+              title="Underline"
+            >
+              <u>U</u>
+            </button>
+            <button
+              class="ann-popup-style-btn"
+              id="text-strikethrough"
+              title="Strikethrough"
+            >
+              <s>S</s>
+            </button>
+          </div>
+        </div>
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Align</label>
+          <div class="ann-popup-style-group">
+            <button
+              class="ann-popup-style-btn"
+              id="text-align-left"
+              title="Left"
+            >
+              <i class="fas fa-align-left"></i>
+            </button>
+            <button
+              class="ann-popup-style-btn"
+              id="text-align-center"
+              title="Center"
+            >
+              <i class="fas fa-align-center"></i>
+            </button>
+            <button
+              class="ann-popup-style-btn"
+              id="text-align-right"
+              title="Right"
+            >
+              <i class="fas fa-align-right"></i>
+            </button>
+          </div>
+        </div>
+        <div class="ann-popup-row" id="bg-opacity-row">
+          <label class="ann-popup-label">BG opacity</label>
+          <input
+            type="range"
+            id="bg-opacity"
+            min="0"
+            max="1"
+            step="0.05"
+            value="1"
+            class="ann-popup-slider"
+          />
+          <span class="ann-popup-slider-val" id="bg-opacity-val">1</span>
+        </div>
+      </div>
+    </template>
+
+    <template id="annotation-popup-marker-template">
+      <div class="ann-popup">
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Icon size</label>
+          <input
+            type="range"
+            id="marker-size"
+            min="16"
+            max="80"
+            step="2"
+            value="16"
+            class="ann-popup-slider"
+          />
+          <span class="ann-popup-slider-val" id="marker-size-val">16</span>
+        </div>
+        <div class="ann-popup-row">
+          <label class="ann-popup-label">Opacity</label>
+          <input
+            type="range"
+            id="marker-opacity"
+            min="0"
+            max="1"
+            step="0.05"
+            value="1"
+            class="ann-popup-slider"
+          />
+          <span class="ann-popup-slider-val" id="marker-opacity-val">1</span>
+        </div>
+      </div>
+    </template>
   </body>
 </html>

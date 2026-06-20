@@ -12,14 +12,22 @@
     <link rel="icon" type="image/png" href="ac192.png" />
     <link rel="manifest" href="manifest.json" />
 
-    <script type="module" crossorigin src="./assets/ac-DNfL53U-.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/marker-shadow-lHssGrbe.js">
-    <link rel="stylesheet" crossorigin href="./assets/marker-shadow-DRzBYDeH.css">
+    <script type="module" crossorigin src="./assets/ac-B5mDrKHY.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/marker-shadow-BKg36MMZ.js">
+    <link rel="stylesheet" crossorigin href="./assets/marker-shadow-Dc-lF48o.css">
   </head>
 
   <body>
     <div id="map"></div>
     <div id="bar"></div>
+    <template id="bar-template">
+      <img src="./assets/ac2-dark-D6V14MFW.png" style="height: 100%; float: right;">
+        <b>City area size:</b> {citySize}m^2
+        <b>| Airport area size:</b> {airportSize}m^2
+        <b>| Percentage:</b> <span {color}>{percentage}%</span>
+        <b>| Drawing for:</b> {drawFor}
+        <br><b>{notif}</b>
+    </template>
     <a id="downloader" style="display: none"></a>
     <input
       type="file"
