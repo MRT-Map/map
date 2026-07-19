@@ -36,6 +36,6 @@
     "postcss": "8.5.19",
     "postcss-preset-env": "11.3.2",
     "prettier": "3.9.5",
-    "vite": "8.1.4"
+    "vite": "8.1.5"
   }
 }
