@@ -11,7 +11,7 @@
   "author": "",
   "license": "GNU-GPL3",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "7.3.0",
+    "@fortawesome/fontawesome-free": "7.3.1",
     "@geoman-io/leaflet-geoman-free": "2.20.0",
     "geojson": "0.5.0",
     "jsts": "2.12.1",
