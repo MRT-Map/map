@@ -33,7 +33,7 @@
     "eslint-config-prettier": "10.1.8",
     "fs-extra": "11.3.6",
     "globals": "17.7.0",
-    "postcss": "8.5.19",
+    "postcss": "8.5.20",
     "postcss-preset-env": "11.3.2",
     "prettier": "3.9.5",
     "vite": "8.1.5"
