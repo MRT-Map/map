@@ -29,7 +29,7 @@
     "@types/leaflet": "1.9.21",
     "@types/node": "24.13.3",
     "autoprefixer": "10.5.4",
-    "eslint": "10.7.0",
+    "eslint": "10.8.0",
     "eslint-config-prettier": "10.1.8",
     "fs-extra": "11.4.0",
     "globals": "17.7.0",
