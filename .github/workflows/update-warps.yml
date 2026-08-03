@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 24.18.1
+          node-version: 26.5.1
       - run: "node warp-data/get-warp-data.js"
       - run: echo "message=Warp update @ $(date +%Y%m%dT%H:%M:%S%Z)" >> "$GITHUB_ENV"
       - uses: EndBug/add-and-commit@290ea2c423ad77ca9c62ae0f5b224379612c0321 # v10.0.0
