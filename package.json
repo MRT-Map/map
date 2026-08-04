@@ -26,7 +26,7 @@
     "@types/fs-extra": "11.0.4",
     "@types/geojson": "7946.0.16",
     "@types/jquery": "4.0.1",
-    "@types/leaflet": "1.9.21",
+    "@types/leaflet": "1.9.22",
     "@types/node": "24.13.3",
     "autoprefixer": "10.5.4",
     "eslint": "10.8.0",
