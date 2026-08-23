@@ -21,7 +21,7 @@ jobs:
           node-version: 26.7.0
       - run: "node warp-data/get-warp-data.js"
       - run: echo "message=Warp update @ $(date +%Y%m%dT%H:%M:%S%Z)" >> "$GITHUB_ENV"
-      - uses: EndBug/add-and-commit@fc1cf1dd8747466e3313305ba0d26460c62a7e59 # v11.1.0
+      - uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         with:
           default_author: github_actions
           message: ${{ env.message }}
