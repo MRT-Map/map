@@ -27,7 +27,7 @@
     "@types/geojson": "7946.0.16",
     "@types/jquery": "4.0.1",
     "@types/leaflet": "1.9.22",
-    "@types/node": "24.13.4",
+    "@types/node": "24.13.5",
     "autoprefixer": "10.6.1",
     "eslint": "10.10.0",
     "eslint-config-prettier": "10.1.8",
