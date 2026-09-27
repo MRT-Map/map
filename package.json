@@ -31,7 +31,7 @@
     "autoprefixer": "10.6.1",
     "eslint": "10.11.0",
     "eslint-config-prettier": "10.1.8",
-    "fs-extra": "11.4.0",
+    "fs-extra": "11.4.1",
     "globals": "17.12.0",
     "postcss": "8.5.28",
     "postcss-preset-env": "11.5.3",
