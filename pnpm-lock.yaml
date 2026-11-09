@@ -721,8 +721,8 @@ packages:
     resolution: {integrity: sha512-BLrgEcRTwX2o6gGxGOCNyMvGSp35YofuYzw9h1IMTRmKqttAZZVU67bdb9Pr2vUHA8+j3i2tJfjO6C6+4myGTA==}
     engines: {node: 18 || 20 || >=22}
 
-  baseline-browser-mapping@2.11.34:
-    resolution: {integrity: sha512-Aqr8mA1kIvyJ3UY5YAY7ib8LSo1DmDMbMnVqGPtsKW1LxaFQFwn9Eb3yvq2fUKJsRvaXjnAV7R5osqETapzNiA==}
+  baseline-browser-mapping@2.11.35:
+    resolution: {integrity: sha512-GNk8KX52CHqeNKGk8+7tZnQab/2k1t/BgrUHPKNdijzpEhF1saPQZHVKb6m5loSAxB39gyrTYw34Qf9CQ3u1qQ==}
     engines: {node: '>=6.0.0'}
     hasBin: true
 
@@ -741,8 +741,8 @@ packages:
   cacheable@2.5.0:
     resolution: {integrity: sha512-60cyAOytib/OzBw1JNSoSV/boK1AtHryDIjvVBk7XbN4ugfkM3+Sry7fEjNgPMGgOjuaZPAp8ruZ0Cxafwyq9g==}
 
-  caniuse-lite@1.0.30001820:
-    resolution: {integrity: sha512-gfWD6MxqVCqAOwmODfZf7DchWvlrA+SRdNX7ceLfg3xRqe5ssjjpF7EgslC/0tiLiNTajdaNN/q8c/5u/7Gz8w==}
+  caniuse-lite@1.0.30001823:
+    resolution: {integrity: sha512-TQ5s/djDjNk1axreUW+4rULH+BmdCMLiJkhaXnO5wqivG7tITkSUj4ItIdzqdZHKaXcHAV8dhH3JxOM7/7bwqw==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -790,8 +790,8 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  electron-to-chromium@1.5.467:
-    resolution: {integrity: sha512-Nw9X371rtZmYcBSnEijnCDONILjs93biCZO34juC7MBOmK8E+GFnyD4T/WvyrlJkppul7oxg6TwvtKst9SODTw==}
+  electron-to-chromium@1.5.478:
+    resolution: {integrity: sha512-pftG+ma5Lm8O6/p45bhYT6StBN5ziQymaRzmCZwFl8DwWHKPPD93FdOmP1aqftcepolQYvrcyTLa17kE8Yf+jg==}
 
   escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
@@ -1071,8 +1071,8 @@ packages:
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
-  node-releases@2.0.61:
-    resolution: {integrity: sha512-5NUN6QCxNFrS9oEA9RPS+d0AP+ooGBzzovY2JhIpDRHacPvOhHjXjUsUMX9qp4nLHZ+5jVgXB2jj/P4arGOE/g==}
+  node-releases@2.0.63:
+    resolution: {integrity: sha512-6li2QanLsAXpIH2R6j77MzRyvOyrvdTqlKtO4CgBdHGNvN99ZZfyxszHc5o5+IZBWD5u6Hzwg83JoGXmqZNG9Q==}
     engines: {node: '>=18'}
 
   optionator@0.9.4:
@@ -1328,8 +1328,8 @@ packages:
   tinyqueue@2.0.3:
     resolution: {integrity: sha512-ppJZNDuKGgxzkHihX8v9v9G5f+18gzaTfrukGrq6ueg0lmH4nqVnA2IPG0AEH3jKEk2GRJCUhDoqpoiw3PHLBA==}
 
-  tslib@2.8.1:
-    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
+  tslib@2.9.1:
+    resolution: {integrity: sha512-a4Ux9VKuIMHsOS7ENbEq6hK2ZGYIT27Rtl0E4eD9KqwxhKiQeMZE/9xb3IdYwWaSOyIBQLExhQgXDTYoiCxnWA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -1911,7 +1911,7 @@ snapshots:
       '@turf/helpers': 7.4.0
       '@turf/meta': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/boolean-contains@7.4.0':
     dependencies:
@@ -1922,7 +1922,7 @@ snapshots:
       '@turf/invariant': 7.4.0
       '@turf/line-split': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/boolean-point-in-polygon@7.4.0':
     dependencies:
@@ -1930,21 +1930,21 @@ snapshots:
       '@turf/invariant': 7.4.0
       '@types/geojson': 7946.0.16
       point-in-polygon-hao: 1.2.4
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/boolean-point-on-line@7.4.0':
     dependencies:
       '@turf/helpers': 7.4.0
       '@turf/invariant': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/distance@7.4.0':
     dependencies:
       '@turf/helpers': 7.4.0
       '@turf/invariant': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/geojson-rbush@7.4.0':
     dependencies:
@@ -1953,24 +1953,24 @@ snapshots:
       '@turf/meta': 7.4.0
       '@types/geojson': 7946.0.16
       rbush: 3.0.1
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/helpers@7.4.0':
     dependencies:
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/invariant@7.4.0':
     dependencies:
       '@turf/helpers': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/kinks@7.4.0':
     dependencies:
       '@turf/helpers': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/line-intersect@7.4.0':
     dependencies:
@@ -1978,7 +1978,7 @@ snapshots:
       '@types/geojson': 7946.0.16
       robust-predicates: 2.0.4
       tinyqueue: 2.0.3
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/line-segment@7.4.0':
     dependencies:
@@ -1986,7 +1986,7 @@ snapshots:
       '@turf/invariant': 7.4.0
       '@turf/meta': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/line-split@7.4.0':
     dependencies:
@@ -2000,13 +2000,13 @@ snapshots:
       '@turf/nearest-point-on-line': 7.4.0
       '@turf/truncate': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/meta@7.4.0':
     dependencies:
       '@turf/helpers': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/nearest-point-on-line@7.4.0':
     dependencies:
@@ -2015,14 +2015,14 @@ snapshots:
       '@turf/invariant': 7.4.0
       '@turf/meta': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@turf/truncate@7.4.0':
     dependencies:
       '@turf/helpers': 7.4.0
       '@turf/meta': 7.4.0
       '@types/geojson': 7946.0.16
-      tslib: 2.8.1
+      tslib: 2.9.1
 
   '@types/esrecurse@4.3.1': {}
 
@@ -2067,7 +2067,7 @@ snapshots:
   autoprefixer@10.6.2(postcss@8.5.32):
     dependencies:
       browserslist: 4.29.5
-      caniuse-lite: 1.0.30001820
+      caniuse-lite: 1.0.30001823
       fraction.js: 5.3.4
       picocolors: 1.1.1
       postcss: 8.5.32
@@ -2075,7 +2075,7 @@ snapshots:
 
   balanced-match@4.0.4: {}
 
-  baseline-browser-mapping@2.11.34: {}
+  baseline-browser-mapping@2.11.35: {}
 
   bignumber.js@9.3.1: {}
 
@@ -2085,10 +2085,10 @@ snapshots:
 
   browserslist@4.29.5:
     dependencies:
-      baseline-browser-mapping: 2.11.34
-      caniuse-lite: 1.0.30001820
-      electron-to-chromium: 1.5.467
-      node-releases: 2.0.61
+      baseline-browser-mapping: 2.11.35
+      caniuse-lite: 1.0.30001823
+      electron-to-chromium: 1.5.478
+      node-releases: 2.0.63
       update-browserslist-db: 1.3.4(browserslist@4.29.5)
 
   cacheable@2.5.0:
@@ -2099,7 +2099,7 @@ snapshots:
       keyv: 5.6.0
       qified: 0.10.1
 
-  caniuse-lite@1.0.30001820: {}
+  caniuse-lite@1.0.30001823: {}
 
   cross-spawn@7.0.6:
     dependencies:
@@ -2135,7 +2135,7 @@ snapshots:
 
   detect-libc@2.1.2: {}
 
-  electron-to-chromium@1.5.467: {}
+  electron-to-chromium@1.5.478: {}
 
   escalade@3.2.0: {}
 
@@ -2381,7 +2381,7 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
-  node-releases@2.0.61: {}
+  node-releases@2.0.63: {}
 
   optionator@0.9.4:
     dependencies:
@@ -2715,7 +2715,7 @@ snapshots:
 
   tinyqueue@2.0.3: {}
 
-  tslib@2.8.1: {}
+  tslib@2.9.1: {}
 
   type-check@0.4.0:
     dependencies:
