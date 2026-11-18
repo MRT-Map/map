@@ -1,0 +1,28 @@
+name: Mirror
+
+on:
+  create:
+  delete:
+  push:
+    branches: "**"
+    tags: "**"
+
+concurrency:
+  group: git-mirror
+
+jobs:
+  mirror-tangled:
+    name: Tangled
+    runs-on: ubuntu-latest
+    environment: mirror-tangled
+    permissions:
+      contents: read
+
+    steps:
+      - uses: wearerequired/git-mirror-action@6bbc55f2f0082bca533b72dc711f7d37154d40cc # v1.3.1
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
+        with:
+          source-repo: "https://github.com/mrt-map/map"
+          destination-repo: "${{ secrets.TARGET_REPO_URL }}"
