@@ -15,7 +15,7 @@
     "@geoman-io/leaflet-geoman-free": "2.20.6",
     "geojson": "0.5.0",
     "jsts": "2.12.1",
-    "jquery": "4.0.0",
+    "jquery": "4.1.0",
     "leaflet": "1.9.4",
     "leaflet-control-bar": "github:mapshakers/leaflet-control-bar",
     "leaflet-easybutton": "2.4.0",
